@@ -1,0 +1,84 @@
+site_name: SXY Research Notes
+site_description: JavaScript Engine Security Research Notes
+site_author: SXY
+
+theme:
+  name: material
+  language: zh
+  logo: assets/logo.png
+  favicon: assets/logo.png
+  palette:
+    - scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+    - scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - 首页: index.md
+  - V8:
+      - 总览: v8/index.md
+      - JIT基础: v8/jit.md
+      - V8 数组的内存布局: v8/V8 数组的内存布局.md
+      - V8 堆的内存布局: v8/V8堆的内存布局.md
+      - V8 指针压缩机制: v8/V8指针压缩机制.md
+  - JSC:
+      - 总览: jsc/index.md
+  - ChakraCore:
+      - 总览: chakracore/index.md
+      - CVE-2019-0567分析: chakracore/CVE-2019-0567.md
+  - VSCode配置:
+      - clangd配置: vscode/clangd-setup.md
+
+
+copyright: |
+  © 2025 SXY Research Notes · Built for research and portfolio
+
+extra:
+  generator: false
+
+extra_javascript:
+  - javascripts/extra.js
