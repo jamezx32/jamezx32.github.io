@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470">
+  <defs>
+    <style>
+      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
+      .field { font: 500 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
+      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
+      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#0b7285"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="470" fill="#ffffff"/>
+  <text x="40" y="32" class="note">Common storage modes for named properties in V8</text>
+
+  <g transform="translate(40 88)">
+    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="252" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="252" height="12" fill="#0b7285"/>
+    <text x="126" y="28" text-anchor="middle" class="title">in-object</text>
+
+    <rect x="18" y="62" width="216" height="40" rx="8" fill="#eef4f7"/>
+    <rect x="18" y="110" width="216" height="40" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
+    <rect x="18" y="158" width="216" height="40" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
+    <rect x="18" y="206" width="216" height="40" rx="8" fill="#f2f4f7"/>
+
+    <text x="36" y="88" class="field">object header</text>
+    <text x="36" y="136" class="field">prop a</text>
+    <text x="36" y="184" class="field">prop b</text>
+    <text x="36" y="232" class="field">unused slots ...</text>
+  </g>
+
+  <g transform="translate(364 88)">
+    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="252" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="252" height="12" fill="#0b7285"/>
+    <text x="126" y="28" text-anchor="middle" class="title">fast properties</text>
+
+    <rect x="18" y="62" width="216" height="40" rx="8" fill="#eef4f7"/>
+    <rect x="18" y="110" width="216" height="40" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <rect x="18" y="158" width="216" height="40" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <rect x="18" y="206" width="216" height="40" rx="8" fill="#f2f4f7"/>
+
+    <text x="36" y="88" class="field">object -&gt; properties store</text>
+    <text x="36" y="136" class="field">slot 0</text>
+    <text x="36" y="184" class="field">slot 1</text>
+    <text x="36" y="232" class="field">more capacity ...</text>
+  </g>
+
+  <g transform="translate(688 88)">
+    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="252" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="252" height="12" fill="#0b7285"/>
+    <text x="126" y="28" text-anchor="middle" class="title">dictionary mode</text>
+
+    <rect x="18" y="62" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="18" y="126" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="18" y="190" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+
+    <text x="36" y="94" class="field">"a" -&gt; value</text>
+    <text x="36" y="158" class="field">"b" -&gt; value</text>
+    <text x="36" y="222" class="field">hash / attrs / metadata</text>
+  </g>
+
+  <line x1="292" y1="220" x2="364" y2="220" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="616" y1="220" x2="688" y2="220" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="248" y="388" width="484" height="42" rx="10" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
+  <text x="490" y="415" text-anchor="middle" class="callout">properties may start in-object, spill to fast backing store, and eventually become dictionary-based</text>
+</svg>

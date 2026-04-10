@@ -1,75 +1,79 @@
 <div class="hero" markdown="1">
+<div class="hero-eyebrow">JavaScript Engine Research Notes</div>
 <div class="hero-title">SXY Research Notes</div>
 <div class="hero-subtitle">
-  面向 JavaScript 引擎学习、调试与漏洞分析的结构化教程与研究笔记
+  记录 V8、JSC、ChakraCore 的对象布局、调试过程、JIT 行为与 CVE Root Cause 分析。
+</div>
+<div class="hero-actions">
+  <a class="hero-action hero-action--primary" href="v8/">从 V8 开始</a>
+  <a class="hero-action" href="v8/V8调试手册/">调试手册</a>
+  <a class="hero-action" href="v8/CVE-2025-12433%E5%88%86%E6%9E%90/">直接看案例</a>
 </div>
 </div>
 
-## 导航入口
+
+## 最近更新
+
+- [V8 调试手册](v8/V8调试手册.md)
+- [CVE-2025-13224 分析](v8/CVE-2025-13224分析.md)
+- [CVE-2025-12433 分析](v8/CVE-2025-12433分析.md)
+- [JavaScriptCore 调试参数](jsc/JavaScriptCore调试参数.md)
+
+## 学习路径
+
+<div class="home-grid" markdown="1">
+
+<div class="home-card" markdown="1">
+### 1. 先看内存表示
+
+- [V8 数组的内存布局](v8/V8 数组的内存布局.md)
+- [V8 堆的内存布局](v8/V8堆的内存布局.md)
+- [V8 指针压缩机制](v8/V8指针压缩机制.md)
+</div>
+
+<div class="home-card" markdown="1">
+### 2. 再看调试与执行
+
+- [V8 调试手册](v8/V8调试手册.md)
+- [JIT 基础](v8/jit.md)
+- [JavaScriptCore Root Cause 分析要点](jsc/JavaScriptCore%20Root%20Cause分析要点.md)
+</div>
+
+<div class="home-card" markdown="1">
+### 3. 最后看漏洞案例
+
+- [CVE-2025-12433 分析](v8/CVE-2025-12433分析.md)
+- [CVE-2025-13224 分析](v8/CVE-2025-13224分析.md)
+- [CVE-2021-30517 分析](v8/CVE-2021-30517分析.md)
+</div>
+
+</div>
+
+## 专题入口
 
 <div class="home-grid" markdown="1">
 
 <div class="home-card" markdown="1">
 ### V8
-- JIT 基础
-- TurboFan
-- 漏洞分析
-- 调试记录
+
+- [总览](v8/index.md)
+- [调试手册](v8/V8调试手册.md)
+- [漏洞分析](v8/CVE-2025-12433分析.md)
 </div>
 
 <div class="home-card" markdown="1">
 ### JSC
-- DFG
-- OSR
-- 字节码与执行流程
-- 调试笔记
+
+- [总览](jsc/index.md)
+- [Root Cause 分析要点](jsc/JavaScriptCore%20Root%20Cause分析要点.md)
+- [调试参数](jsc/JavaScriptCore调试参数.md)
 </div>
 
 <div class="home-card" markdown="1">
 ### ChakraCore
-- 基础执行流程
-- ByteCode / IR
-- 调试参数
-- Root Cause
-</div>
 
-<div class="home-card" markdown="1">
-### VSCode配置
-- clangd 环境配置
-- compile_commands.json
-- 调试环境
-- 常见问题
+- [总览](chakracore/index.md)
+- [CVE-2019-0567 分析](chakracore/CVE-2019-0567.md)
 </div>
 
 </div>
-
-## 站点介绍
-
-这个站点用于系统整理 JavaScript 引擎学习与安全研究相关内容，强调从基础概念、源码阅读、调试实践到漏洞分析的连续学习路径。
-
-当前内容主要围绕四条主线展开：
-
-- **JSC**：理解执行层、优化机制、栈布局与调试方法
-- **V8**：整理 JIT、TurboFan 与漏洞分析相关笔记
-- **ChakraCore**：归纳执行流程、IR、调试参数与 Root Cause 分析
-- **VSCode 配置**：整理 clangd、源码索引与调试环境搭建流程
-
-
-## 当前整理重点
-
-现阶段站点仍在持续补全中，当前优先整理的内容包括：
-
-1. JSC 基础教程与调试路径
-2. VSCode / clangd 配置教程
-3. ChakraCore 基础执行流程与分析框架
-4. V8 相关专题笔记与案例归档
-
-## 后续计划
-
-后续会逐步补充以下内容：
-
-- 各引擎执行层与优化层的专题页面
-- 常用调试参数、dump 输出与脚本整理
-- Root Cause 分析模板与案例
-- CVE / PoC / Patch 对照记录
-- 更适合公开阅读的教程化页面与索引导航

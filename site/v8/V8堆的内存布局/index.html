@@ -12,6 +12,8 @@
         <meta name="author" content="SXY">
       
       
+        <link rel="canonical" href="https://jamezx32.github.io/v8/V8%E5%A0%86%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">
+      
       
         <link rel="prev" href="../V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">
       
@@ -53,7 +55,7 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-09-v15">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -71,7 +73,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-new-space" class="md-skip">
+        <a href="#v8" class="md-skip">
           跳转至
         </a>
       
@@ -126,20 +128,20 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
   
@@ -488,6 +490,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8调试手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="md-nav__link">
         
   
@@ -521,6 +551,8 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
+      
+        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -564,6 +596,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -572,10 +606,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-new-space" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 新生代（New Space）
+        一张图先看懂
       
     </span>
   </a>
@@ -583,10 +617,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-old-space" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 老生代（Old Space）
+        各空间做什么
       
     </span>
   </a>
@@ -594,10 +628,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-large-object-space-los" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 大型对象区（Large Object Space, LOS）
+        对象怎么流动（最常见路径）
       
     </span>
   </a>
@@ -605,10 +639,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-code-space" class="md-nav__link">
+  <a href="#pointer-compression" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 代码空间（Code Space）
+        Pointer Compression 不是堆空间
       
     </span>
   </a>
@@ -616,43 +650,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-read-only-space" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 只读空间（Read-Only Space）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-pointer-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. 指针压缩（Pointer Compression）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. 对象生命周期与代际关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 一个更实用的理解方式
+        参考
       
     </span>
   </a>
@@ -683,6 +684,90 @@
     
   
     V8 指针压缩机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2021-30517%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2021-30517分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-13224%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-13224分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-12433%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-12433分析
   
 
     
@@ -772,6 +857,90 @@
     
   
     总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20NAN-Boxing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAN-Boxing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    调试参数
   
 
     
@@ -1015,6 +1184,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1023,10 +1194,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-new-space" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 新生代（New Space）
+        一张图先看懂
       
     </span>
   </a>
@@ -1034,10 +1205,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-old-space" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 老生代（Old Space）
+        各空间做什么
       
     </span>
   </a>
@@ -1045,10 +1216,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-large-object-space-los" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 大型对象区（Large Object Space, LOS）
+        对象怎么流动（最常见路径）
       
     </span>
   </a>
@@ -1056,10 +1227,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-code-space" class="md-nav__link">
+  <a href="#pointer-compression" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 代码空间（Code Space）
+        Pointer Compression 不是堆空间
       
     </span>
   </a>
@@ -1067,43 +1238,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-read-only-space" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 只读空间（Read-Only Space）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-pointer-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. 指针压缩（Pointer Compression）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. 对象生命周期与代际关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 一个更实用的理解方式
+        参考
       
     </span>
   </a>
@@ -1127,116 +1265,86 @@
 
 
 
-  <h1>V8 堆的内存布局</h1>
-
-<p>V8 使用堆内存来管理 JavaScript 运行时动态分配的对象、数组、函数对象以及其他复杂数据结构。为了兼顾分配效率、垃圾回收开销和执行性能，V8 会把堆划分为多个具有不同职责的空间。理解这些空间的用途，有助于分析对象分配、GC 行为以及一些与引擎内部实现相关的问题。</p>
+<h1 id="v8">V8 堆的内存布局<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h1>
+<p>这篇只保留调试和漏洞分析最常用的结论，重点是把“空间职责”和“对象流转路径”看清楚。</p>
 <hr />
-<h3 id="1-new-space">1. 新生代（New Space）<a class="headerlink" href="#1-new-space" title="Permanent link">&para;</a></h3>
-<p>新生代主要用于存放<strong>生命周期较短的对象</strong>。绝大多数新创建的普通对象，都会优先分配到这里，因此这里也是垃圾回收最频繁的区域。</p>
-<p>新生代通常分为两个半区：</p>
-<ul>
-<li><strong>From Space</strong>：当前正在使用的区域。</li>
-<li><strong>To Space</strong>：垃圾回收时用于接收存活对象的备用区域。</li>
-</ul>
-<p>当发生 Minor GC 时，V8 会把仍然存活的对象从 <code>From Space</code> 复制到 <code>To Space</code>，然后交换两个空间的角色。由于大部分新对象往往“创建后很快死亡”，这种<strong>复制式回收</strong>在新生代中通常非常高效。</p>
-<p>可以把它理解为：</p>
-<ul>
-<li>新对象先进入新生代；</li>
-<li>很快死亡的对象会在下一次回收中被直接丢弃；</li>
-<li>经过多次回收仍然存活的对象，才会被提升到老生代。</li>
-</ul>
-<hr />
-<h3 id="2-old-space">2. 老生代（Old Space）<a class="headerlink" href="#2-old-space" title="Permanent link">&para;</a></h3>
-<p>老生代用于存放<strong>生命周期较长的对象</strong>。如果一个对象在新生代中经历多次垃圾回收后仍然存活，V8 往往会把它晋升到老生代。</p>
-<p>这类对象通常包括：</p>
-<ul>
-<li>长时间存活的业务对象；</li>
-<li>全局对象引用的数据；</li>
-<li>缓存结构；</li>
-<li>被闭包长期捕获的对象。</li>
-</ul>
-<p>由于老生代中的对象不再像新生代那样“快速死亡”，其垃圾回收策略通常采用：</p>
-<ul>
-<li><strong>标记-清除（Mark-Sweep）</strong></li>
-<li><strong>标记-整理（Mark-Compact）</strong></li>
-</ul>
-<p>这类回收方式相比新生代复制回收更重，但适合处理存活时间更长、分布更稳定的对象。</p>
-<hr />
-<h3 id="3-large-object-space-los">3. 大型对象区（Large Object Space, LOS）<a class="headerlink" href="#3-large-object-space-los" title="Permanent link">&para;</a></h3>
-<p>大型对象区用于存放<strong>体积较大的对象</strong>。这类对象如果仍然采用普通复制式回收，开销会很高，因此通常会直接分配到专门的大对象空间中。</p>
-<p>这一空间的特点是：</p>
-<ul>
-<li>适合存放尺寸较大的对象；</li>
-<li>一般不会像新生代那样频繁搬移；</li>
-<li>垃圾回收通常依赖标记类算法，而不是常规复制回收。</li>
-</ul>
-<p>很多资料会用“大于某个阈值”来描述什么对象会进入 LOS，但这个阈值并不适合在笔记里写死，因为它可能随 V8 版本、对象类型和实现细节而变化。更稳妥的理解方式是：<strong>当对象大到不适合频繁复制时，V8 往往会把它放进 Large Object Space。</strong></p>
-<hr />
-<h3 id="4-code-space">4. 代码空间（Code Space）<a class="headerlink" href="#4-code-space" title="Permanent link">&para;</a></h3>
-<p>代码空间主要用于存放 V8 生成的机器码，例如：</p>
-<ul>
-<li>Baseline / JIT 编译后的代码；</li>
-<li>内建函数（builtins）的机器码；</li>
-<li>与执行优化相关的代码对象。</li>
-</ul>
-<p>这部分空间和普通对象空间不同，因为其中存放的不是一般的 JavaScript 对象数据，而是<strong>可执行代码及相关元数据</strong>。</p>
-<p>在分析 JIT、内联缓存、优化代码失效或代码对象布局时，Code Space 是一个非常重要的概念。</p>
-<hr />
-<h3 id="5-read-only-space">5. 只读空间（Read-Only Space）<a class="headerlink" href="#5-read-only-space" title="Permanent link">&para;</a></h3>
-<p>V8 还包含一些只读或特殊用途的空间，例如 <strong>Read-Only Space</strong>。这类空间通常用来存放：</p>
-<ul>
-<li>不应在运行时被修改的对象；</li>
-<li>常量数据；</li>
-<li>某些共享的只读结构。</li>
-</ul>
-<p>把这部分数据放到只读空间中，有助于：</p>
-<ul>
-<li>减少重复分配；</li>
-<li>提高共享效率；</li>
-<li>降低被意外修改的风险。</li>
-</ul>
-<hr />
-<h3 id="6-pointer-compression">6. 指针压缩（Pointer Compression）<a class="headerlink" href="#6-pointer-compression" title="Permanent link">&para;</a></h3>
-<p>在 64 位平台上，V8 常使用<strong>指针压缩（Pointer Compression）</strong>来降低内存占用。</p>
-<p>它的核心思路不是“改变对象属于哪个空间”，而是：</p>
-<ul>
-<li>在特定堆布局前提下，</li>
-<li>用更紧凑的方式表示堆内引用，</li>
-<li>从而减少对象字段和指针存储带来的开销。</li>
-</ul>
-<p>因此，指针压缩更适合被理解为一种<strong>对象表示和地址编码优化机制</strong>，而不是独立的堆空间。</p>
-<hr />
-<h3 id="7">7. 对象生命周期与代际关系<a class="headerlink" href="#7" title="Permanent link">&para;</a></h3>
-<p>从对象生命周期的角度，可以把 V8 堆的大致行为理解为：</p>
-<ul>
-<li><strong>生命周期较短的对象</strong>通常先分配在<strong>新生代</strong>；</li>
-<li><strong>经过多次 GC 仍然存活的对象</strong>会逐步晋升到<strong>老生代</strong>；</li>
-<li><strong>体积特别大的对象</strong>可能直接进入<strong>大型对象区</strong>；</li>
-<li><strong>JIT 生成的机器码</strong>则位于<strong>代码空间</strong>。</li>
-</ul>
-<p>这也是 V8 采用分代垃圾回收设计的核心原因：</p>
+<h2 id="_1">一张图先看懂<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>大多数对象死得很快，少数对象会活得很久。</p>
+<p>这是面向调试/分析的常用视角，不是源码里的完整枚举（不同版本会有更多细分空间）。</p>
 </blockquote>
-<p>围绕这一经验规律，把不同生命周期、不同用途的对象放到不同空间中，能够显著提升整体内存管理效率。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>V8 Heap (常用视角)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ New Space（年轻代）
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  ├─ From-Space
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  └─ To-Space
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├─ Old Space（老年代）
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├─ Large Object Spaces（大对象）
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  ├─ Old Large Object Space
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └─ Code Large Object Space
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├─ Code Space（代码对象）
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>└─ Read-Only Space（只读共享对象）
+</code></pre></div>
 <hr />
-<h3 id="8">8. 一个更实用的理解方式<a class="headerlink" href="#8" title="Permanent link">&para;</a></h3>
-<p>如果只是为了建立整体印象，可以把 V8 的堆布局先粗略理解成下面这张图：</p>
+<h2 id="_2">各空间做什么<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>空间</th>
+<th>主要放什么</th>
+<th>调试时最关心什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New Space</td>
+<td>新创建、短生命周期对象</td>
+<td>Minor GC 频繁、对象会复制和搬移</td>
+</tr>
+<tr>
+<td>Old Space</td>
+<td>存活时间长的普通对象</td>
+<td>进入老年代后回收策略和地址稳定性变化</td>
+</tr>
+<tr>
+<td>Large Object Spaces</td>
+<td>体积大的对象/代码对象</td>
+<td>大对象通常不走半空间复制路径</td>
+</tr>
+<tr>
+<td>Code Space</td>
+<td>JIT 代码与代码元数据</td>
+<td>与普通 JS 对象分配路径不同</td>
+</tr>
+<tr>
+<td>Read-Only Space</td>
+<td>共享且不可变的内部对象</td>
+<td>语义上是稳定区，不按普通可变对象处理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">对象怎么流动（最常见路径）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>new object
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  -&gt; New Space
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      -&gt; 死亡：Minor GC 回收
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      -&gt; 存活：晋升到 Old Space
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>large object
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  -&gt; 直接进入 Large Object Spaces
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>code object
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  -&gt; Code Space / Code Large Object Space
+</code></pre></div>
+<p>这也是为什么做 root cause 时，先分清对象属于哪个空间会很关键：它直接影响对象是否容易搬移、何时被回收、以及地址观察是否稳定。</p>
+<hr />
+<h2 id="pointer-compression">Pointer Compression 不是堆空间<a class="headerlink" href="#pointer-compression" title="Permanent link">&para;</a></h2>
+<p><code>Pointer Compression</code> 解决的是 <strong>值表示</strong>（tagged pointer/smi）的内存开销问题，不是“再新增一个 heap space”。<br />
+它影响字段里值怎么编码，不改变对象归属到哪个空间。</p>
+<p>可配合阅读：<a href="../V8%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6/">V8 指针压缩机制</a></p>
+<hr />
+<h2 id="_4">参考<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>New Space</strong>：新创建、短命对象的主要活动区域；</li>
-<li><strong>Old Space</strong>：长期存活对象所在区域；</li>
-<li><strong>Large Object Space</strong>：不适合频繁复制的大对象；</li>
-<li><strong>Code Space</strong>：JIT 与内建代码对象；</li>
-<li><strong>Read-Only Space</strong>：只读共享数据；</li>
-<li><strong>Pointer Compression</strong>：对象表示层面的内存优化机制。</li>
-</ul>
-<p>这套划分并不是为了记概念而记概念，而是因为它直接影响：</p>
-<ul>
-<li>对象最初会分配到哪里；</li>
-<li>垃圾回收如何发生；</li>
-<li>对象会不会被搬移；</li>
-<li>某些内部指针和对象地址该如何理解；</li>
-<li>调试和漏洞分析时，不同对象为什么会出现在不同区域。</li>
+<li><a href="https://v8.dev/blog/trash-talk">Trash talk: the Orinoco garbage collector</a></li>
+<li><a href="https://v8.dev/blog/pointer-compression">Pointer Compression in V8</a></li>
 </ul>
 
 
@@ -1295,12 +1403,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/extra.js"></script>
+        <script src="../../javascripts/extra.js?v=2026-04-09-v15"></script>
       
     
   </body>

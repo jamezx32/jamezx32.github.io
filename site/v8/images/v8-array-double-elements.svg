@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+  <defs>
+    <style>
+      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
+      .field { font: 500 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
+      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
+      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#0b7285"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="430" fill="#ffffff"/>
+  <text x="40" y="30" class="note">A simplified view of a JSArray with packed double elements</text>
+
+  <g transform="translate(40 78)">
+    <rect width="320" height="248" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="320" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="320" height="12" fill="#0b7285"/>
+    <text x="160" y="28" text-anchor="middle" class="title">JSArray</text>
+
+    <rect x="18" y="62" width="284" height="38" rx="8" fill="#eef4f7"/>
+    <rect x="18" y="108" width="284" height="38" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <rect x="18" y="154" width="284" height="38" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+    <rect x="18" y="200" width="284" height="30" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
+
+    <text x="36" y="86" class="field">map</text>
+    <text x="36" y="132" class="field">properties</text>
+    <text x="36" y="178" class="field">elements pointer</text>
+    <text x="36" y="221" class="field">length</text>
+  </g>
+
+  <g transform="translate(494 62)">
+    <rect width="350" height="278" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="350" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="350" height="12" fill="#0b7285"/>
+    <text x="175" y="28" text-anchor="middle" class="title">FixedDoubleArray</text>
+
+    <rect x="18" y="62" width="314" height="38" rx="8" fill="#eef4f7"/>
+    <rect x="18" y="108" width="314" height="42" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+    <rect x="18" y="158" width="314" height="42" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+    <rect x="18" y="208" width="314" height="42" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+
+    <text x="36" y="86" class="field">map / header</text>
+    <text x="36" y="134" class="field">element[0]   1.1</text>
+    <text x="36" y="184" class="field">element[1]   2.2</text>
+    <text x="36" y="234" class="field">element[2]   3.3 ...</text>
+  </g>
+
+  <g transform="translate(696 350)">
+    <rect width="214" height="44" rx="10" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
+    <text x="107" y="377" text-anchor="middle" class="callout">raw doubles, not object refs</text>
+  </g>
+
+  <g transform="translate(390 116)">
+    <rect width="72" height="82" rx="10" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
+    <text x="36" y="148" text-anchor="middle" class="callout">elements</text>
+    <text x="36" y="168" text-anchor="middle" class="mini">backing store</text>
+  </g>
+
+  <line x1="360" y1="172" x2="494" y2="172" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(52 346)">
+    <rect width="352" height="46" rx="10" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <text x="176" y="374" text-anchor="middle" class="callout">named property like arr.a goes through properties, not elements</text>
+  </g>
+</svg>

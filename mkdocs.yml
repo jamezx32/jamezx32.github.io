@@ -9,18 +9,18 @@ theme:
   logo: assets/logo.png
   favicon: assets/logo.png
   palette:
-    - scheme: slate
-      primary: black
-      accent: indigo
-      toggle:
-        icon: material/weather-sunny
-        name: 切换到浅色模式
     - scheme: default
       primary: indigo
       accent: deep purple
       toggle:
         icon: material/weather-night
         name: 切换到深色模式
+    - scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
   font:
     text: Roboto
     code: Roboto Mono
@@ -30,8 +30,6 @@ theme:
     - navigation.expand
     - navigation.top
     - navigation.instant
-    - navigation.tracking
-    - toc.follow
     - search.suggest
     - search.highlight
     - content.code.copy
@@ -56,18 +54,25 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css
+  - stylesheets/extra.css?v=2026-04-09-v15
 
 nav:
   - 首页: index.md
   - V8:
       - 总览: v8/index.md
       - JIT基础: v8/jit.md
+      - V8调试手册: v8/V8调试手册.md
       - V8 数组的内存布局: v8/V8 数组的内存布局.md
       - V8 堆的内存布局: v8/V8堆的内存布局.md
       - V8 指针压缩机制: v8/V8指针压缩机制.md
+      - CVE-2021-30517分析: v8/CVE-2021-30517分析.md
+      - CVE-2025-13224分析: v8/CVE-2025-13224分析.md
+      - CVE-2025-12433分析: v8/CVE-2025-12433分析.md
   - JSC:
       - 总览: jsc/index.md
+      - Root Cause分析要点: jsc/JavaScriptCore Root Cause分析要点.md
+      - NAN-Boxing: jsc/JavaScriptCore NAN-Boxing.md
+      - 调试参数: jsc/JavaScriptCore调试参数.md
   - ChakraCore:
       - 总览: chakracore/index.md
       - CVE-2019-0567分析: chakracore/CVE-2019-0567.md
@@ -82,4 +87,4 @@ extra:
   generator: false
 
 extra_javascript:
-  - javascripts/extra.js
+  - javascripts/extra.js?v=2026-04-09-v15
