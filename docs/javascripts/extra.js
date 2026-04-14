@@ -1388,6 +1388,96 @@
   })();
 
   const copyButtonModule = (function () {
+    function ensureCopyNav(highlight, pre) {
+      const host = isHTMLElement(highlight) ? highlight : pre;
+      if (!isHTMLElement(host)) return null;
+
+      let nav = host.querySelector(":scope > .md-code__nav");
+      if (!nav) {
+        nav = document.createElement("div");
+        nav.className = "md-code__nav";
+        host.insertBefore(nav, host.firstChild);
+      }
+
+      return nav;
+    }
+
+    function ensureCopyButton(highlight, pre) {
+      const nav = ensureCopyNav(highlight, pre);
+      if (!isHTMLElement(nav)) return null;
+
+      let button = nav.querySelector(":scope > .md-clipboard, :scope > .md-code__button");
+      if (!button) {
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "md-clipboard";
+        nav.appendChild(button);
+      }
+
+      return button;
+    }
+
+    function findCopySource(button) {
+      if (!isHTMLElement(button)) return null;
+
+      const highlight = button.closest(".highlight");
+      const scopedCode = highlight
+        ? highlight.querySelector(":scope > pre > code, :scope > code")
+        : null;
+      if (scopedCode) return scopedCode;
+
+      const pre = button.closest("pre");
+      return pre ? pre.querySelector(":scope > code") : null;
+    }
+
+    function readCopyText(button) {
+      const source = findCopySource(button);
+      if (!source) return "";
+
+      return source.textContent.replace(/\u00a0/g, " ").replace(/\s+$/, "");
+    }
+
+    function fallbackCopyText(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.top = "0";
+      textarea.style.left = "0";
+      textarea.style.width = "1px";
+      textarea.style.height = "1px";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+
+      textarea.remove();
+      return copied;
+    }
+
+    async function copyButtonText(button) {
+      const text = readCopyText(button);
+      if (!text) return false;
+
+      try {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {
+        // Fall back to execCommand below.
+      }
+
+      return fallbackCopyText(text);
+    }
+
     function isCopyToast(node) {
       const text = getTextContent(node);
       return (
@@ -1449,16 +1539,32 @@
 
       button.addEventListener(
         "click",
-        function () {
-          window.setTimeout(function () {
-            markCopied(button);
-          }, 0);
+        async function () {
+          const copied = await copyButtonText(button);
+          if (!copied) return;
+
+          markCopied(button);
         },
         true
       );
     }
 
+    function ensureButtons(root) {
+      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
+        if (!isHTMLElement(highlight)) return;
+
+        const pre = highlight.querySelector(":scope > pre");
+        if (!isHTMLElement(pre)) return;
+
+        const button = ensureCopyButton(highlight, pre);
+        if (button) {
+          bindCopyButton(button);
+        }
+      });
+    }
+
     function bindAll(root) {
+      ensureButtons(root);
       queryAll(resolveRoot(root), SELECTORS.copyButtons).forEach(bindCopyButton);
     }
 
@@ -1480,16 +1586,11 @@
       if (!isElement(target)) return;
 
       const button = target.closest(SELECTORS.copyButtons);
-      if (button) {
-        bindCopyButton(button);
-        window.setTimeout(function () {
-          markCopied(button);
-          removeNativeCopyToasts(document);
-        }, 0);
-      }
-
       [0, 40, 120, 260].forEach(function (delay) {
         window.setTimeout(function () {
+          if (button) {
+            bindCopyButton(button);
+          }
           removeNativeCopyToasts(document);
         }, delay);
       });

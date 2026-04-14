@@ -55,7 +55,7 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-09-v15">
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-14-v16">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -1843,7 +1843,7 @@
 <h3 id="3">3) 代理开关（可选）<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <p>网络较慢可在 <code>~/.bashrc</code> 添加：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>proxy_on<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:8005
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:xxx
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">https_proxy</span><span class="o">=</span><span class="nv">$http_proxy</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>https.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
@@ -1876,10 +1876,9 @@
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s1">v8_enable_disassembler=true</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s1">v8_enable_object_print=true</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="s1">v8_enable_verify_heap=true</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="s1">v8_enable_debugging_features=true</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="s1">treat_warnings_as_errors=false</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="s1">&#39;</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>ninja<span class="w"> </span>-C<span class="w"> </span>out.gn/x64.release_with_symbol<span class="w"> </span>d8
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="s1">treat_warnings_as_errors=false</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="s1">&#39;</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>ninja<span class="w"> </span>-C<span class="w"> </span>out.gn/x64.release_with_symbol<span class="w"> </span>d8
 </code></pre></div>
 <p>验证版本：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./out.gn/x64.release_with_symbol/d8<span class="w"> </span>--version
@@ -2112,7 +2111,7 @@
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/extra.js?v=2026-04-09-v15"></script>
+        <script src="../../javascripts/extra.js?v=2026-04-14-v16"></script>
       
     
   </body>
