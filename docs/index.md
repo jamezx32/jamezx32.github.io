@@ -14,6 +14,7 @@
 
 ## 最近更新
 
+- [ChakraCore 构建与调试](chakracore/ChakraCore构建与调试.md)
 - [V8 调试手册](v8/V8调试手册.md)
 - [CVE-2025-13224 分析](v8/CVE-2025-13224分析.md)
 - [CVE-2025-12433 分析](v8/CVE-2025-12433分析.md)
@@ -73,6 +74,7 @@
 ### ChakraCore
 
 - [总览](chakracore/index.md)
+- [构建与调试](chakracore/ChakraCore构建与调试.md)
 - [CVE-2019-0567 分析](chakracore/CVE-2019-0567.md)
 </div>
 

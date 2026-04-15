@@ -4,11 +4,18 @@
 
 ## 快速开始
 
+- [ChakraCore 构建与调试](ChakraCore构建与调试.md)
 - [CVE-2019-0567 分析](CVE-2019-0567.md)
 
 ## 当前内容
 
 <div class="home-grid" markdown="1">
+
+<div class="home-card" markdown="1">
+### 构建与调试
+
+- [ChakraCore 构建与调试](ChakraCore构建与调试.md)
+</div>
 
 <div class="home-card" markdown="1">
 ### 漏洞分析
@@ -19,7 +26,7 @@
 <div class="home-card" markdown="1">
 ### 阅读方式
 
-先看案例触发条件和 Root Cause，再回头补执行流程与对象模型。
+先看构建和通用调试方法，再进入具体漏洞分析。
 </div>
 
 </div>

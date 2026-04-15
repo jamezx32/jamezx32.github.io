@@ -75,6 +75,7 @@ nav:
       - 调试参数: jsc/JavaScriptCore调试参数.md
   - ChakraCore:
       - 总览: chakracore/index.md
+      - ChakraCore 构建与调试: chakracore/ChakraCore构建与调试.md
       - CVE-2019-0567分析: chakracore/CVE-2019-0567.md
   - VSCode配置:
       - clangd配置: vscode/clangd-setup.md
