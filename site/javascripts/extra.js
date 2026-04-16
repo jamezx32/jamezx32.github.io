@@ -7,10 +7,11 @@
   const SAFARI_SIDEBAR_LAYOUT_VERSION = "2026-04-09-v5";
   const EARLY_USER_AGENT = navigator.userAgent || "";
   const EARLY_VENDOR = navigator.vendor || "";
+  const NON_SAFARI_UA_RE = /Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|DuckDuckGo|Electron|Atlas|Android/i;
   const IS_EARLY_SAFARI =
     /Safari/i.test(EARLY_USER_AGENT) &&
     /Apple/i.test(EARLY_VENDOR) &&
-    !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|DuckDuckGo|Electron|Atlas|Android/i.test(EARLY_USER_AGENT);
+    !NON_SAFARI_UA_RE.test(EARLY_USER_AGENT);
 
   function migrateEarlySafariSidebarState() {
     try {
@@ -70,16 +71,14 @@
     tocToggle: ".site-toc-toggle",
     paletteForm: '.md-header__option[data-md-component="palette"]',
     copyButtons:
-      ".md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button",
+      ":is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button)",
     copyToast:
       ".md-dialog, .md-snackbar, .md-snackbar--active, .md-toast, .md-toast--active, .md-tooltip, .md-tooltip--active, .md-status, .md-status--active, [class*='snackbar'], [class*='toast'], [class*='tooltip'], [class*='announce'], [data-md-component='dialog'], [data-md-component='snackbar'], [data-md-component='toast'], [data-md-component='announce'], [role='status'], [role='alert'], [aria-live='polite'], [aria-live='assertive']",
     codeBlocks: ".md-typeset .highlight",
   };
-
   const APP = {
     timers: {
       footer: null,
-      toastCleanup: null,
     },
     observers: {
       footer: null,
@@ -89,7 +88,6 @@
     copyResetTimers: new WeakMap(),
   };
 
-  const TOP_BUTTON_TEXT = "回到顶部⬆️";
   const TOP_BUTTON_LABEL = "回到顶部";
 
   const LANGUAGE_ALIASES = {
@@ -226,17 +224,13 @@
     return (
       /Safari/i.test(ua) &&
       /Apple/i.test(vendor) &&
-      !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|DuckDuckGo|Electron|Atlas|Android/i.test(ua)
+      !NON_SAFARI_UA_RE.test(ua)
     );
   }
 
   function isAtlasBrowser() {
     const ua = navigator.userAgent || "";
     return /Atlas/i.test(ua);
-  }
-
-  function isSafariLikeBrowser() {
-    return isSafariBrowser() || isAtlasBrowser();
   }
 
   function subscribePageChanges(callback) {
@@ -251,6 +245,35 @@
       callback(document);
     });
   }
+
+  const pageTypeModule = (function () {
+    const PAGE_CLASSES = ["page-home", "page-overview", "page-article"];
+    const OVERVIEW_PATHS = ["/v8", "/jsc", "/chakracore"];
+
+    function getPageType() {
+      const pathname = normalizeHref(window.location.pathname);
+
+      if (!pathname || pathname === "/") {
+        return "home";
+      }
+
+      if (OVERVIEW_PATHS.indexOf(pathname) !== -1) {
+        return "overview";
+      }
+
+      return "article";
+    }
+
+    return {
+      init: function () {
+        const root = document.documentElement;
+        if (!root) return;
+
+        root.classList.remove.apply(root.classList, PAGE_CLASSES);
+        root.classList.add("page-" + getPageType());
+      },
+    };
+  })();
 
   const footerModule = (function () {
     function syncFooterMetrics() {
@@ -338,20 +361,18 @@
 
         if (!footer) return;
 
-        const existing = document.querySelector(SELECTORS.footerTime);
-        if (existing) {
-          existing.remove();
+        let timeBlock = document.querySelector(SELECTORS.footerTime);
+        if (!timeBlock) {
+          timeBlock = document.createElement("div");
+          timeBlock.className = "custom-footer-time";
+          footer.appendChild(timeBlock);
         }
-
-        const timeBlock = document.createElement("div");
-        timeBlock.className = "custom-footer-time";
 
         function update() {
           timeBlock.textContent = formatChinaTime();
         }
 
         update();
-        footer.appendChild(timeBlock);
         syncFooterMetrics();
         APP.timers.footer = window.setInterval(update, 1000);
       },
@@ -613,7 +634,7 @@
       return normalizeHash(left) === normalizeHash(right);
     }
 
-    function clearMaterialTocState(entries) {
+    function clearMaterialTocState() {
       const tocRoot = document.querySelector(SELECTORS.tocRoot);
       if (!tocRoot) return;
 
@@ -623,7 +644,7 @@
       });
     }
 
-    function clearInteractiveState(entries) {
+    function clearInteractiveState() {
       const tocRoot = document.querySelector(SELECTORS.tocRoot);
       if (!tocRoot) return;
 
@@ -741,8 +762,8 @@
         return [];
       }
 
-      clearMaterialTocState(activeEntries);
-      clearInteractiveState(activeEntries);
+      clearMaterialTocState();
+      clearInteractiveState();
       return activeEntries;
     }
 
@@ -1155,6 +1176,17 @@
     let lastScrollTop = Math.max(window.scrollY || 0, 0);
     let subscribed = false;
 
+    function handleClick(event) {
+      if (event) {
+        event.preventDefault();
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
     function getButton(root) {
       const scope = resolveRoot(root);
       if (isElement(scope)) {
@@ -1170,6 +1202,14 @@
 
       button.classList.toggle("site-top-visible", visible);
       button.setAttribute("aria-hidden", visible ? "false" : "true");
+
+      if (visible) {
+        button.hidden = false;
+        button.removeAttribute("hidden");
+        button.removeAttribute("tabindex");
+      } else {
+        button.setAttribute("tabindex", "-1");
+      }
     }
 
     function prepareButton(button) {
@@ -1177,43 +1217,26 @@
 
       button.hidden = false;
       button.removeAttribute("hidden");
-      button.setAttribute("aria-hidden", "false");
       button.setAttribute("aria-label", TOP_BUTTON_LABEL);
       button.setAttribute("title", TOP_BUTTON_LABEL);
-      button.style.removeProperty("top");
-      button.style.removeProperty("right");
-      button.style.removeProperty("bottom");
-      button.style.removeProperty("left");
+      const textNode = Array.from(button.childNodes).find(function (node) {
+        return node && node.nodeType === Node.TEXT_NODE && node.textContent.trim();
+      });
+      if (textNode) {
+        textNode.textContent = " " + TOP_BUTTON_LABEL;
+      }
       button.style.removeProperty("margin-left");
       button.style.removeProperty("margin-right");
       button.style.removeProperty("transform");
-      button.textContent = TOP_BUTTON_TEXT;
-      setVisible(button, false);
-    }
-
-    function bindClick(button) {
-      if (!isHTMLElement(button) || button.dataset.siteTopBound === "true") {
-        return;
+      if (button.dataset.siteTopClickBound !== "true") {
+        button.addEventListener("click", handleClick);
+        button.dataset.siteTopClickBound = "true";
       }
-
-      button.addEventListener("click", function (event) {
-        event.preventDefault();
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      });
-
-      button.dataset.siteTopBound = "true";
+      setVisible(button, false);
     }
 
     function syncVisibility(scrollTop, forceHidden) {
       if (!isHTMLElement(activeButton)) return;
-
-      if (activeButton.hidden) {
-        activeButton.hidden = false;
-        activeButton.removeAttribute("hidden");
-      }
 
       const currentScrollTop =
         typeof scrollTop === "number" ? scrollTop : scrollCoordinatorModule.getScrollTop();
@@ -1258,8 +1281,8 @@
         if (!activeButton) return;
 
         prepareButton(activeButton);
-        bindClick(activeButton);
         bindEvents();
+
         if (!subscribed) {
           scrollCoordinatorModule.subscribe(function (scrollTop) {
             syncVisibility(scrollTop, false);
@@ -1581,21 +1604,6 @@
       });
     }
 
-    function handleClick(event) {
-      const target = event.target;
-      if (!isElement(target)) return;
-
-      const button = target.closest(SELECTORS.copyButtons);
-      [0, 40, 120, 260].forEach(function (delay) {
-        window.setTimeout(function () {
-          if (button) {
-            bindCopyButton(button);
-          }
-          removeNativeCopyToasts(document);
-        }, delay);
-      });
-    }
-
     return {
       init: function (root) {
         bindAll(root);
@@ -1607,17 +1615,6 @@
             childList: true,
             subtree: true,
           });
-        }
-
-        if (!APP.timers.toastCleanup) {
-          APP.timers.toastCleanup = window.setInterval(function () {
-            removeNativeCopyToasts(document);
-          }, 180);
-        }
-
-        if (!document.documentElement.dataset.copyEnhancerClickBound) {
-          document.addEventListener("click", handleClick, true);
-          document.documentElement.dataset.copyEnhancerClickBound = "true";
         }
       },
     };
@@ -1829,6 +1826,7 @@
 
   const modules = [
     browserClassModule,
+    pageTypeModule,
     footerModule,
     headerTitleModule,
     tocModule,

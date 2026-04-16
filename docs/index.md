@@ -1,81 +1,96 @@
-<div class="hero" markdown="1">
-<div class="hero-eyebrow">JavaScript Engine Research Notes</div>
-<div class="hero-title">SXY Research Notes</div>
-<div class="hero-subtitle">
-  记录 V8、JSC、ChakraCore 的对象布局、调试过程、JIT 行为与 CVE Root Cause 分析。
-</div>
-<div class="hero-actions">
-  <a class="hero-action hero-action--primary" href="v8/">从 V8 开始</a>
-  <a class="hero-action" href="v8/V8调试手册/">调试手册</a>
-  <a class="hero-action" href="v8/CVE-2025-12433%E5%88%86%E6%9E%90/">直接看案例</a>
-</div>
-</div>
+<div class="index-flow index-flow--home">
+  <section class="home-hero">
+    <div class="home-hero__main">
+      <div class="home-hero__eyebrow">JavaScript Engine Research Notes</div>
+       <h3 ></h3>
+      <h1 class="home-hero__title">SXY JavaScript 引擎研究笔记</h1>
+       <h3 ></h3>
+      <p class="home-hero__summary">
+        记录 V8、JavaScriptCore 和 ChakraCore 的对象布局、调试链路、
+        JIT 行为与 CVE Root Cause 分析。
+        <h3 ></h3>
+      </p>
+      <div class="home-hero__actions">
+        <a class="home-hero__action home-hero__action--primary" href="v8/">从 V8 总览开始</a>
+        <a class="home-hero__action" href="jsc/">查看 JSC 总览</a>
+      </div>
+    </div>
+    <aside class="home-hero__aside">
+      <div class="home-panel home-panel--start">
+        <div class="home-panel__eyebrow">从哪里开始</div>
+        <ol class="home-start-list">
+          <li class="home-start-list__item">
+            <span class="home-start-list__step">01</span>
+            <div>
+              <a href="v8/">先看 V8 总览</a>
+              <p>先建立对象模型、堆布局和主要入口的整体认识。</p>
+            </div>
+          </li>
+          <li class="home-start-list__item">
+            <span class="home-start-list__step">02</span>
+            <div>
+              <a href="v8/V8调试手册/">继续阅读调试手册</a>
+              <p>将结构理解连接到实际调试流程中。</p>
+            </div>
+          </li>
+          <li class="home-start-list__item">
+            <span class="home-start-list__step">03</span>
+            <div>
+              <a href="v8/CVE-2025-12433分析/">最后阅读漏洞案例</a>
+              <p>再阅读真实案例，对照 exploit 与补丁分析。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </aside>
+  </section>
 
+  <section class="home-engines">
+    <div class="home-section-heading">
+      <div class="home-section-heading__eyebrow">主要方向</div>
+    </div>
+    <div class="home-engine-grid">
+      <article class="home-engine-card home-engine-card--featured">
+        <div class="home-engine-card__eyebrow">Engine</div>
+        <h3 class="home-engine-card__title">V8</h3>
+        <p class="home-engine-card__summary">当前内容最完整，适合先建立对象模型与调试链路，再进入漏洞案例。</p>
+        <ul class="home-engine-card__links">
+          <li><a href="v8/">V8 总览</a></li>
+          <li><a href="v8/V8调试手册/">V8 调试手册</a></li>
+          <li><a href="v8/CVE-2025-12433分析/">CVE-2025-12433 分析</a></li>
+        </ul>
+      </article>
+      <article class="home-engine-card">
+        <div class="home-engine-card__eyebrow">Engine</div>
+        <h3 class="home-engine-card__title">JSC</h3>
+        <p class="home-engine-card__summary">适合补充值表示与 Root Cause 视角，也便于与 V8 对照阅读。</p>
+        <ul class="home-engine-card__links">
+          <li><a href="jsc/">JSC 总览</a></li>
+          <li><a href="jsc/JavaScriptCore Root Cause分析要点/">Root Cause 分析要点</a></li>
+        </ul>
+      </article>
+      <article class="home-engine-card">
+        <div class="home-engine-card__eyebrow">Engine</div>
+        <h3 class="home-engine-card__title">ChakraCore</h3>
+        <p class="home-engine-card__summary">内容较少，但保留了构建流程与历史案例，适合做横向对照。</p>
+        <ul class="home-engine-card__links">
+          <li><a href="chakracore/">ChakraCore 总览</a></li>
+          <li><a href="chakracore/ChakraCore构建与调试/">ChakraCore 构建与调试</a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
 
-## 最近更新
-
-- [ChakraCore 构建与调试](chakracore/ChakraCore构建与调试.md)
-- [V8 调试手册](v8/V8调试手册.md)
-- [CVE-2025-13224 分析](v8/CVE-2025-13224分析.md)
-- [CVE-2025-12433 分析](v8/CVE-2025-12433分析.md)
-- [JavaScriptCore 调试参数](jsc/JavaScriptCore调试参数.md)
-
-## 学习路径
-
-<div class="home-grid" markdown="1">
-
-<div class="home-card" markdown="1">
-### 1. 先看内存表示
-
-- [V8 数组的内存布局](v8/V8 数组的内存布局.md)
-- [V8 堆的内存布局](v8/V8堆的内存布局.md)
-- [V8 指针压缩机制](v8/V8指针压缩机制.md)
-</div>
-
-<div class="home-card" markdown="1">
-### 2. 再看调试与执行
-
-- [V8 调试手册](v8/V8调试手册.md)
-- [JIT 基础](v8/jit.md)
-- [JavaScriptCore Root Cause 分析要点](jsc/JavaScriptCore%20Root%20Cause分析要点.md)
-</div>
-
-<div class="home-card" markdown="1">
-### 3. 最后看漏洞案例
-
-- [CVE-2025-12433 分析](v8/CVE-2025-12433分析.md)
-- [CVE-2025-13224 分析](v8/CVE-2025-13224分析.md)
-- [CVE-2021-30517 分析](v8/CVE-2021-30517分析.md)
-</div>
-
-</div>
-
-## 专题入口
-
-<div class="home-grid" markdown="1">
-
-<div class="home-card" markdown="1">
-### V8
-
-- [总览](v8/index.md)
-- [调试手册](v8/V8调试手册.md)
-- [漏洞分析](v8/CVE-2025-12433分析.md)
-</div>
-
-<div class="home-card" markdown="1">
-### JSC
-
-- [总览](jsc/index.md)
-- [Root Cause 分析要点](jsc/JavaScriptCore%20Root%20Cause分析要点.md)
-- [调试参数](jsc/JavaScriptCore调试参数.md)
-</div>
-
-<div class="home-card" markdown="1">
-### ChakraCore
-
-- [总览](chakracore/index.md)
-- [构建与调试](chakracore/ChakraCore构建与调试.md)
-- [CVE-2019-0567 分析](chakracore/CVE-2019-0567.md)
-</div>
-
+  <section class="home-strip">
+    <article class="home-strip__block">
+      <div class="home-strip__eyebrow">重点入口</div>
+      <h2 class="home-strip__title">对象布局、Root Cause 与调试参数</h2>
+      <ul class="home-inline-list">
+        <li><a href="v8/V8 数组的内存布局/">V8 数组的内存布局</a></li>
+        <li><a href="jsc/JavaScriptCore Root Cause分析要点/">JSC Root Cause 分析要点</a></li>
+        <li><a href="jsc/JavaScriptCore调试参数/">JSC 调试参数</a></li>
+        <li><a href="chakracore/ChakraCore构建与调试/">ChakraCore 构建与调试</a></li>
+      </ul>
+    </article>
+  </section>
 </div>
