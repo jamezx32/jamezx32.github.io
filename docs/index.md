@@ -2,13 +2,10 @@
   <section class="home-hero">
     <div class="home-hero__main">
       <div class="home-hero__eyebrow">JavaScript Engine Research Notes</div>
-       <h3 ></h3>
       <h1 class="home-hero__title">SXY JavaScript 引擎研究笔记</h1>
-       <h3 ></h3>
       <p class="home-hero__summary">
         记录 V8、JavaScriptCore 和 ChakraCore 的对象布局、调试链路、
         JIT 行为与 CVE Root Cause 分析。
-        <h3 ></h3>
       </p>
       <div class="home-hero__actions">
         <a class="home-hero__action home-hero__action--primary" href="v8/">从 V8 总览开始</a>

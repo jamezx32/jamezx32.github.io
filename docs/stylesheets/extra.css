@@ -4467,3 +4467,73 @@ html.codeblock-enhancer-ready .md-typeset .highlight {
 /* =========================================================
    11. 动效
    ========================================================= */
+
+/* =========================================================
+   12. Safari / Edge 兼容性补丁（最小修复）
+   ========================================================= */
+
+body,
+.md-container,
+.md-main__inner {
+  overflow-x: hidden;
+}
+
+.md-content,
+.md-content__inner,
+.home-hero__main,
+.home-hero__aside {
+  min-width: 0;
+}
+
+.home-hero__title {
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.md-header__title {
+  line-height: 1.2;
+}
+
+.md-header__title[data-site-title-ready="true"] .md-header__topic,
+.md-header__title[data-site-title-ready="true"] .md-header__topic:not([data-md-component="header-topic"]),
+.md-header__title[data-site-title-ready="true"] .md-header__topic[data-md-component="header-topic"],
+.md-header__title[data-site-title-mode="page"] .md-header__topic:not([data-md-component="header-topic"]),
+.md-header__title[data-site-title-mode="page"] .md-header__topic[data-md-component="header-topic"] {
+  transform: none;
+}
+
+.md-header__title[data-site-title-ready="true"] .md-header__topic {
+  transition:
+    opacity 0.18s ease,
+    color 0.18s ease;
+}
+
+html:not(.codeblock-enhancer-ready) .md-typeset .highlight {
+  visibility: visible;
+}
+
+.md-typeset .highlight > .md-code__nav {
+  top: var(--site-code-copy-top);
+  right: var(--site-code-copy-right);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.md-typeset .highlight > .md-code__nav :is(.md-clipboard, .md-code__button, button.md-clipboard, button.md-code__button) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@supports not (gap: 1rem) {
+  .home-hero__actions > .home-hero__action {
+    margin: 0 0.72rem 0.62rem 0;
+  }
+
+  .home-hero__actions > .home-hero__action:last-child {
+    margin-right: 0;
+  }
+}
