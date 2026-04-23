@@ -35,10 +35,6 @@
 
   migrateEarlySafariSidebarState();
 
-  if (document.documentElement) {
-    document.documentElement.classList.add("codeblock-enhancer-pending");
-  }
-
   try {
     if (window.localStorage.getItem(STORAGE_KEYS.sidebarCollapsed) === "true") {
       document.documentElement.classList.add("sidebar-collapsed");
@@ -70,10 +66,6 @@
     tocHeading: ".site-toc-heading",
     tocToggle: ".site-toc-toggle",
     paletteForm: '.md-header__option[data-md-component="palette"]',
-    copyButtons:
-      ":is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button)",
-    copyToast:
-      ".md-dialog, .md-snackbar, .md-snackbar--active, .md-toast, .md-toast--active, .md-tooltip, .md-tooltip--active, .md-status, .md-status--active, [class*='snackbar'], [class*='toast'], [class*='tooltip'], [class*='announce'], [data-md-component='dialog'], [data-md-component='snackbar'], [data-md-component='toast'], [data-md-component='announce'], [role='status'], [role='alert'], [aria-live='polite'], [aria-live='assertive']",
     codeBlocks: ".md-typeset .highlight",
   };
   const APP = {
@@ -83,9 +75,7 @@
     observers: {
       footer: null,
       headerTitle: null,
-      copyButtons: null,
     },
-    copyResetTimers: new WeakMap(),
   };
 
   const TOP_BUTTON_LABEL = "回到顶部";
@@ -1410,229 +1400,7 @@
     };
   })();
 
-  const copyButtonModule = (function () {
-    function ensureCopyNav(highlight, pre) {
-      const host = isHTMLElement(highlight) ? highlight : pre;
-      if (!isHTMLElement(host)) return null;
-
-      let nav = host.querySelector(":scope > .md-code__nav");
-      if (!nav) {
-        nav = document.createElement("div");
-        nav.className = "md-code__nav";
-        host.insertBefore(nav, host.firstChild);
-      }
-
-      return nav;
-    }
-
-    function ensureCopyButton(highlight, pre) {
-      const nav = ensureCopyNav(highlight, pre);
-      if (!isHTMLElement(nav)) return null;
-
-      let button = nav.querySelector(":scope > .md-clipboard, :scope > .md-code__button");
-      if (!button) {
-        button = document.createElement("button");
-        button.type = "button";
-        button.className = "md-clipboard";
-        nav.appendChild(button);
-      }
-
-      return button;
-    }
-
-    function findCopySource(button) {
-      if (!isHTMLElement(button)) return null;
-
-      const highlight = button.closest(".highlight");
-      const scopedCode = highlight
-        ? highlight.querySelector(":scope > pre > code, :scope > code")
-        : null;
-      if (scopedCode) return scopedCode;
-
-      const pre = button.closest("pre");
-      return pre ? pre.querySelector(":scope > code") : null;
-    }
-
-    function readCopyText(button) {
-      const source = findCopySource(button);
-      if (!source) return "";
-
-      return source.textContent.replace(/\u00a0/g, " ").replace(/\s+$/, "");
-    }
-
-    function fallbackCopyText(text) {
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.setAttribute("readonly", "");
-      textarea.style.position = "fixed";
-      textarea.style.top = "0";
-      textarea.style.left = "0";
-      textarea.style.width = "1px";
-      textarea.style.height = "1px";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-
-      let copied = false;
-      try {
-        copied = document.execCommand("copy");
-      } catch {
-        copied = false;
-      }
-
-      textarea.remove();
-      return copied;
-    }
-
-    async function copyButtonText(button) {
-      const text = readCopyText(button);
-      if (!text) return false;
-
-      try {
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-          await navigator.clipboard.writeText(text);
-          return true;
-        }
-      } catch {
-        // Fall back to execCommand below.
-      }
-
-      return fallbackCopyText(text);
-    }
-
-    function isCopyToast(node) {
-      const text = getTextContent(node);
-      return (
-        node.matches(".md-dialog, [data-md-component='dialog']") ||
-        /^(已复制|复制)$/i.test(text) ||
-        /已复制|复制/.test(text)
-      );
-    }
-
-    function removeNativeCopyToasts(root) {
-      queryAll(resolveRoot(root), SELECTORS.copyToast).forEach(function (node) {
-        if (isHTMLElement(node) && isCopyToast(node)) {
-          node.remove();
-        }
-      });
-    }
-
-    function clearCopyResetTimer(button) {
-      const timer = APP.copyResetTimers.get(button);
-      if (!timer) return;
-
-      clearTimeout(timer);
-      APP.copyResetTimers.delete(button);
-    }
-
-    function setIdleState(button) {
-      if (!isHTMLElement(button)) return;
-      button.classList.remove("is-copied");
-      button.removeAttribute("data-copy-state");
-      button.setAttribute("aria-label", "复制");
-      button.setAttribute("title", "复制");
-    }
-
-    function markCopied(button) {
-      if (!isHTMLElement(button)) return;
-
-      clearCopyResetTimer(button);
-      button.classList.add("is-copied");
-      button.setAttribute("data-copy-state", "copied");
-      button.setAttribute("aria-label", "已复制");
-      button.setAttribute("title", "已复制");
-      removeNativeCopyToasts(document);
-
-      const resetTimer = window.setTimeout(function () {
-        setIdleState(button);
-        APP.copyResetTimers.delete(button);
-      }, 1400);
-
-      APP.copyResetTimers.set(button, resetTimer);
-    }
-
-    function bindCopyButton(button) {
-      if (!isHTMLElement(button) || button.dataset.copyEnhancerBound === "true") {
-        return;
-      }
-
-      button.dataset.copyEnhancerBound = "true";
-      setIdleState(button);
-
-      button.addEventListener(
-        "click",
-        async function () {
-          const copied = await copyButtonText(button);
-          if (!copied) return;
-
-          markCopied(button);
-        },
-        true
-      );
-    }
-
-    function ensureButtons(root) {
-      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
-        if (!isHTMLElement(highlight)) return;
-
-        const pre = highlight.querySelector(":scope > pre");
-        if (!isHTMLElement(pre)) return;
-
-        const button = ensureCopyButton(highlight, pre);
-        if (button) {
-          bindCopyButton(button);
-        }
-      });
-    }
-
-    function bindAll(root) {
-      ensureButtons(root);
-      queryAll(resolveRoot(root), SELECTORS.copyButtons).forEach(bindCopyButton);
-    }
-
-    function handleMutations(mutations) {
-      mutations.forEach(function (mutation) {
-        mutation.addedNodes.forEach(function (node) {
-          if (!isHTMLElement(node)) return;
-          if (node.matches(SELECTORS.copyButtons)) {
-            bindCopyButton(node);
-          }
-          bindAll(node);
-          removeNativeCopyToasts(node);
-        });
-      });
-    }
-
-    return {
-      init: function (root) {
-        bindAll(root);
-        removeNativeCopyToasts(root);
-
-        if (!APP.observers.copyButtons && typeof MutationObserver !== "undefined") {
-          APP.observers.copyButtons = new MutationObserver(handleMutations);
-          APP.observers.copyButtons.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-          });
-        }
-      },
-    };
-  })();
-
   const codeBlockModule = (function () {
-    function setReady(ready) {
-      if (!document.documentElement) return;
-
-      if (ready) {
-        document.documentElement.classList.remove("codeblock-enhancer-pending");
-        document.documentElement.classList.add("codeblock-enhancer-ready");
-      } else {
-        document.documentElement.classList.remove("codeblock-enhancer-ready");
-        document.documentElement.classList.add("codeblock-enhancer-pending");
-      }
-    }
-
     function normalizeLanguageName(value) {
       const normalized = (value || "").trim().toLowerCase();
       if (!normalized) return "Text";
@@ -1692,16 +1460,8 @@
       return normalizeLanguageName(firstValid || "Text");
     }
 
-    function ensureFilenameLabel(highlight, languageName) {
-      let filename = highlight.querySelector(":scope > .filename");
-
-      if (!filename) {
-        filename = document.createElement("div");
-        filename.className = "filename auto-codeblock-filename";
-        highlight.insertBefore(filename, highlight.firstChild);
-      }
-
-      filename.textContent = languageName;
+    function setLanguageLabel(highlight, languageName) {
+      highlight.dataset.codeLanguage = languageName;
     }
 
     function splitCodeIntoLines(code) {
@@ -1743,7 +1503,7 @@
       const code = pre ? pre.querySelector(":scope > code") : null;
       if (!pre || !code) return;
 
-      ensureFilenameLabel(highlight, inferLanguage(highlight, pre, code));
+      setLanguageLabel(highlight, inferLanguage(highlight, pre, code));
       splitCodeIntoLines(code);
       highlight.classList.add("has-auto-linenums");
       highlight.dataset.autoCodeEnhanced = "true";
@@ -1751,11 +1511,7 @@
 
     return {
       init: function (root) {
-        setReady(false);
         queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(enhanceCodeBlock);
-        window.requestAnimationFrame(function () {
-          setReady(true);
-        });
       },
     };
   })();
@@ -1835,7 +1591,6 @@
     tabsCollapseModule,
     topButtonModule,
     themeToggleModule,
-    copyButtonModule,
     codeBlockModule,
     factTableModule,
   ];

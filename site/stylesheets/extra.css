@@ -3532,20 +3532,12 @@ button.md-top[data-md-component="top"]:focus-visible {
    7. 代码块基础样式
    ========================================================= */
 
-html:not(.codeblock-enhancer-ready) .md-typeset .highlight {
-  visibility: hidden;
-}
-
-html.codeblock-enhancer-ready .md-typeset .highlight {
-  visibility: visible;
-}
-
 .md-typeset .highlight.has-auto-linenums {
   position: relative;
 }
 
-.md-typeset .highlight.has-auto-linenums > .filename,
-.md-typeset .highlight.has-auto-linenums .filename.auto-codeblock-filename {
+.md-typeset .highlight.has-auto-linenums::before {
+  content: attr(data-code-language);
   position: absolute;
   top: 0;
   left: var(--site-code-label-left);
@@ -3568,8 +3560,7 @@ html.codeblock-enhancer-ready .md-typeset .highlight {
   z-index: 4;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .highlight.has-auto-linenums > .filename,
-[data-md-color-scheme="slate"] .md-typeset .highlight.has-auto-linenums .filename.auto-codeblock-filename {
+[data-md-color-scheme="slate"] .md-typeset .highlight.has-auto-linenums::before {
   color: #e5e7eb;
 }
 
@@ -3711,13 +3702,7 @@ html.codeblock-enhancer-ready .md-typeset .highlight {
    8. 代码块复制按钮系统
    ========================================================= */
 
-.md-typeset .highlight,
-.md-typeset pre {
-  position: relative;
-}
-
-.md-code__nav,
-.md-typeset .highlight:hover > .md-code__nav {
+.md-typeset .highlight > .md-code__nav {
   position: absolute;
   top: var(--site-code-copy-top);
   right: var(--site-code-copy-right);
@@ -3726,245 +3711,32 @@ html.codeblock-enhancer-ready .md-typeset .highlight {
   z-index: 6;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.34rem;
+  gap: 0.2rem;
   padding: 0;
   margin: 0;
-  width: auto;
-  min-width: 0;
-  height: auto;
-  min-height: 0;
   background: transparent;
-  background-color: transparent;
-  background-image: none;
   border: 0;
-  border-radius: 0;
   box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
-.md-code__nav::before,
-.md-code__nav::after {
+.md-typeset .highlight > .md-code__nav::before,
+.md-typeset .highlight > .md-code__nav::after {
   content: none;
-  box-shadow: none;
 }
 
-.md-code__nav > :not(.md-clipboard):not(button.md-clipboard):not(.md-code__button):not(button.md-code__button)::before,
-.md-code__nav > :not(.md-clipboard):not(button.md-clipboard):not(.md-code__button):not(button.md-code__button)::after {
-  box-shadow: none;
-}
-
-.md-code__nav > :not(.md-clipboard):not(button.md-clipboard):not(.md-code__button[title="复制"]):not(button.md-code__button[title="复制"]):not(.md-code__button[aria-label*="复制"]):not(button.md-code__button[aria-label*="复制"]) {
-  background: transparent;
-  background-color: transparent;
-  background-image: none;
-  border: 0;
-  box-shadow: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button) {
-  position: relative;
-  inset: auto;
-  z-index: 7;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 0 0 auto;
-  width: auto;
-  min-width: 0;
-  height: 19px;
-  min-height: 29px;
-  margin: 0;
-  padding: 0 0 0 1.16rem;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-  outline: 0;
-  transform: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  overflow: visible;
-  isolation: isolate;
-  opacity: 1;
+.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"] {
   color: #8f8f93;
-  font-size: 0.84rem;
-  font-weight: 560;
-  line-height: 1;
-  letter-spacing: 0;
-  text-indent: 0;
-  white-space: nowrap;
-  transition: color 0.18s ease, opacity 0.18s ease;
 }
 
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button) {
+[data-md-color-scheme="slate"] .md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"] {
   color: rgba(226, 232, 240, 0.94);
 }
 
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button)::before {
-  content: "复制";
-  display: inline-block;
-  position: static;
-  inset: auto;
-  margin: 0;
-  padding: 0;
-  background: none;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-  color: inherit;
-  font: inherit;
-  line-height: 1;
-  letter-spacing: 0;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button)::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 19px;
-  height: 19px;
-  margin: 0;
-  transform: translateY(-50%);
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><rect x='2.7' y='4.8' width='9.2' height='10.1' rx='2.1'/><rect x='6.1' y='2.1' width='9.2' height='10.1' rx='2.1'/></svg>");
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><rect x='2.7' y='4.8' width='9.2' height='10.1' rx='2.1'/><rect x='6.1' y='2.1' width='9.2' height='10.1' rx='2.1'/></svg>");
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  z-index: auto;
-  opacity: 0.98;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button) > * {
-  display: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):hover,
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).focus-visible,
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus,
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus-visible {
+.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:hover,
+.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:focus,
+.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:focus-visible {
   background: transparent;
-  background-color: transparent;
   border-color: transparent;
-  color: #8f8f93;
-  box-shadow: none;
-  outline: none;
-}
-
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):hover,
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).focus-visible,
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus,
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus-visible {
-  background: transparent;
-  background-color: transparent;
-  border-color: transparent;
-  color: rgba(226, 232, 240, 0.94);
-  box-shadow: none;
-  outline: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):active {
-  transform: none;
-  background: transparent;
-  background-color: transparent;
-  border-color: transparent;
-  box-shadow: none;
-  outline: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).is-copied {
-  background: transparent;
-  background-color: transparent;
-  border-color: transparent;
-  color: #8f8f93;
-  box-shadow: none;
-  outline: none;
-}
-
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).is-copied {
-  background: transparent;
-  background-color: transparent;
-  border-color: transparent;
-  color: rgba(226, 232, 240, 0.98);
-  box-shadow: none;
-  outline: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).is-copied::before {
-  content: "已复制";
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).is-copied::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 21px;
-  height: 21px;
-  margin: 0;
-  transform: translateY(-50%);
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M4.2 9.4 7.3 12.5 13.8 5.9'/></svg>");
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M4.2 9.4 7.3 12.5 13.8 5.9'/></svg>");
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  z-index: auto;
-}
-
-.md-dialog[data-md-component="dialog"],
-.md-snackbar,
-.md-snackbar--active,
-.md-toast,
-.md-toast--active,
-.md-tooltip,
-.md-tooltip--active,
-.md-status,
-.md-status--active,
-[class*="snackbar"],
-[class*="toast"],
-[class*="tooltip"],
-[class*="announce"],
-[data-md-component="snackbar"],
-[data-md-component="toast"],
-[data-md-component="announce"] {
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button)::-moz-focus-inner {
-  border: 0;
-}
-
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).focus-visible,
-:is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus-visible,
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button).focus-visible,
-[data-md-color-scheme="slate"] :is(.md-clipboard, button.md-clipboard, .md-code__button, button.md-code__button):focus-visible {
-  -webkit-focus-ring-color: transparent;
-  outline: none;
   box-shadow: none;
 }
 
@@ -4450,20 +4222,60 @@ html.codeblock-enhancer-ready .md-typeset .highlight {
     top: 2px;
     right: 8px;
   }
-
-  .md-clipboard::after,
-  button.md-clipboard::after,
-  .md-code__button::after,
-  button.md-code__button::after,
-  .md-clipboard.is-copied::after,
-  button.md-clipboard.is-copied::after,
-  .md-code__button.is-copied::after,
-  button.md-code__button.is-copied::after {
-    width: 21px;
-    height: 21px;
-  }
 }
 
 /* =========================================================
    11. 动效
    ========================================================= */
+
+/* =========================================================
+   12. Safari / Edge 兼容性补丁（最小修复）
+   ========================================================= */
+
+body,
+.md-container,
+.md-main__inner {
+  overflow-x: hidden;
+}
+
+.md-content,
+.md-content__inner,
+.home-hero__main,
+.home-hero__aside {
+  min-width: 0;
+}
+
+.home-hero__title {
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.md-header__title {
+  line-height: 1.2;
+}
+
+.md-header__title[data-site-title-ready="true"] .md-header__topic,
+.md-header__title[data-site-title-ready="true"] .md-header__topic:not([data-md-component="header-topic"]),
+.md-header__title[data-site-title-ready="true"] .md-header__topic[data-md-component="header-topic"],
+.md-header__title[data-site-title-mode="page"] .md-header__topic:not([data-md-component="header-topic"]),
+.md-header__title[data-site-title-mode="page"] .md-header__topic[data-md-component="header-topic"] {
+  transform: none;
+}
+
+.md-header__title[data-site-title-ready="true"] .md-header__topic {
+  transition:
+    opacity 0.18s ease,
+    color 0.18s ease;
+}
+
+@supports not (gap: 1rem) {
+  .home-hero__actions > .home-hero__action {
+    margin: 0 0.72rem 0.62rem 0;
+  }
+
+  .home-hero__actions > .home-hero__action:last-child {
+    margin-right: 0;
+  }
+}
