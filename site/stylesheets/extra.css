@@ -4286,6 +4286,61 @@ body,
     color 0.18s ease;
 }
 
+/* =========================================================
+   13. Header / Tabs 布局稳定补丁
+   ========================================================= */
+
+.md-header {
+  height: var(--site-header-height);
+  min-height: var(--site-header-height);
+  max-height: var(--site-header-height);
+}
+
+.md-header__inner {
+  height: var(--site-header-height);
+  min-height: var(--site-header-height);
+  max-height: var(--site-header-height);
+}
+
+.md-header__title {
+  height: auto;
+  min-height: 0;
+}
+
+.md-header__title > .md-header__ellipsis,
+.md-header__topic,
+.md-header__ellipsis {
+  height: auto;
+  min-height: 0;
+}
+
+.md-tabs,
+html.site-tabs-collapsed .md-tabs {
+  position: sticky;
+  top: var(--site-header-height);
+  height: var(--site-tabs-min-height);
+  min-height: var(--site-tabs-min-height);
+  max-height: var(--site-tabs-min-height);
+  margin-top: 0;
+  margin-bottom: 0;
+  clip-path: none;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.md-tabs .md-grid,
+.md-tabs__list,
+html.site-tabs-collapsed .md-tabs .md-grid,
+html.site-tabs-collapsed .md-tabs__list {
+  height: var(--site-tabs-min-height);
+  min-height: var(--site-tabs-min-height);
+  max-height: var(--site-tabs-min-height);
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
 @supports not (gap: 1rem) {
   .home-hero__actions > .home-hero__action {
     margin: 0 0.72rem 0.62rem 0;
