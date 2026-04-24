@@ -76,9 +76,6 @@
   --site-code-line-padding-left: 3.55rem;
   --site-code-header-bg: linear-gradient(180deg, rgba(237, 240, 244, 0.995), rgba(228, 232, 237, 0.985));
   --site-code-header-border: rgba(176, 182, 190, 0.11);
-  --site-code-copy-top: calc(3px + 0.18cm);
-  --site-code-copy-right: calc(8px + 0.18cm);
-
   --site-sidebar-nested-border: rgba(148, 163, 184, 0.16);
   --site-sidebar-active-bg: transparent;
   --site-sidebar-active-border: rgba(15, 23, 42, 0.22);
@@ -3630,10 +3627,12 @@ button.md-top[data-md-component="top"]:focus-visible {
 }
 
 .md-typeset .highlight pre {
+  position: relative;
   border-radius: 16px;
   border: 1px solid rgba(171, 177, 187, 0.17);
   background: linear-gradient(180deg, rgba(245, 248, 252, 0.992), rgba(239, 243, 248, 0.978));
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.043);
+  overflow: visible;
 }
 
 [data-md-color-scheme="slate"] .md-typeset .highlight pre {
@@ -3677,6 +3676,7 @@ button.md-top[data-md-component="top"]:focus-visible {
   box-shadow: none;
   border: 0;
   padding: 0;
+  overflow: auto;
 }
 
 .md-typeset pre code {
@@ -3699,44 +3699,35 @@ button.md-top[data-md-component="top"]:focus-visible {
 }
 
 /* =========================================================
-   8. 代码块复制按钮系统
+   8. 代码块复制按钮
    ========================================================= */
 
-.md-typeset .highlight > .md-code__nav {
+.md-typeset .highlight > .md-clipboard {
   position: absolute;
-  top: var(--site-code-copy-top);
-  right: var(--site-code-copy-right);
+  top: calc((var(--site-codebar-height) - 1.5em) / 2);
+  right: 0.74rem;
   left: auto;
   bottom: auto;
   z-index: 6;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0;
+  display: block;
   margin: 0;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-}
-
-.md-typeset .highlight > .md-code__nav::before,
-.md-typeset .highlight > .md-code__nav::after {
-  content: none;
-}
-
-.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"] {
   color: #8f8f93;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"] {
+.md-typeset .highlight pre > .md-code__nav {
+  top: calc((var(--site-codebar-height) - 1.5em) / 2);
+  right: 0.74rem;
+  z-index: 6;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .highlight > .md-clipboard {
   color: rgba(226, 232, 240, 0.94);
 }
 
-.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:hover,
-.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:focus,
-.md-typeset .highlight > .md-code__nav > .md-code__button[data-md-type="copy"]:focus-visible {
+.md-typeset .highlight > .md-clipboard:hover,
+.md-typeset .highlight > .md-clipboard:focus,
+.md-typeset .highlight > .md-clipboard:focus-visible {
   background: transparent;
-  border-color: transparent;
   box-shadow: none;
 }
 
@@ -4218,9 +4209,10 @@ button.md-top[data-md-component="top"]:focus-visible {
     content: none;
   }
 
-  .md-code__nav {
-    top: 2px;
-    right: 8px;
+  .md-typeset .highlight > .md-clipboard,
+  .md-typeset .highlight pre > .md-code__nav {
+    top: calc((var(--site-codebar-height) - 1.5em) / 2);
+    right: 0.5rem;
   }
 }
 

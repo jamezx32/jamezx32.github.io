@@ -1464,6 +1464,30 @@
       highlight.dataset.codeLanguage = languageName;
     }
 
+    function normalizeCopyButton(highlight, pre) {
+      const nav = pre.querySelector(":scope > .md-code__nav");
+      if (!nav) return;
+
+      const copyButton = nav.querySelector(':scope > .md-code__button[data-md-type="copy"]');
+      if (!copyButton) return;
+
+      if (highlight.querySelector(":scope > .md-clipboard")) {
+        copyButton.remove();
+        if (!nav.children.length) {
+          nav.remove();
+        }
+        return;
+      }
+
+      copyButton.classList.remove("md-code__button");
+      copyButton.classList.add("md-clipboard");
+      highlight.appendChild(copyButton);
+
+      if (!nav.children.length) {
+        nav.remove();
+      }
+    }
+
     function splitCodeIntoLines(code) {
       if (!isHTMLElement(code) || code.dataset.autoLinenumsApplied === "true") {
         return;
@@ -1503,6 +1527,7 @@
       const code = pre ? pre.querySelector(":scope > code") : null;
       if (!pre || !code) return;
 
+      normalizeCopyButton(highlight, pre);
       setLanguageLabel(highlight, inferLanguage(highlight, pre, code));
       splitCodeIntoLines(code);
       highlight.classList.add("has-auto-linenums");
