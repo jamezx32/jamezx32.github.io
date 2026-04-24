@@ -4315,9 +4315,13 @@ body,
 }
 
 .md-tabs,
-html.site-tabs-collapsed .md-tabs {
-  position: sticky;
-  top: var(--site-header-height);
+html.site-tabs-collapsed .md-tabs,
+html.site-browser-safari .md-tabs,
+html.site-browser-safari.site-tabs-collapsed .md-tabs,
+html.site-browser-atlas .md-tabs,
+html.site-browser-atlas.site-tabs-collapsed .md-tabs {
+  position: relative;
+  top: auto;
   height: var(--site-tabs-min-height);
   min-height: var(--site-tabs-min-height);
   max-height: var(--site-tabs-min-height);
@@ -4332,7 +4336,15 @@ html.site-tabs-collapsed .md-tabs {
 .md-tabs .md-grid,
 .md-tabs__list,
 html.site-tabs-collapsed .md-tabs .md-grid,
-html.site-tabs-collapsed .md-tabs__list {
+html.site-tabs-collapsed .md-tabs__list,
+html.site-browser-safari .md-tabs .md-grid,
+html.site-browser-safari .md-tabs__list,
+html.site-browser-safari.site-tabs-collapsed .md-tabs .md-grid,
+html.site-browser-safari.site-tabs-collapsed .md-tabs__list,
+html.site-browser-atlas .md-tabs .md-grid,
+html.site-browser-atlas .md-tabs__list,
+html.site-browser-atlas.site-tabs-collapsed .md-tabs .md-grid,
+html.site-browser-atlas.site-tabs-collapsed .md-tabs__list {
   height: var(--site-tabs-min-height);
   min-height: var(--site-tabs-min-height);
   max-height: var(--site-tabs-min-height);

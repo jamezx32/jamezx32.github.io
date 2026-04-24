@@ -1100,61 +1100,14 @@
 
   const tabsCollapseModule = (function () {
     const COLLAPSE_CLASS = "site-tabs-collapsed";
-    const COLLAPSE_SCROLL_LIMIT = 6;
-    const EXPAND_SCROLL_LIMIT = 1;
-    let subscribed = false;
 
-    function isDesktopViewport() {
-      return window.matchMedia("(min-width: 76.25em)").matches;
-    }
-
-    function hasTabs() {
-      return isHTMLElement(document.querySelector(SELECTORS.tabsRoot));
-    }
-
-    function setCollapsed(collapsed) {
-      const root = document.documentElement;
-      const isCollapsed = root.classList.contains(COLLAPSE_CLASS);
-      if (isCollapsed === collapsed) return;
-
-      root.classList.toggle(COLLAPSE_CLASS, collapsed);
-    }
-
-    function syncState(currentScrollTop) {
-      if (!isDesktopViewport() || !hasTabs()) {
-        setCollapsed(false);
-        return;
-      }
-
-      const isCollapsed = document.documentElement.classList.contains(COLLAPSE_CLASS);
-
-      // Keep a tiny hysteresis window so the layout shift caused by collapsing
-      // the tabs doesn't immediately flip the state back and create flicker.
-      if (isCollapsed) {
-        setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
-        return;
-      }
-
-      setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
-    }
-
-    function handleResize() {
-      scrollCoordinatorModule.requestSync();
+    function keepExpanded() {
+      document.documentElement.classList.remove(COLLAPSE_CLASS);
     }
 
     return {
       init: function () {
-        if (!subscribed) {
-          scrollCoordinatorModule.subscribe(syncState, { immediate: false });
-          subscribed = true;
-        }
-
-        if (document.documentElement.dataset.siteTabsCollapseBound !== "true") {
-          window.addEventListener("resize", handleResize, { passive: true });
-          document.documentElement.dataset.siteTabsCollapseBound = "true";
-        }
-
-        scrollCoordinatorModule.requestSync();
+        keepExpanded();
       },
     };
   })();
