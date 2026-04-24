@@ -3714,19 +3714,43 @@ button.md-top[data-md-component="top"]:focus-visible {
   color: #8f8f93;
 }
 
-.md-typeset .highlight pre > .md-code__nav {
+.md-typeset .highlight .md-code__nav {
+  position: absolute;
   top: calc((var(--site-codebar-height) - 1.5em) / 2);
   right: 0.74rem;
+  left: auto;
+  bottom: auto;
   z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .highlight > .md-clipboard {
+.md-typeset .highlight .md-code__nav::before,
+.md-typeset .highlight .md-code__nav::after {
+  content: none;
+}
+
+.md-typeset .highlight .md-code__button[data-md-type="copy"] {
+  color: #8f8f93;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .highlight > .md-clipboard,
+[data-md-color-scheme="slate"] .md-typeset .highlight .md-code__button[data-md-type="copy"] {
   color: rgba(226, 232, 240, 0.94);
 }
 
 .md-typeset .highlight > .md-clipboard:hover,
 .md-typeset .highlight > .md-clipboard:focus,
-.md-typeset .highlight > .md-clipboard:focus-visible {
+.md-typeset .highlight > .md-clipboard:focus-visible,
+.md-typeset .highlight .md-code__button[data-md-type="copy"]:hover,
+.md-typeset .highlight .md-code__button[data-md-type="copy"]:focus,
+.md-typeset .highlight .md-code__button[data-md-type="copy"]:focus-visible {
   background: transparent;
   box-shadow: none;
 }
@@ -4210,7 +4234,7 @@ button.md-top[data-md-component="top"]:focus-visible {
   }
 
   .md-typeset .highlight > .md-clipboard,
-  .md-typeset .highlight pre > .md-code__nav {
+  .md-typeset .highlight .md-code__nav {
     top: calc((var(--site-codebar-height) - 1.5em) / 2);
     right: 0.5rem;
   }
