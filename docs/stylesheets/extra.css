@@ -1627,9 +1627,9 @@ body {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.md-tabs,
-html.site-browser-safari .md-tabs,
-html.site-browser-atlas .md-tabs {
+.md-tabs:not([hidden]),
+html.site-browser-safari .md-tabs:not([hidden]),
+html.site-browser-atlas .md-tabs:not([hidden]) {
   display: block;
   position: relative;
   top: auto;
@@ -1650,9 +1650,9 @@ html.site-browser-atlas .md-tabs {
   transition: transform 0.28s var(--site-tabs-ease), opacity 0.22s ease, margin-bottom 0.28s var(--site-tabs-ease);
 }
 
-.md-tabs .md-grid,
-html.site-browser-safari .md-tabs .md-grid,
-html.site-browser-atlas .md-tabs .md-grid {
+.md-tabs:not([hidden]) .md-grid,
+html.site-browser-safari .md-tabs:not([hidden]) .md-grid,
+html.site-browser-atlas .md-tabs:not([hidden]) .md-grid {
   display: flex;
   align-items: center;
   height: var(--site-tabs-min-height);
@@ -1739,6 +1739,10 @@ html.site-tabs-collapsed .md-tabs {
   opacity: 0;
   transform: translateY(calc(-1 * var(--site-tabs-min-height)));
   pointer-events: none;
+}
+
+.md-tabs[hidden] {
+  display: none;
 }
 
 html.site-tabs-collapsed .md-tabs .md-grid,
