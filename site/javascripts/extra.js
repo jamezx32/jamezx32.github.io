@@ -1100,14 +1100,45 @@
 
   const tabsCollapseModule = (function () {
     const COLLAPSE_CLASS = "site-tabs-collapsed";
+    const COLLAPSE_SCROLL_LIMIT = 96;
+    const EXPAND_SCROLL_LIMIT = 2;
+    let subscribed = false;
 
-    function keepExpanded() {
-      document.documentElement.classList.remove(COLLAPSE_CLASS);
+    function hasTabs() {
+      return Boolean(document.querySelector(SELECTORS.tabsRoot));
+    }
+
+    function setCollapsed(collapsed) {
+      document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
+    }
+
+    function syncState(scrollTop) {
+      if (!hasTabs()) {
+        setCollapsed(false);
+        return;
+      }
+
+      const root = document.documentElement;
+      const currentScrollTop = Math.max(scrollTop || 0, 0);
+
+      if (root.classList.contains(COLLAPSE_CLASS)) {
+        setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
+        return;
+      }
+
+      setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
+    }
+
+    function subscribeScroll() {
+      if (subscribed) return;
+      subscribed = true;
+      scrollCoordinatorModule.subscribe(syncState, { immediate: false });
     }
 
     return {
       init: function () {
-        keepExpanded();
+        subscribeScroll();
+        syncState(scrollCoordinatorModule.getScrollTop());
       },
     };
   })();
@@ -1417,30 +1448,6 @@
       highlight.dataset.codeLanguage = languageName;
     }
 
-    function normalizeCopyButton(highlight, pre) {
-      const nav = pre.querySelector(":scope > .md-code__nav");
-      if (!nav) return;
-
-      const copyButton = nav.querySelector(':scope > .md-code__button[data-md-type="copy"]');
-      if (!copyButton) return;
-
-      if (highlight.querySelector(":scope > .md-clipboard")) {
-        copyButton.remove();
-        if (!nav.children.length) {
-          nav.remove();
-        }
-        return;
-      }
-
-      copyButton.classList.remove("md-code__button");
-      copyButton.classList.add("md-clipboard");
-      highlight.appendChild(copyButton);
-
-      if (!nav.children.length) {
-        nav.remove();
-      }
-    }
-
     function splitCodeIntoLines(code) {
       if (!isHTMLElement(code) || code.dataset.autoLinenumsApplied === "true") {
         return;
@@ -1480,7 +1487,6 @@
       const code = pre ? pre.querySelector(":scope > code") : null;
       if (!pre || !code) return;
 
-      normalizeCopyButton(highlight, pre);
       setLanguageLabel(highlight, inferLanguage(highlight, pre, code));
       splitCodeIntoLines(code);
       highlight.classList.add("has-auto-linenums");
@@ -1572,6 +1578,8 @@
     codeBlockModule,
     factTableModule,
   ];
+
+  pageTypeModule.init();
 
   function init(root) {
     modules.forEach(function (module) {
