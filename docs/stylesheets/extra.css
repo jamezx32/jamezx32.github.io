@@ -185,6 +185,7 @@
 html {
   min-height: 100%;
   background: var(--site-overscroll-bg);
+  overflow-y: auto;
   overscroll-behavior-y: none;
 }
 
@@ -195,6 +196,7 @@ body {
   background: var(--site-overscroll-bg);
   background-color: var(--md-default-bg-color);
   overflow-x: clip;
+  overflow-y: auto;
   overscroll-behavior-y: none;
 }
 
@@ -205,6 +207,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: clip;
+  overflow-y: visible;
   background: var(--site-page-bg);
   isolation: isolate;
 }
@@ -1687,11 +1690,11 @@ html.site-browser-atlas .md-tabs:not([hidden]) {
   z-index: 3;
   flex: 0 0 auto;
   width: 100%;
-  height: var(--site-tabs-min-height);
+  height: auto;
   min-height: var(--site-tabs-min-height);
-  max-height: var(--site-tabs-min-height);
+  max-height: none;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   clip-path: none;
   opacity: 1;
   transform: none;
@@ -1709,9 +1712,9 @@ html.site-browser-safari .md-tabs:not([hidden]) .md-grid,
 html.site-browser-atlas .md-tabs:not([hidden]) .md-grid {
   display: flex;
   align-items: center;
-  height: var(--site-tabs-min-height);
+  height: auto;
   min-height: var(--site-tabs-min-height);
-  max-height: var(--site-tabs-min-height);
+  max-height: none;
   padding: 0 0.96rem 0 1.08rem;
   overflow: visible;
 }
@@ -1723,13 +1726,13 @@ html.site-browser-atlas .md-tabs__list {
   flex: 1 1 auto;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 0;
+  gap: 0.58rem;
   width: 100%;
-  height: var(--site-tabs-min-height);
+  height: auto;
   min-height: var(--site-tabs-min-height);
-  max-height: var(--site-tabs-min-height);
+  max-height: none;
   margin: 0;
-  padding: 0;
+  padding: 0.34rem 0 0.42rem;
   list-style: none;
   overflow-x: auto;
   overflow-y: hidden;
@@ -1748,8 +1751,8 @@ html.site-browser-atlas .md-tabs__list {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  height: var(--site-tabs-min-height);
-  min-height: var(--site-tabs-min-height);
+  height: var(--site-tabs-link-height);
+  min-height: var(--site-tabs-link-height);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1759,26 +1762,30 @@ html.site-browser-atlas .md-tabs__list {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: auto;
-  height: var(--site-tabs-min-height);
-  min-height: var(--site-tabs-min-height);
+  min-width: var(--site-tabs-link-min-width);
+  height: var(--site-tabs-link-height);
+  min-height: var(--site-tabs-link-height);
   margin: 0;
-  padding: 0 1rem;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.84rem;
-  font-weight: 650;
+  padding: 0 1.12rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.92rem;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
   white-space: nowrap;
   opacity: 1;
   transform: none;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 8px 18px rgba(15, 23, 42, 0.10);
   transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
     color 0.18s ease,
-    opacity 0.18s ease,
+    transform 0.18s ease,
     box-shadow 0.18s ease;
 }
 
@@ -1787,8 +1794,11 @@ html.site-browser-atlas .md-tabs__list {
 .md-tabs__link--active,
 .md-tabs__link[aria-current="page"] {
   color: #ffffff;
-  background: transparent;
-  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 12px 24px rgba(15, 23, 42, 0.14);
 }
 
 html.site-tabs-collapsed .md-tabs {
@@ -3947,7 +3957,7 @@ button.md-top[data-md-component="top"]:focus-visible {
 
   .md-tabs__list {
     gap: 0.34rem;
-    padding: 0;
+    padding: 0.22rem 0 0.3rem;
   }
 
   .md-tabs__item {
@@ -3959,6 +3969,7 @@ button.md-top[data-md-component="top"]:focus-visible {
     height: 38px;
     padding: 0 0.94rem;
     font-size: 0.82rem;
+    border-radius: 999px;
   }
 
   .home-hero,
@@ -4035,6 +4046,15 @@ body,
 .md-container,
 .md-main__inner {
   overflow-x: hidden;
+}
+
+body,
+.md-container,
+.md-main,
+.md-main__inner,
+.md-content,
+.md-content__inner {
+  overflow-y: visible;
 }
 
 html.page-home .md-sidebar--primary,
