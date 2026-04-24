@@ -1629,10 +1629,7 @@ body {
 
 .md-tabs,
 html.site-browser-safari .md-tabs,
-html.site-browser-atlas .md-tabs,
-html.site-tabs-collapsed .md-tabs,
-html.site-browser-safari.site-tabs-collapsed .md-tabs,
-html.site-browser-atlas.site-tabs-collapsed .md-tabs {
+html.site-browser-atlas .md-tabs {
   display: block;
   position: relative;
   top: auto;
@@ -1741,6 +1738,12 @@ html.site-tabs-collapsed .md-tabs {
   margin-bottom: calc(-1 * var(--site-tabs-min-height));
   opacity: 0;
   transform: translateY(calc(-1 * var(--site-tabs-min-height)));
+  pointer-events: none;
+}
+
+html.site-tabs-collapsed .md-tabs .md-grid,
+html.site-tabs-collapsed .md-tabs__list {
+  opacity: 0;
   pointer-events: none;
 }
 

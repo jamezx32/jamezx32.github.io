@@ -1100,7 +1100,7 @@
 
   const tabsCollapseModule = (function () {
     const COLLAPSE_CLASS = "site-tabs-collapsed";
-    const COLLAPSE_SCROLL_LIMIT = 96;
+    const COLLAPSE_SCROLL_LIMIT = 8;
     const EXPAND_SCROLL_LIMIT = 2;
     let subscribed = false;
 
