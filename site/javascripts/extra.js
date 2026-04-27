@@ -220,7 +220,15 @@
 
   function isAtlasBrowser() {
     const ua = navigator.userAgent || "";
-    return /Atlas/i.test(ua);
+    const vendor = navigator.vendor || "";
+
+    return (
+      /Atlas/i.test(ua) ||
+      /Atlas/i.test(vendor) ||
+      /OpenAI/i.test(ua) ||
+      /ChatGPT/i.test(ua) ||
+      /ChatGPT/i.test(vendor)
+    );
   }
 
   function subscribePageChanges(callback) {
@@ -373,10 +381,21 @@
     return {
       init: function () {
         const isSafari = isSafariBrowser();
-        const isAtlas = isAtlasBrowser();
+        const forcedAtlas =
+          !isSafari &&
+          (
+            window.location.search.includes("force_atlas=1") ||
+            window.localStorage.getItem("sxy-force-atlas") === "true"
+          );
+        const isAtlas = !isSafari && (forcedAtlas || isAtlasBrowser());
 
         document.documentElement.classList.toggle("site-browser-safari", isSafari);
         document.documentElement.classList.toggle("site-browser-atlas", isAtlas);
+
+        if (document.body) {
+          document.body.classList.toggle("is-atlas", isAtlas);
+          document.body.classList.toggle("is-safari", isSafari);
+        }
       },
     };
   })();
@@ -483,59 +502,6 @@
 
   const tocModule = (function () {
     let activeEntries = [];
-
-    function isDesktopSidebarViewport() {
-      return window.matchMedia("(min-width: 76.25em)").matches;
-    }
-
-    function stripMaterialSidebarAttributes(sidebar) {
-      if (!isHTMLElement(sidebar)) return;
-
-      sidebar.removeAttribute("data-md-component");
-      sidebar.removeAttribute("data-md-type");
-      sidebar.removeAttribute("data-md-state");
-
-      queryAll(sidebar, "[data-md-component], [data-md-scrollfix], [data-md-state]").forEach(function (node) {
-        if (!isElement(node)) return;
-        node.removeAttribute("data-md-component");
-        node.removeAttribute("data-md-scrollfix");
-        node.removeAttribute("data-md-state");
-      });
-
-      if (sidebar.classList.contains("md-sidebar--secondary")) {
-        queryAll(sidebar, ".md-nav__link").forEach(function (link) {
-          if (!isHTMLElement(link)) return;
-          link.classList.remove(
-            "md-nav__link--active",
-            "md-nav__link--passed",
-            "site-toc-link--current",
-            "site-toc-link--hovered"
-          );
-          link.removeAttribute("aria-current");
-        });
-      }
-    }
-
-    function stabilizeSafariSidebars() {
-      if (!isAtlasBrowser() || !isDesktopSidebarViewport()) {
-        return;
-      }
-
-      queryAll(document, ".md-sidebar--primary, .md-sidebar--secondary").forEach(function (sidebar) {
-        if (!isHTMLElement(sidebar) || sidebar.dataset.siteStaticSidebar === "true") {
-          return;
-        }
-
-        const clone = sidebar.cloneNode(true);
-        if (!isHTMLElement(clone)) {
-          return;
-        }
-
-        clone.dataset.siteStaticSidebar = "true";
-        stripMaterialSidebarAttributes(clone);
-        sidebar.replaceWith(clone);
-      });
-    }
 
     function ensureHeading(title) {
       const tocInner = document.querySelector(SELECTORS.tocInner);
@@ -743,7 +709,6 @@
     }
 
     function refreshEntries() {
-      stabilizeSafariSidebars();
       applyTitle();
 
       activeEntries = getEntries();
@@ -842,7 +807,6 @@
 
     return {
       init: function () {
-        stabilizeSafariSidebars();
         bindEvents();
         activeEntries = [];
 
@@ -860,9 +824,10 @@
     const BUTTONS = [
       {
         selector: SELECTORS.sidebarToggle,
+        controlType: "sidebar",
         className: "sidebar-collapsed",
         storageKey: STORAGE_KEYS.sidebarCollapsed,
-        classNames: "site-sidebar-toggle md-header__button md-icon",
+        classNames: "site-header-control__button site-sidebar-toggle",
         textSelector: ".site-sidebar-toggle__text",
         defaultText: "隐藏目录",
         collapsedText: "显示目录",
@@ -875,9 +840,10 @@
       },
       {
         selector: SELECTORS.tocToggle,
+        controlType: "toc",
         className: "toc-collapsed",
         storageKey: STORAGE_KEYS.tocCollapsed,
-        classNames: "site-toc-toggle md-header__button md-icon",
+        classNames: "site-header-control__button site-toc-toggle",
         textSelector: ".site-toc-toggle__text",
         defaultText: "隐藏标题目录",
         collapsedText: "显示标题目录",
@@ -940,18 +906,33 @@
       return paletteOption && paletteOption.parentElement ? paletteOption.parentElement : null;
     }
 
+    function getWrapper(config, button) {
+      if (!button) return null;
+
+      const wrapper = button.closest(".site-header-control");
+      if (wrapper) return wrapper;
+
+      const nextWrapper = document.createElement("div");
+      nextWrapper.className = "md-header__option site-header-control";
+      nextWrapper.setAttribute("data-site-control", config.controlType);
+      button.replaceWith(nextWrapper);
+      nextWrapper.appendChild(button);
+      return nextWrapper;
+    }
+
     function syncButton(config) {
       const button = document.querySelector(config.selector);
+      const wrapper = getWrapper(config, button);
       const hasToc = tocHasItems();
 
-      if (!button) return;
+      if (!button || !wrapper) return;
 
       if (!isDesktopViewport() || (config.requiresToc && !hasToc)) {
-        button.hidden = true;
+        wrapper.hidden = true;
         return;
       }
 
-      button.hidden = false;
+      wrapper.hidden = false;
       const collapsed = document.documentElement.classList.contains(config.className);
       const label = collapsed ? config.collapsedLabel : config.defaultLabel;
       const text = collapsed ? config.collapsedText : config.defaultText;
@@ -980,11 +961,18 @@
 
     function ensureButton(config) {
       let button = document.querySelector(config.selector);
+      let wrapper = button ? getWrapper(config, button) : null;
+
       if (!button) {
+        wrapper = document.createElement("div");
+        wrapper.className = "md-header__option site-header-control";
+        wrapper.setAttribute("data-site-control", config.controlType);
+
         button = document.createElement("button");
         button.type = "button";
         button.className = config.classNames;
         button.innerHTML = config.innerHTML;
+        wrapper.appendChild(button);
 
         button.addEventListener("click", function () {
           setCollapsed(
@@ -996,10 +984,10 @@
 
       const host = getHost();
       const paletteOption = document.querySelector(SELECTORS.paletteForm);
-      if (host && paletteOption && button.parentElement !== host) {
-        host.insertBefore(button, paletteOption);
-      } else if (!button.parentElement) {
-        document.body.appendChild(button);
+      if (host && paletteOption && wrapper && wrapper.parentElement !== host) {
+        host.insertBefore(wrapper, paletteOption);
+      } else if (wrapper && !wrapper.parentElement) {
+        document.body.appendChild(wrapper);
       }
     }
 
@@ -1081,7 +1069,7 @@
       requestSync: requestSync,
       subscribe: function (callback, options) {
         if (typeof callback !== "function") {
-          return function () {};
+          return function () { };
         }
 
         subscribers.add(callback);
@@ -1140,6 +1128,288 @@
         subscribeScroll();
         syncState(scrollCoordinatorModule.getScrollTop());
       },
+    };
+  })();
+
+  const topShadowModule = (function () {
+    let shadowNode = null;
+    let ticking = false;
+
+    function needsTopShadow() {
+      const root = document.documentElement;
+      return (
+        root.classList.contains("site-browser-safari") ||
+        root.classList.contains("site-browser-atlas")
+      );
+    }
+
+    function ensureShadowNode() {
+      if (shadowNode && document.body.contains(shadowNode)) {
+        return shadowNode;
+      }
+
+      shadowNode = document.querySelector(".site-top-shadow");
+
+      if (!shadowNode) {
+        shadowNode = document.createElement("div");
+        shadowNode.className = "site-top-shadow";
+        shadowNode.setAttribute("aria-hidden", "true");
+        document.body.appendChild(shadowNode);
+      }
+
+      return shadowNode;
+    }
+
+    function getVisibleBottom(element) {
+      if (!isHTMLElement(element)) {
+        return 0;
+      }
+
+      const rect = element.getBoundingClientRect();
+
+      if (rect.height <= 0) {
+        return 0;
+      }
+
+      const style = window.getComputedStyle(element);
+
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        style.opacity === "0"
+      ) {
+        return 0;
+      }
+
+      return Math.max(0, rect.bottom);
+    }
+
+    function syncShadowPosition() {
+      ticking = false;
+
+      const shadow = ensureShadowNode();
+
+      if (!needsTopShadow()) {
+        shadow.style.opacity = "0";
+        return;
+      }
+
+      const header = document.querySelector(SELECTORS.headerRoot);
+      const tabs = document.querySelector(SELECTORS.tabsRoot);
+      const root = document.documentElement;
+      const tabsCollapsed = root.classList.contains("site-tabs-collapsed");
+
+      const headerBottom = getVisibleBottom(header);
+      const tabsBottom = tabsCollapsed ? 0 : getVisibleBottom(tabs);
+      const bottom = Math.max(headerBottom, tabsBottom);
+
+      if (bottom <= 0) {
+        shadow.style.opacity = "0";
+        return;
+      }
+
+      root.style.setProperty("--site-top-shadow-top", Math.round(bottom - 1) + "px");
+      shadow.style.opacity = "1";
+    }
+
+    function requestSync() {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(syncShadowPosition);
+    }
+
+    function bindEvents() {
+      if (document.documentElement.dataset.siteTopShadowBound === "true") {
+        return;
+      }
+
+      window.addEventListener("scroll", requestSync, { passive: true });
+      window.addEventListener("resize", requestSync, { passive: true });
+
+      if (window.visualViewport && typeof window.visualViewport.addEventListener === "function") {
+        window.visualViewport.addEventListener("resize", requestSync, { passive: true });
+        window.visualViewport.addEventListener("scroll", requestSync, { passive: true });
+      }
+
+      if (typeof ResizeObserver === "function") {
+        const observer = new ResizeObserver(requestSync);
+        const header = document.querySelector(SELECTORS.headerRoot);
+        const tabs = document.querySelector(SELECTORS.tabsRoot);
+
+        if (isHTMLElement(header)) observer.observe(header);
+        if (isHTMLElement(tabs)) observer.observe(tabs);
+      }
+
+      if (typeof MutationObserver === "function") {
+        const observer = new MutationObserver(requestSync);
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+      }
+
+      document.documentElement.dataset.siteTopShadowBound = "true";
+    }
+
+    return {
+      init: function () {
+        bindEvents();
+        ensureShadowNode();
+        requestSync();
+        window.setTimeout(requestSync, 80);
+        window.setTimeout(requestSync, 240);
+      },
+    };
+  })();
+
+  const atlasWheelModule = (function () {
+    function isSafariForcedOrDetected() {
+      const root = document.documentElement;
+
+      return (
+        root.classList.contains("site-browser-safari") ||
+        (document.body && document.body.classList.contains("is-safari"))
+      );
+    }
+
+    function isAtlasForcedOrDetected() {
+      const root = document.documentElement;
+
+      return (
+        root.classList.contains("site-browser-atlas") ||
+        (document.body && document.body.classList.contains("is-atlas"))
+      );
+    }
+
+    function isDesktopCompatViewport() {
+      return window.matchMedia("(min-width: 76.25em)").matches;
+    }
+
+    function getTargetElement(target) {
+      if (target instanceof Node && !(target instanceof Element)) {
+        return target.parentElement;
+      }
+
+      return target instanceof Element ? target : null;
+    }
+
+    function shouldIgnoreWheelTarget(target) {
+      const element = getTargetElement(target);
+      if (!element) return false;
+
+      return Boolean(
+        element.closest(
+          [
+            ".md-header",
+            ".md-tabs",
+            ".md-sidebar--primary",
+            ".md-sidebar--secondary",
+            ".md-search",
+            ".md-dialog",
+            ".custom-codeblock__body",
+            ".custom-codeblock__copy",
+            "input",
+            "textarea",
+            "select",
+            "button",
+            '[contenteditable=""]',
+            '[contenteditable="true"]'
+          ].join(", ")
+        )
+      );
+    }
+
+    function isMainContentTarget(target) {
+      const element = getTargetElement(target);
+      if (!element) return false;
+
+      return Boolean(
+        element.closest(
+          ".md-main, .md-main__inner, .md-content, .md-content__inner, .md-typeset"
+        )
+      );
+    }
+
+    function getScrollRoot() {
+      return document.scrollingElement || document.documentElement || document.body;
+    }
+
+    function getMaxScrollTop(root) {
+      return Math.max(
+        0,
+        root.scrollHeight - root.clientHeight,
+        document.documentElement.scrollHeight - window.innerHeight,
+        document.body.scrollHeight - window.innerHeight
+      );
+    }
+
+    function getCurrentScrollTop(root) {
+      return Math.max(
+        window.scrollY || 0,
+        root ? root.scrollTop || 0 : 0,
+        document.documentElement.scrollTop || 0,
+        document.body.scrollTop || 0
+      );
+    }
+
+    function forcePageScroll(deltaY) {
+      const root = getScrollRoot();
+      if (!root) return false;
+
+      const current = getCurrentScrollTop(root);
+      const max = getMaxScrollTop(root);
+      const next = Math.min(Math.max(0, current + deltaY), max);
+
+      if (next === current) return false;
+
+      root.scrollTop = next;
+      document.documentElement.scrollTop = next;
+      document.body.scrollTop = next;
+
+      return true;
+    }
+
+    function handleWheel(event) {
+      const needsCompatScroll =
+        isDesktopCompatViewport() &&
+        (isAtlasForcedOrDetected() || isSafariForcedOrDetected());
+
+      if (!needsCompatScroll) return;
+      if (event.defaultPrevented) return;
+      if (shouldIgnoreWheelTarget(event.target)) return;
+      if (!isMainContentTarget(event.target)) return;
+
+      const deltaY = event.deltaY || 0;
+      if (!deltaY) return;
+
+      if (Math.abs(deltaY) < Math.abs(event.deltaX || 0)) {
+        return;
+      }
+
+      const moved = forcePageScroll(deltaY);
+
+      if (moved) {
+        event.preventDefault();
+        scrollCoordinatorModule.requestSync();
+      }
+    }
+
+    function bindWheel() {
+      if (document.documentElement.dataset.siteCompatWheelBound === "true") {
+        return;
+      }
+
+      window.addEventListener("wheel", handleWheel, {
+        passive: false,
+        capture: true,
+      });
+
+      document.documentElement.dataset.siteCompatWheelBound = "true";
+    }
+
+    return {
+      init: bindWheel,
     };
   })();
 
@@ -1385,6 +1655,13 @@
   })();
 
   const codeBlockModule = (function () {
+    const COPY_LABEL = "复制";
+    const COPIED_LABEL = "已复制";
+    const COPY_ICON =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7.75A2.75 2.75 0 0 1 10.75 5h6.5A2.75 2.75 0 0 1 20 7.75v6.5A2.75 2.75 0 0 1 17.25 17h-6.5A2.75 2.75 0 0 1 8 14.25v-6.5Zm2.75-1.25c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25h-6.5Z"/><path d="M4 10.75A2.75 2.75 0 0 1 6.75 8h.5v1.5h-.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25v-.5H16v.5A2.75 2.75 0 0 1 13.25 20h-6.5A2.75 2.75 0 0 1 4 17.25v-6.5Z"/></svg>';
+    const CHECK_ICON =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.55 16.6 4.95 12l1.06-1.06 3.54 3.54 8.44-8.43 1.06 1.06-9.5 9.49Z"/></svg>';
+
     function normalizeLanguageName(value) {
       const normalized = (value || "").trim().toLowerCase();
       if (!normalized) return "Text";
@@ -1448,6 +1725,126 @@
       highlight.dataset.codeLanguage = languageName;
     }
 
+    function setCopyButtonState(button, copied) {
+      button.classList.toggle("is-copied", copied);
+      button.innerHTML =
+        (copied ? CHECK_ICON : COPY_ICON) +
+        '<span class="custom-codeblock__copy-text">' +
+        (copied ? COPIED_LABEL : COPY_LABEL) +
+        "</span>";
+      button.setAttribute("aria-label", copied ? COPIED_LABEL : COPY_LABEL);
+    }
+
+    function fallbackCopyText(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.top = "-1000px";
+      textarea.style.left = "-1000px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } finally {
+        textarea.remove();
+      }
+
+      return copied;
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          // Fall back for non-secure contexts and restricted clipboard permissions.
+        }
+      }
+
+      return fallbackCopyText(text);
+    }
+
+    function getCodeText(code) {
+      const lines = queryAll(code, ".code-line");
+      if (lines.length) {
+        return lines.map(function (line) {
+          return line.textContent || "";
+        }).join("\n");
+      }
+
+      return (code.textContent || "").replace(/\n$/, "");
+    }
+
+    function removeNativeCopyControls(highlight) {
+      queryAll(highlight, ":scope > .md-clipboard, :scope > .md-code__nav").forEach(function (node) {
+        node.remove();
+      });
+    }
+
+    function createCodeHeader(languageName, code) {
+      const header = document.createElement("div");
+      const leading = document.createElement("div");
+      const dots = document.createElement("span");
+      const language = document.createElement("span");
+      const copyButton = document.createElement("button");
+
+      header.className = "custom-codeblock__header";
+      leading.className = "custom-codeblock__leading";
+      dots.className = "custom-codeblock__dots";
+      dots.setAttribute("aria-hidden", "true");
+      language.className = "custom-codeblock__language";
+      language.textContent = languageName;
+      copyButton.className = "custom-codeblock__copy";
+      copyButton.type = "button";
+      setCopyButtonState(copyButton, false);
+
+      copyButton.addEventListener("click", async function () {
+        const didCopy = await copyText(getCodeText(code));
+        if (!didCopy) return;
+
+        setCopyButtonState(copyButton, true);
+        if (copyButton._siteCopyTimer) {
+          window.clearTimeout(copyButton._siteCopyTimer);
+        }
+        copyButton._siteCopyTimer = window.setTimeout(function () {
+          setCopyButtonState(copyButton, false);
+        }, 1500);
+      });
+
+      leading.append(dots, language);
+      header.append(leading, copyButton);
+      return header;
+    }
+
+    function ensureCodeBlockStructure(highlight, pre, code, languageName) {
+      removeNativeCopyControls(highlight);
+      highlight.classList.add("custom-codeblock");
+
+      const existingHeader = highlight.querySelector(":scope > .custom-codeblock__header");
+      if (existingHeader) {
+        existingHeader.remove();
+      }
+
+      let body = highlight.querySelector(":scope > .custom-codeblock__body");
+      if (!body) {
+        body = document.createElement("div");
+        body.className = "custom-codeblock__body";
+      }
+
+      if (pre.parentElement !== body) {
+        body.appendChild(pre);
+      }
+
+      highlight.prepend(createCodeHeader(languageName, code));
+      if (body.parentElement !== highlight) {
+        highlight.appendChild(body);
+      }
+    }
+
     function splitCodeIntoLines(code) {
       if (!isHTMLElement(code) || code.dataset.autoLinenumsApplied === "true") {
         return;
@@ -1487,8 +1884,10 @@
       const code = pre ? pre.querySelector(":scope > code") : null;
       if (!pre || !code) return;
 
-      setLanguageLabel(highlight, inferLanguage(highlight, pre, code));
+      const languageName = inferLanguage(highlight, pre, code);
+      setLanguageLabel(highlight, languageName);
       splitCodeIntoLines(code);
+      ensureCodeBlockStructure(highlight, pre, code, languageName);
       highlight.classList.add("has-auto-linenums");
       highlight.dataset.autoCodeEnhanced = "true";
     }
@@ -1573,6 +1972,8 @@
     layoutToggleModule,
     scrollCoordinatorModule,
     tabsCollapseModule,
+    topShadowModule,
+    atlasWheelModule,
     topButtonModule,
     themeToggleModule,
     codeBlockModule,
