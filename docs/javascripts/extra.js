@@ -1371,9 +1371,7 @@
     }
 
     function handleWheel(event) {
-      const needsCompatScroll =
-        isDesktopCompatViewport() &&
-        (isAtlasForcedOrDetected() || isSafariForcedOrDetected());
+      const needsCompatScroll = isDesktopCompatViewport();
 
       if (!needsCompatScroll) return;
       if (event.defaultPrevented) return;
