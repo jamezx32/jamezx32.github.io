@@ -12,11 +12,13 @@
         <meta name="author" content="SXY">
       
       
+        <link rel="canonical" href="https://jamezx32.github.io/v8/jit/">
+      
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">
+        <link rel="next" href="../V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/">
       
       
         
@@ -45,15 +47,9 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-27-v43">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -71,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -126,20 +122,20 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
   
@@ -520,10 +516,76 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-ignition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Ignition：解释器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sparkplug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sparkplug：非优化基线编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maglev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maglev：中层优化编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-turbofan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. TurboFan：顶层优化编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-turboshaft-turbofan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Turboshaft 和 TurboFan 的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 调试时的对应关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        我之后会写
+        参考资料
       
     </span>
   </a>
@@ -534,6 +596,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8调试手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -610,6 +700,90 @@
     
   
     V8 指针压缩机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2021-30517%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2021-30517分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-13224%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-13224分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-12433%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-12433分析
   
 
     
@@ -712,6 +886,90 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20NAN-Boxing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAN-Boxing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    调试参数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -788,6 +1046,34 @@
     
   
     总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chakracore/ChakraCore%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChakraCore 构建与调试
   
 
     
@@ -952,10 +1238,76 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-ignition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Ignition：解释器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sparkplug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sparkplug：非优化基线编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maglev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maglev：中层优化编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-turbofan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. TurboFan：顶层优化编译器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-turboshaft-turbofan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Turboshaft 和 TurboFan 的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 调试时的对应关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        我之后会写
+        参考资料
       
     </span>
   </a>
@@ -980,14 +1332,62 @@
 
 
 <h1 id="v8-jit">V8 JIT 基础<a class="headerlink" href="#v8-jit" title="Permanent link">&para;</a></h1>
-<p>这里先放一篇测试页面。</p>
-<h2 id="_1">我之后会写<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Ignition</li>
-<li>TurboFan</li>
-<li>优化与反优化</li>
-<li>类型推断</li>
-</ul>
+<p>V8 采用分层执行模型。JavaScript 源码首先被编译为 Ignition bytecode，随后根据函数的执行热点和运行时反馈，逐步进入更高层级的编译管线。</p>
+<p><code>JavaScript source -&gt; Ignition bytecode -&gt; Sparkplug -&gt; Maglev -&gt; TurboFan</code></p>
+<h2 id="1-ignition">1. Ignition：解释器<a class="headerlink" href="#1-ignition" title="Permanent link">&para;</a></h2>
+<p>Ignition 是 V8 的解释器。它将 JavaScript 函数编译为紧凑的 bytecode，并负责执行这些 bytecode。与直接生成基线机器码相比，bytecode 体积更小，启动成本更低，也更适合作为后续优化阶段的输入。</p>
+<p><img alt="V8 compilation pipeline with Ignition enabled" src="https://v8.dev/_img/ignition-interpreter/ignition-pipeline.png" /></p>
+<p>在这一阶段，V8 一边执行 bytecode，一边收集运行时反馈。对象形状、属性访问模式和操作数类型等信息，会被后续编译器用于生成更专门化的代码。调试时，<code>--print-bytecode</code> 主要对应这一层。</p>
+<h2 id="2-sparkplug">2. Sparkplug：非优化基线编译器<a class="headerlink" href="#2-sparkplug" title="Permanent link">&para;</a></h2>
+<p>Sparkplug 是 V8 的 non-optimizing JavaScript compiler。它位于 Ignition 和 TurboFan 之间，负责将 bytecode 快速编译为与解释执行语义等价的机器码。Sparkplug 的设计目标不是进行复杂优化，而是尽可能快地消除解释器固有的开销，例如 bytecode decoding 和 dispatch overhead。</p>
+<p>Sparkplug 仍然以 Ignition bytecode 作为输入，并尽量复用现有 builtin 和调用约定。它生成机器码的速度很快，因此适合较早介入执行管线，在不等待顶层优化编译完成的情况下提供稳定的性能收益。</p>
+<h2 id="3-maglev">3. Maglev：中层优化编译器<a class="headerlink" href="#3-maglev" title="Permanent link">&para;</a></h2>
+<p>Maglev 是 V8 的 fast optimizing compiler，位于 Sparkplug 和 TurboFan 之间。它的目标是在编译速度和代码质量之间取得中间位置，即生成明显优于 Sparkplug 的代码，同时保持远低于 TurboFan 的编译成本。</p>
+<p><img alt="V8 tiering with Maglev" src="https://v8.dev/_img/maglev/I-IS-IT-IST-ISTM.svg" /></p>
+<p>Maglev 直接基于 bytecode 和运行时反馈构建中间表示，并根据已经观察到的类型和对象形状生成专门化代码。当这些假设在运行时不再成立时，代码会触发 deoptimization 并回退到更低层级的执行路径。对分析 JIT 行为而言，Maglev 是连接 baseline 编译和 peak-performance optimization 的关键一层。</p>
+<h2 id="4-turbofan">4. TurboFan：顶层优化编译器<a class="headerlink" href="#4-turbofan" title="Permanent link">&para;</a></h2>
+<p>TurboFan 是 V8 的 optimizing compiler，目标是峰值执行性能。它利用 bytecode 和运行时反馈生成高度专门化、通常带有投机性质的机器码，因此编译成本最高，但生成代码的性能上限也最高。</p>
+<p>在这一层，V8 会更积极地利用类型信息、对象形状信息以及控制流信息进行优化。相应地，错误类型推断、缺失检查、错误去优化路径等问题，也更容易在这一层暴露。调试时，<code>--trace-opt</code>、<code>--trace-deopt</code> 和 <code>--trace-turbo</code> 主要用于观察这一阶段的编译与回退行为。</p>
+<h2 id="5-turboshaft-turbofan">5. Turboshaft 和 TurboFan 的关系<a class="headerlink" href="#5-turboshaft-turbofan" title="Permanent link">&para;</a></h2>
+<p><code>TurboFan / Turboshaft</code> 经常被并列提及，但两者并不表示两层独立的执行 tier。按照执行分层理解，顶层优化编译器仍然是 TurboFan；而 Turboshaft 更接近于 V8 近年来引入的内部 IR 和编译基础设施，用于逐步替换 TurboFan 的部分传统实现。因此，Turboshaft 更适合被理解为顶层优化管线内部的演进，而不是新增的一层 JIT。</p>
+<h2 id="6">6. 调试时的对应关系<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>关注点</th>
+<th>常用 flag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ignition</td>
+<td>bytecode、寄存器/累加器语义</td>
+<td><code>--print-bytecode</code></td>
+</tr>
+<tr>
+<td>Sparkplug</td>
+<td>baseline code 是否生成</td>
+<td>具体 flag 随版本变化，通常先看 <code>--help</code></td>
+</tr>
+<tr>
+<td>Maglev</td>
+<td>中层优化是否介入、是否发生 deopt</td>
+<td><code>--trace-opt</code>、部分版本提供 Maglev trace flag</td>
+</tr>
+<tr>
+<td>TurboFan</td>
+<td>优化图、机器码、deopt 点</td>
+<td><code>--trace-opt</code> <code>--trace-deopt</code> <code>--trace-turbo</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1">参考资料<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://v8.dev/blog/ignition-interpreter">Firing up the Ignition interpreter</a></li>
+<li><a href="https://v8.dev/blog/sparkplug">Sparkplug — a non-optimizing JavaScript compiler</a></li>
+<li><a href="https://v8.dev/blog/maglev">Maglev - V8’s Fastest Optimizing JIT</a></li>
+</ol>
 
 
 
@@ -1045,12 +1445,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/extra.js"></script>
+        <script src="../../javascripts/extra.js?v=2026-04-27-v43"></script>
       
     
   </body>

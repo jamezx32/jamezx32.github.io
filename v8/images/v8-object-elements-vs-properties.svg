@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+  <defs>
+    <style>
+      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
+      .field { font: 500 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
+      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
+      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#0b7285"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="430" fill="#ffffff"/>
+  <text x="40" y="30" class="note">A plain object can have indexed elements and named properties at the same time</text>
+
+  <g transform="translate(60 86)">
+    <rect width="300" height="228" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="300" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="300" height="12" fill="#0b7285"/>
+    <text x="150" y="28" text-anchor="middle" class="title">JSObject</text>
+
+    <rect x="18" y="62" width="264" height="38" rx="8" fill="#eef4f7"/>
+    <rect x="18" y="108" width="264" height="38" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <rect x="18" y="154" width="264" height="38" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+    <rect x="18" y="200" width="264" height="30" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
+
+    <text x="36" y="86" class="field">map</text>
+    <text x="36" y="132" class="field">properties pointer</text>
+    <text x="36" y="178" class="field">elements pointer</text>
+    <text x="36" y="221" class="field">in-object fields ...</text>
+  </g>
+
+  <g transform="translate(470 78)">
+    <rect width="200" height="126" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="200" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="200" height="12" fill="#0b7285"/>
+    <text x="100" y="28" text-anchor="middle" class="title">elements store</text>
+
+    <rect x="18" y="62" width="164" height="42" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+    <text x="36" y="88" class="field">obj[0] = 1</text>
+  </g>
+
+  <g transform="translate(470 236)">
+    <rect width="200" height="126" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+    <rect width="200" height="42" rx="12" fill="#0b7285"/>
+    <rect y="30" width="200" height="12" fill="#0b7285"/>
+    <text x="100" y="28" text-anchor="middle" class="title">properties store</text>
+
+    <rect x="18" y="62" width="164" height="42" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+    <text x="36" y="88" class="field">obj.a = 1</text>
+  </g>
+
+  <line x1="360" y1="178" x2="470" y2="138" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="360" y1="132" x2="470" y2="298" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="720" y="142" width="196" height="132" rx="12" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
+  <text x="818" y="170" text-anchor="middle" class="callout">same object</text>
+  <text x="742" y="200" class="mini">named properties and indexed elements</text>
+  <text x="742" y="222" class="mini">are separated for performance reasons</text>
+  <text x="742" y="244" class="mini">even though both are just “properties” in JS</text>
+</svg>

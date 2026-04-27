@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <defs>
+    <style>
+      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
+      .label { font: 600 18px Helvetica, Arial, sans-serif; fill: #101828; }
+      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
+      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
+      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
+    </style>
+  </defs>
+
+  <rect width="980" height="560" fill="#ffffff"/>
+  <text x="42" y="34" class="note">A rough map of the spaces most often encountered in V8 heap analysis</text>
+
+  <g transform="translate(42 64)">
+    <rect width="896" height="384" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="26" y="34" class="callout">V8 heap</text>
+
+    <g transform="translate(26 58)">
+      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+      <rect width="250" height="42" rx="12" fill="#0b7285"/>
+      <rect y="30" width="250" height="12" fill="#0b7285"/>
+      <text x="125" y="28" text-anchor="middle" class="title">New Space</text>
+
+      <rect x="18" y="62" width="96" height="56" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+      <rect x="136" y="62" width="96" height="56" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
+      <text x="66" y="92" text-anchor="middle" class="label">From</text>
+      <text x="184" y="92" text-anchor="middle" class="label">To</text>
+      <text x="18" y="132" class="mini">young objects / minor GC / semispace copy</text>
+    </g>
+
+    <g transform="translate(322 58)">
+      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+      <rect width="250" height="42" rx="12" fill="#0b7285"/>
+      <rect y="30" width="250" height="12" fill="#0b7285"/>
+      <text x="125" y="28" text-anchor="middle" class="title">Old Space</text>
+
+      <rect x="18" y="62" width="214" height="56" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
+      <text x="36" y="92" class="label">long-lived objects</text>
+      <text x="18" y="132" class="mini">mark-sweep / mark-compact</text>
+    </g>
+
+    <g transform="translate(618 58)">
+      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+      <rect width="250" height="42" rx="12" fill="#0b7285"/>
+      <rect y="30" width="250" height="12" fill="#0b7285"/>
+      <text x="125" y="28" text-anchor="middle" class="title">Large Object Space</text>
+
+      <rect x="18" y="62" width="214" height="56" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
+      <text x="36" y="92" class="label">large objects</text>
+      <text x="18" y="132" class="mini">generally not a good fit for copying GC</text>
+    </g>
+
+    <g transform="translate(98 230)">
+      <rect width="250" height="120" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+      <rect width="250" height="42" rx="12" fill="#0b7285"/>
+      <rect y="30" width="250" height="12" fill="#0b7285"/>
+      <text x="125" y="28" text-anchor="middle" class="title">Code Space</text>
+
+      <rect x="18" y="62" width="214" height="40" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="36" y="88" class="label">builtins / JIT code / metadata</text>
+    </g>
+
+    <g transform="translate(548 230)">
+      <rect width="250" height="120" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
+      <rect width="250" height="42" rx="12" fill="#0b7285"/>
+      <rect y="30" width="250" height="12" fill="#0b7285"/>
+      <text x="125" y="28" text-anchor="middle" class="title">Read-Only Space</text>
+
+      <rect x="18" y="62" width="214" height="40" rx="8" fill="#f2f4f7" stroke="#98a2b3" stroke-width="1.5"/>
+      <text x="36" y="88" class="label">shared immutable structures</text>
+    </g>
+  </g>
+
+  <g transform="translate(186 470)">
+    <rect width="608" height="54" rx="12" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
+    <text x="304" y="492" text-anchor="middle" class="callout">Pointer Compression</text>
+    <text x="304" y="512" text-anchor="middle" class="mini">tagged representation optimization, not a separate heap space</text>
+  </g>
+</svg>

@@ -1,0 +1,1699 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="JavaScript Engine Security Research Notes">
+      
+      
+        <meta name="author" content="SXY">
+      
+      
+        <link rel="canonical" href="https://jamezx32.github.io/jsc/JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/">
+      
+      
+        <link rel="prev" href="../JavaScriptCore%20NAN-Boxing/">
+      
+      
+        <link rel="next" href="../../chakracore/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>调试参数 - SXY Research Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v=2026-04-27-v43">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#javascriptcore" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="SXY Research Notes" class="md-header__button md-logo" aria-label="SXY Research Notes" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SXY Research Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              调试参数
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../v8/" class="md-tabs__link">
+          
+  
+  
+  V8
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  JSC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chakracore/" class="md-tabs__link">
+          
+  
+  
+  ChakraCore
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../vscode/clangd-setup/" class="md-tabs__link">
+          
+  
+  
+  VSCode配置
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SXY Research Notes" class="md-nav__button md-logo" aria-label="SXY Research Notes" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    SXY Research Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    V8
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/jit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JIT基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8调试手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8 数组的内存布局
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/V8%E5%A0%86%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8 堆的内存布局
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/V8%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V8 指针压缩机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/CVE-2021-30517%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2021-30517分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/CVE-2025-13224%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-13224分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v8/CVE-2025-12433%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2025-12433分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JSC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JavaScriptCore%20NAN-Boxing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAN-Boxing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    调试参数
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    调试参数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最常用的一组启动参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb 里最常用的启动方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#describe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        describe() 和对象形态
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数组索引和命名属性的最小观察例子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用 dump 脚本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用 dump 脚本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jsc_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jsc_dump
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsc_diff_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jsc_diff_test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug.sh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jscdump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .jscdump 常用组合
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它常用命令模板
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChakraCore
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ChakraCore
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chakracore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chakracore/ChakraCore%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChakraCore 构建与调试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chakracore/CVE-2019-0567/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE-2019-0567分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VSCode配置
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VSCode配置
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/clangd-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    clangd配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最常用的一组启动参数
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb 里最常用的启动方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#describe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        describe() 和对象形态
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数组索引和命名属性的最小观察例子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用 dump 脚本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用 dump 脚本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jsc_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jsc_dump
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsc_diff_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jsc_diff_test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug.sh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jscdump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .jscdump 常用组合
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其它常用命令模板
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="javascriptcore">JavaScriptCore 调试参数<a class="headerlink" href="#javascriptcore" title="Permanent link">&para;</a></h1>
+<p>这篇笔记把平时看 JSC 常用的启动参数、<code>gdb</code> 命令和几个小脚本整理到一起，主要目的是把“先把输出打开、把层次切开、把断点打准”这几件事收成一个固定入口。</p>
+<hr />
+<h2 id="_1">最常用的一组启动参数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/home/sxy/tmp/WebKit/ReleaseAssertionDebugBuild/bin/jsc<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>/home/sxy/JsC/WebKit/test.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--useConcurrentGC<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--verboseCompilation<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>--verboseOSR<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>--dumpGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>&gt;stdout.jscdump<span class="w"> </span><span class="m">2</span>&gt;stderr.jscdump
+</code></pre></div>
+<p>这组参数的作用基本够覆盖平时排查 DFG / FTL 问题的第一轮观察：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>输出字节码</td>
+</tr>
+<tr>
+<td>--useConcurrentJIT=0</td>
+<td>关闭并行 JIT，方便复现和对照输出</td>
+</tr>
+<tr>
+<td>--useConcurrentGC=0</td>
+<td>关闭并行 GC，减少调试噪声</td>
+</tr>
+<tr>
+<td>--verboseCompilation=1</td>
+<td>输出编译层面的详细信息</td>
+</tr>
+<tr>
+<td>--verboseOSR=1</td>
+<td>输出 OSR 相关信息</td>
+</tr>
+<tr>
+<td>--dumpGraphAtEachPhase=1</td>
+<td>dump 优化阶段图，适合先看 DFG / FTL 变换</td>
+</tr>
+</tbody>
+</table>
+<p>如果一开始还不确定问题出在哪层，先把这组参数跑起来，通常就能知道代码有没有进优化、进了哪一层、每一阶段的图长什么样。</p>
+<hr />
+<h2 id="gdb"><code>gdb</code> 里最常用的启动方式<a class="headerlink" href="#gdb" title="Permanent link">&para;</a></h2>
+<p>先启动 <code>gdb</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gdb<span class="w"> </span>/home/sxy/tmp/WebKit/ReleaseAssertionDebugBuild/bin/jsc
+</code></pre></div>
+<p>再在 <code>gdb</code> 里带参数运行脚本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>(gdb) run /home/sxy/tmp/44308/test/test1.js \
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  --dumpGraphAtEachPhase=true \
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  --useConcurrentJIT=false \
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  --dumpDisassembly=true \
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  --useConcurrentGC=false \
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  2&gt;Graph.jscDump
+</code></pre></div>
+<p>平时比较常用的一类断点是先在自己关心的 helper 或内置打印函数上拦一下，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>(gdb) b functionDescribe
+</code></pre></div>
+<p>这样做的好处是，先把“对象长什么样”看清楚，再决定后面要不要继续跟 JIT 图或机器码。</p>
+<hr />
+<h2 id="describe"><code>describe()</code> 和对象形态<a class="headerlink" href="#describe" title="Permanent link">&para;</a></h2>
+<p>笔记里留了一段很典型的输出：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&gt;&gt;&gt; var a ={};
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>undefined
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>&gt;&gt;&gt; print(describe(a));
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Object: 0x7f54e1464180 with butterfly (nil)(base=0xfffffffffffffff8)
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>(Structure 0x7f5300005d00:[0x5d00/23808, Object, (0/6, 0/0){}, NonArray,
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Unknown, Proto:0x7f5523014798, Leaf]), StructureID: 23808
+</code></pre></div>
+<p>这里通常先看三件事：</p>
+<ul>
+<li>对象地址本身</li>
+<li><code>butterfly</code> 有没有分配、指向哪里</li>
+<li><code>Structure</code> 和 indexing type 当前是什么</li>
+</ul>
+<p>笔记里顺手记了两个常见的 indexing type：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>0x0000a240 NonArrayWithContiguous
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>0x0000a160 NonArrayWithDouble
+</code></pre></div>
+<p>这些值单独看意义不大，但一旦和数组模式切换、属性访问或者漏洞利用链放在一起，就会变得很关键。</p>
+<hr />
+<h2 id="_2">数组索引和命名属性的最小观察例子<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>下面这个例子很适合在 <code>describe()</code>、断点和结构切换时一起看：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nx">a</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w">                </span><span class="c1">// 索引键，进入 elements / indexed storage</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nx">a</span><span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w">              </span><span class="c1">// &quot;0&quot; 仍然按索引键处理</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nx">a</span><span class="p">.</span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w">                 </span><span class="c1">// 命名属性，进入 property 路径</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nx">a</span><span class="p">[</span><span class="o">-</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w">               </span><span class="c1">// 不是合法数组索引，走命名属性</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nx">a</span><span class="p">[</span><span class="mf">4294967295</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w">       </span><span class="c1">// 超出数组索引上限，走命名属性</span>
+</code></pre></div>
+<p>这个例子的价值不在于行为本身，而在于它很适合拿来确认 JSC 当前把哪些键放进 indexed storage，哪些键留在普通属性区。看对象模型或做 Root Cause 时，这种边界经常决定后面的 <code>Structure</code> 和 <code>Butterfly</code> 怎么变化。</p>
+<hr />
+<h2 id="dump">常用 dump 脚本<a class="headerlink" href="#dump" title="Permanent link">&para;</a></h2>
+<h3 id="jsc_dump"><code>jsc_dump</code><a class="headerlink" href="#jsc_dump" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="m">2</span>&gt;ByteCode.jscDump
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--verboseCompilation<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;Compilation.jscDump
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--verboseOSR<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;OSR.jscDump
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--verboseCFA<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;CFA.jscDump
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--dumpGeneratedBytecodes<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;GeneratedBytecodes.jscDump
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--dumpDisassembly<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;Disassembly.jscDump
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--dumpFTLDisassembly<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="m">2</span>&gt;FTLDisassembly.jscDump
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--dumpGraphAtEachPhase<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--useConcurrentJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useConcurrentGC<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="m">2</span>&gt;Graph.jscDump
+</code></pre></div>
+<p>这个脚本适合做第一轮全量采样。优点是省事，基本把字节码、编译日志、OSR、CFA、图和反汇编都拆成了单独文件；缺点是输出很多，更适合先跑一遍再对比，不适合每次都用。</p>
+<h3 id="jsc_diff_test"><code>jsc_diff_test</code><a class="headerlink" href="#jsc_diff_test" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>./jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useFTLJIT<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<p>这个脚本适合快速切执行层。PoC 如果只在某一层触发，这里一般很快就能分出来是 LLInt、Baseline、DFG、FTL 还是 DFG+FTL 的问题。</p>
+<p>也可以把输出分别重定向到不同文件，方便直接做 diff：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>WebKitBuild/Debug/bin/jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>&gt;<span class="w"> </span>LLInt.txt
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>WebKitBuild/Debug/bin/jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>&gt;<span class="w"> </span>BaseLine.txt
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>WebKitBuild/Debug/bin/jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useFTLJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>&gt;<span class="w"> </span>DFG.txt
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>WebKitBuild/Debug/bin/jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useFTLJIT<span class="o">=</span><span class="nb">true</span><span class="w"> </span>&gt;<span class="w"> </span>FTL.txt
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>WebKitBuild/Debug/bin/jsc<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>--useLLInt<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useBaselineJIT<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--useDFGJIT<span class="o">=</span><span class="nb">true</span><span class="w">  </span>--useFTLJIT<span class="o">=</span><span class="nb">true</span><span class="w"> </span>&gt;<span class="w"> </span>DFGFTL.txt
+</code></pre></div>
+<h3 id="debugsh"><code>Debug.sh</code><a class="headerlink" href="#debugsh" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>gdb<span class="w"> </span>./jsc<span class="w"> </span>-ex<span class="w"> </span><span class="s2">&quot;run --useConcurrentJIT=false exp.js&quot;</span>
+</code></pre></div>
+<p>这个脚本比较简单，但平时拿来快速起一个关并发 JIT 的调试环境很方便。</p>
+<hr />
+<h2 id="jscdump"><code>.jscdump</code> 常用组合<a class="headerlink" href="#jscdump" title="Permanent link">&para;</a></h2>
+<p>如果主要想看图和优化阶段，可以直接用下面这组：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./jsc<span class="w"> </span>PoC.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>--useConcurrentGC<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span>--verboseCompilation<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span>--verboseOSR<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span>--dumpGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span>&gt;stdout.jscdump<span class="w"> </span><span class="m">2</span>&gt;stderr.jscdump
+</code></pre></div>
+<p>如果要进一步拆 DFG / FTL / B3 / Air，可以开得更细：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./jsc<span class="w"> </span>PoC.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span>--useConcurrentGC<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span>--verboseCompilation<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span>--verboseOSR<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span>--dumpDFGGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span>--dumpDFGFTLGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span>--dumpB3GraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span>--dumpAirGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">  </span>&gt;stdout.jscdump<span class="w"> </span><span class="m">2</span>&gt;stderr.jscdump
+</code></pre></div>
+<p>这组参数比较适合已经知道问题在优化链路里，接下来要判断它究竟是 DFG、FTL、B3 还是 Air 哪一层把语义做坏了。</p>
+<hr />
+<h2 id="_3">其它常用命令模板<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>下面这些命令的共同用途，是把阈值、图输出和反汇编一起打开，方便快速复现实验：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>./jsc<span class="w"> </span>-d<span class="w"> </span>-f<span class="w"> </span>test2.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--verboseOSR<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>--verboseCFA<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span>--dumpDFGGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span>--dumpGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span>--verboseCompilation<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span>&gt;out-<span class="sb">`</span>date<span class="w"> </span>+%s<span class="sb">`</span>.log<span class="w"> </span><span class="m">2</span>&gt;err_<span class="sb">`</span>date<span class="w"> </span>+%s<span class="sb">`</span>.log
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./jsc<span class="w"> </span>-d<span class="w"> </span>-f<span class="w"> </span>/home/jiming/code/CVE-2019-8518.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--verboseOSR<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>--thresholdForFTLOptimizeAfterWarmUp<span class="o">=</span><span class="m">1000</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>--verboseCFA<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>--dumpDFGGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span>--dumpDisassembly<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span>--verboseCompilation<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="m">2</span>&gt;/home/jiming/code/err.dumpjsc
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>./jsc<span class="w"> </span>-f<span class="w"> </span>/home/jiming/note/SafeToExecute/poc.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--useConcurrentJIT<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--thresholdForOptimizeSoon<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span>--useConcurrentGC<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span>--thresholdForJITAfterWarmUp<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span>--thresholdForOptimizeAfterWarmUp<span class="o">=</span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span>--thresholdForFTLOptimizeAfterWarmUp<span class="o">=</span><span class="m">1000</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">  </span>--dumpGraphAtEachPhase<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">  </span>--verboseDFGBytecodeParsing<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">  </span>--dumpBytecodeAtDFGTime<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">  </span><span class="m">2</span>&gt;/home/jiming/note/SafeToExecute/poc.jscdump
+</code></pre></div>
+<p>这些命令没有统一“标准答案”，但思路比较固定：先关并发、再压优化阈值、最后按需要开图、开字节码和开反汇编。</p>
+<hr />
+<h2 id="_4">小结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>如果只是准备开始调 JSC，第一步通常不是急着翻源码，而是先把字节码、图、反汇编和执行层切换开关整理好。参数一旦收顺，后面看 DFG / FTL、做 Root Cause 或复现 PoC，入口会稳定很多。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2025 SXY Research Notes · Built for research and portfolio
+
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/extra.js?v=2026-04-27-v43"></script>
+      
+    
+  </body>
+</html>
