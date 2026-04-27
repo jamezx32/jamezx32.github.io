@@ -231,6 +231,12 @@
     );
   }
 
+  function isEdgeBrowser() {
+
+    return /Edg\//i.test(navigator.userAgent || "");
+
+  }
+
   function subscribePageChanges(callback) {
     if (typeof document$ !== "undefined" && document$.subscribe) {
       document$.subscribe(function () {
@@ -381,6 +387,7 @@
     return {
       init: function () {
         const isSafari = isSafariBrowser();
+        const isEdge = isEdgeBrowser();
         const forcedAtlas =
           !isSafari &&
           (
@@ -391,10 +398,12 @@
 
         document.documentElement.classList.toggle("site-browser-safari", isSafari);
         document.documentElement.classList.toggle("site-browser-atlas", isAtlas);
+        document.documentElement.classList.toggle("site-browser-edge", isEdge);
 
         if (document.body) {
           document.body.classList.toggle("is-atlas", isAtlas);
           document.body.classList.toggle("is-safari", isSafari);
+          document.body.classList.toggle("is-edge", isEdge);
         }
       },
     };
@@ -1087,49 +1096,72 @@
   })();
 
   const tabsCollapseModule = (function () {
-    const COLLAPSE_CLASS = "site-tabs-collapsed";
-    const COLLAPSE_SCROLL_LIMIT = 20;
-    const EXPAND_SCROLL_LIMIT = 4;
-    let subscribed = false;
+  const COLLAPSE_CLASS = "site-tabs-collapsed";
+  const COLLAPSE_SCROLL_LIMIT = 24;
+  const EXPAND_SCROLL_LIMIT = 6;
+  let subscribed = false;
+  let initialized = false;
 
-    function hasTabs() {
-      return Boolean(document.querySelector(SELECTORS.tabsRoot));
+  function hasTabs() {
+    const tabs = document.querySelector(SELECTORS.tabsRoot);
+    return isHTMLElement(tabs) && tabs.querySelector(".md-tabs__list");
+  }
+
+  function setCollapsed(collapsed) {
+    document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
+  }
+
+  function getRealScrollTop(scrollTop) {
+    return Math.max(
+      typeof scrollTop === "number" ? scrollTop : 0,
+      window.scrollY || 0,
+      document.documentElement.scrollTop || 0,
+      document.body.scrollTop || 0
+    );
+  }
+
+  function syncState(scrollTop) {
+    if (!hasTabs()) {
+      setCollapsed(false);
+      return;
     }
 
-    function setCollapsed(collapsed) {
-      document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
-    }
+    const currentScrollTop = getRealScrollTop(scrollTop);
 
-    function syncState(scrollTop) {
-      if (!hasTabs()) {
-        setCollapsed(false);
-        return;
-      }
-
-      const root = document.documentElement;
-      const currentScrollTop = Math.max(scrollTop || 0, 0);
-
-      if (root.classList.contains(COLLAPSE_CLASS)) {
-        setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
-        return;
-      }
-
+    if (!initialized) {
+      initialized = true;
       setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
+      return;
     }
 
-    function subscribeScroll() {
-      if (subscribed) return;
-      subscribed = true;
-      scrollCoordinatorModule.subscribe(syncState, { immediate: false });
+    if (document.documentElement.classList.contains(COLLAPSE_CLASS)) {
+      setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
+      return;
     }
 
-    return {
-      init: function () {
-        subscribeScroll();
+    setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
+  }
+
+  function subscribeScroll() {
+    if (subscribed) return;
+    subscribed = true;
+    scrollCoordinatorModule.subscribe(syncState, { immediate: false });
+  }
+
+  return {
+    init: function () {
+      subscribeScroll();
+
+      window.requestAnimationFrame(function () {
         syncState(scrollCoordinatorModule.getScrollTop());
-      },
-    };
-  })();
+
+        window.setTimeout(function () {
+          syncState(scrollCoordinatorModule.getScrollTop());
+        }, 80);
+      });
+    },
+  };
+})();
 
   const topShadowModule = (function () {
     let shadowNode = null;
