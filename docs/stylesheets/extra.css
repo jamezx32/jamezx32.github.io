@@ -4366,3 +4366,27 @@ html.site-browser-edge .md-main {
   position: relative;
   z-index: 1;
 }
+
+/* =========================================================
+   Native Material copy button cleanup
+   ========================================================= */
+
+.md-typeset .custom-codeblock .md-clipboard,
+.md-typeset .custom-codeblock .md-code__nav,
+.md-typeset .custom-codeblock pre>.md-clipboard,
+.md-typeset .custom-codeblock pre>button.md-clipboard,
+.md-typeset .custom-codeblock>button.md-clipboard,
+.md-typeset .highlight.custom-codeblock>.md-clipboard,
+.md-typeset .highlight.custom-codeblock>.md-code__nav {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.md-typeset .custom-codeblock .custom-codeblock__header .custom-codeblock__copy {
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

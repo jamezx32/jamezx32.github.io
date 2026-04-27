@@ -4232,13 +4232,11 @@ html.site-browser-safari .md-main__inner {
   opacity: 0;
   transform: translateZ(0);
   will-change: top, opacity;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.24) 0%,
-    rgba(15, 23, 42, 0.14) 36%,
-    rgba(15, 23, 42, 0.06) 68%,
-    rgba(15, 23, 42, 0) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(15, 23, 42, 0.24) 0%,
+      rgba(15, 23, 42, 0.14) 36%,
+      rgba(15, 23, 42, 0.06) 68%,
+      rgba(15, 23, 42, 0) 100%);
 }
 
 /* 只在 Safari / Atlas 兼容模式启用 */
@@ -4250,13 +4248,11 @@ html.site-browser-atlas .site-top-shadow {
 /* tabs 折叠后阴影变短，贴在 header 底部 */
 html.site-tabs-collapsed .site-top-shadow {
   --site-top-shadow-height: 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.22) 0%,
-    rgba(15, 23, 42, 0.12) 40%,
-    rgba(15, 23, 42, 0.045) 74%,
-    rgba(15, 23, 42, 0) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(15, 23, 42, 0.22) 0%,
+      rgba(15, 23, 42, 0.12) 40%,
+      rgba(15, 23, 42, 0.045) 74%,
+      rgba(15, 23, 42, 0) 100%);
 }
 
 /* 让 header / tabs 永远在阴影上方 */
@@ -4277,3 +4273,120 @@ html.site-browser-atlas .md-main {
   z-index: 1;
 }
 
+/* =========================================================
+   Edge unified header/tabs behavior
+   ========================================================= */
+
+html.site-browser-edge,
+html.site-browser-edge body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto !important;
+  scroll-behavior: auto !important;
+}
+
+html.site-browser-edge .md-container {
+  height: auto !important;
+  min-height: 100dvh !important;
+  overflow-y: visible !important;
+}
+
+html.site-browser-edge .md-main,
+html.site-browser-edge .md-main__inner,
+html.site-browser-edge .md-content,
+html.site-browser-edge .md-content__inner {
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+html.site-browser-edge .md-header,
+html.site-browser-edge .md-header__inner,
+html.site-browser-edge .md-tabs,
+html.site-browser-edge .md-tabs .md-grid,
+html.site-browser-edge .md-tabs__list,
+html.site-browser-edge .md-tabs__link {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+html.site-browser-edge .md-header {
+  z-index: 40 !important;
+  box-shadow: none !important;
+}
+
+html.site-browser-edge .md-tabs:not([hidden]) {
+  display: block !important;
+  min-height: var(--site-tabs-min-height) !important;
+  max-height: var(--site-tabs-min-height) !important;
+  height: var(--site-tabs-min-height) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  z-index: 39 !important;
+  margin-top: -1px !important;
+  background: linear-gradient(135deg, rgb(63, 81, 181), rgb(79, 70, 229)) !important;
+  box-shadow: none !important;
+}
+
+html.site-browser-edge .md-tabs:not([hidden]) .md-grid,
+html.site-browser-edge .md-tabs__list,
+html.site-browser-edge .md-tabs__item,
+html.site-browser-edge .md-tabs__link {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+html.site-browser-edge.site-tabs-collapsed .md-tabs:not([hidden]) {
+  min-height: 0 !important;
+  max-height: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-0.45rem) !important;
+  pointer-events: none !important;
+}
+
+html.site-browser-edge.site-tabs-collapsed .md-tabs:not([hidden]) .md-grid,
+html.site-browser-edge.site-tabs-collapsed .md-tabs__list {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html.site-browser-edge .site-top-shadow {
+  opacity: 1;
+}
+
+html.site-browser-edge .md-main {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   Native Material copy button cleanup
+   ========================================================= */
+
+.md-typeset .custom-codeblock .md-clipboard,
+.md-typeset .custom-codeblock .md-code__nav,
+.md-typeset .custom-codeblock pre>.md-clipboard,
+.md-typeset .custom-codeblock pre>button.md-clipboard,
+.md-typeset .custom-codeblock>button.md-clipboard,
+.md-typeset .highlight.custom-codeblock>.md-clipboard,
+.md-typeset .highlight.custom-codeblock>.md-code__nav {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.md-typeset .custom-codeblock .custom-codeblock__header .custom-codeblock__copy {
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

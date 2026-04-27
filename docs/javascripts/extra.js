@@ -1096,72 +1096,72 @@
   })();
 
   const tabsCollapseModule = (function () {
-  const COLLAPSE_CLASS = "site-tabs-collapsed";
-  const COLLAPSE_SCROLL_LIMIT = 24;
-  const EXPAND_SCROLL_LIMIT = 6;
-  let subscribed = false;
-  let initialized = false;
+    const COLLAPSE_CLASS = "site-tabs-collapsed";
+    const COLLAPSE_SCROLL_LIMIT = 24;
+    const EXPAND_SCROLL_LIMIT = 6;
+    let subscribed = false;
+    let initialized = false;
 
-  function hasTabs() {
-    const tabs = document.querySelector(SELECTORS.tabsRoot);
-    return isHTMLElement(tabs) && tabs.querySelector(".md-tabs__list");
-  }
-
-  function setCollapsed(collapsed) {
-    document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
-  }
-
-  function getRealScrollTop(scrollTop) {
-    return Math.max(
-      typeof scrollTop === "number" ? scrollTop : 0,
-      window.scrollY || 0,
-      document.documentElement.scrollTop || 0,
-      document.body.scrollTop || 0
-    );
-  }
-
-  function syncState(scrollTop) {
-    if (!hasTabs()) {
-      setCollapsed(false);
-      return;
+    function hasTabs() {
+      const tabs = document.querySelector(SELECTORS.tabsRoot);
+      return isHTMLElement(tabs) && tabs.querySelector(".md-tabs__list");
     }
 
-    const currentScrollTop = getRealScrollTop(scrollTop);
+    function setCollapsed(collapsed) {
+      document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
+    }
 
-    if (!initialized) {
-      initialized = true;
+    function getRealScrollTop(scrollTop) {
+      return Math.max(
+        typeof scrollTop === "number" ? scrollTop : 0,
+        window.scrollY || 0,
+        document.documentElement.scrollTop || 0,
+        document.body.scrollTop || 0
+      );
+    }
+
+    function syncState(scrollTop) {
+      if (!hasTabs()) {
+        setCollapsed(false);
+        return;
+      }
+
+      const currentScrollTop = getRealScrollTop(scrollTop);
+
+      if (!initialized) {
+        initialized = true;
+        setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
+        return;
+      }
+
+      if (document.documentElement.classList.contains(COLLAPSE_CLASS)) {
+        setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
+        return;
+      }
+
       setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
-      return;
     }
 
-    if (document.documentElement.classList.contains(COLLAPSE_CLASS)) {
-      setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
-      return;
+    function subscribeScroll() {
+      if (subscribed) return;
+      subscribed = true;
+      scrollCoordinatorModule.subscribe(syncState, { immediate: false });
     }
 
-    setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
-  }
+    return {
+      init: function () {
+        subscribeScroll();
 
-  function subscribeScroll() {
-    if (subscribed) return;
-    subscribed = true;
-    scrollCoordinatorModule.subscribe(syncState, { immediate: false });
-  }
-
-  return {
-    init: function () {
-      subscribeScroll();
-
-      window.requestAnimationFrame(function () {
-        syncState(scrollCoordinatorModule.getScrollTop());
-
-        window.setTimeout(function () {
+        window.requestAnimationFrame(function () {
           syncState(scrollCoordinatorModule.getScrollTop());
-        }, 80);
-      });
-    },
-  };
-})();
+
+          window.setTimeout(function () {
+            syncState(scrollCoordinatorModule.getScrollTop());
+          }, 80);
+        });
+      },
+    };
+  })();
 
   const topShadowModule = (function () {
     let shadowNode = null;
@@ -1810,7 +1810,27 @@
     }
 
     function removeNativeCopyControls(highlight) {
-      queryAll(highlight, ":scope > .md-clipboard, :scope > .md-code__nav").forEach(function (node) {
+      queryAll(
+        highlight,
+        [
+          ".md-clipboard",
+          ".md-code__nav",
+          ".highlight > button",
+          ".highlight > pre > button",
+          "pre > .md-clipboard",
+          "pre > button.md-clipboard",
+          "button.md-clipboard",
+        ].join(", ")
+      ).forEach(function (node) {
+        if (!isHTMLElement(node)) return;
+
+        if (
+          node.classList.contains("custom-codeblock__copy") ||
+          node.closest(".custom-codeblock__header")
+        ) {
+          return;
+        }
+
         node.remove();
       });
     }
@@ -1901,7 +1921,13 @@
     }
 
     function enhanceCodeBlock(highlight) {
-      if (!isHTMLElement(highlight) || highlight.dataset.autoCodeEnhanced === "true") {
+      if (!isHTMLElement(highlight)) {
+        return;
+      }
+
+      removeNativeCopyControls(highlight);
+
+      if (highlight.dataset.autoCodeEnhanced === "true") {
         return;
       }
 
@@ -1925,6 +1951,18 @@
     return {
       init: function (root) {
         queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(enhanceCodeBlock);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 80);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 240);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 800);
       },
     };
   })();
@@ -1977,6 +2015,14 @@
       if (!isHTMLElement(table)) return;
       table.classList.add("fact-table");
       ensureWrapper(table);
+    }
+
+    function cleanupNativeCopyControls(root) {
+      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
+        if (isHTMLElement(highlight)) {
+          removeNativeCopyControls(highlight);
+        }
+      });
     }
 
     return {

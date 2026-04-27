@@ -231,6 +231,12 @@
     );
   }
 
+  function isEdgeBrowser() {
+
+    return /Edg\//i.test(navigator.userAgent || "");
+
+  }
+
   function subscribePageChanges(callback) {
     if (typeof document$ !== "undefined" && document$.subscribe) {
       document$.subscribe(function () {
@@ -381,6 +387,7 @@
     return {
       init: function () {
         const isSafari = isSafariBrowser();
+        const isEdge = isEdgeBrowser();
         const forcedAtlas =
           !isSafari &&
           (
@@ -391,10 +398,12 @@
 
         document.documentElement.classList.toggle("site-browser-safari", isSafari);
         document.documentElement.classList.toggle("site-browser-atlas", isAtlas);
+        document.documentElement.classList.toggle("site-browser-edge", isEdge);
 
         if (document.body) {
           document.body.classList.toggle("is-atlas", isAtlas);
           document.body.classList.toggle("is-safari", isSafari);
+          document.body.classList.toggle("is-edge", isEdge);
         }
       },
     };
@@ -1088,16 +1097,27 @@
 
   const tabsCollapseModule = (function () {
     const COLLAPSE_CLASS = "site-tabs-collapsed";
-    const COLLAPSE_SCROLL_LIMIT = 20;
-    const EXPAND_SCROLL_LIMIT = 4;
+    const COLLAPSE_SCROLL_LIMIT = 24;
+    const EXPAND_SCROLL_LIMIT = 6;
     let subscribed = false;
+    let initialized = false;
 
     function hasTabs() {
-      return Boolean(document.querySelector(SELECTORS.tabsRoot));
+      const tabs = document.querySelector(SELECTORS.tabsRoot);
+      return isHTMLElement(tabs) && tabs.querySelector(".md-tabs__list");
     }
 
     function setCollapsed(collapsed) {
       document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
+    }
+
+    function getRealScrollTop(scrollTop) {
+      return Math.max(
+        typeof scrollTop === "number" ? scrollTop : 0,
+        window.scrollY || 0,
+        document.documentElement.scrollTop || 0,
+        document.body.scrollTop || 0
+      );
     }
 
     function syncState(scrollTop) {
@@ -1106,10 +1126,15 @@
         return;
       }
 
-      const root = document.documentElement;
-      const currentScrollTop = Math.max(scrollTop || 0, 0);
+      const currentScrollTop = getRealScrollTop(scrollTop);
 
-      if (root.classList.contains(COLLAPSE_CLASS)) {
+      if (!initialized) {
+        initialized = true;
+        setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
+        return;
+      }
+
+      if (document.documentElement.classList.contains(COLLAPSE_CLASS)) {
         setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
         return;
       }
@@ -1126,7 +1151,14 @@
     return {
       init: function () {
         subscribeScroll();
-        syncState(scrollCoordinatorModule.getScrollTop());
+
+        window.requestAnimationFrame(function () {
+          syncState(scrollCoordinatorModule.getScrollTop());
+
+          window.setTimeout(function () {
+            syncState(scrollCoordinatorModule.getScrollTop());
+          }, 80);
+        });
       },
     };
   })();
@@ -1371,9 +1403,7 @@
     }
 
     function handleWheel(event) {
-      const needsCompatScroll =
-        isDesktopCompatViewport() &&
-        (isAtlasForcedOrDetected() || isSafariForcedOrDetected());
+      const needsCompatScroll = isDesktopCompatViewport();
 
       if (!needsCompatScroll) return;
       if (event.defaultPrevented) return;
@@ -1780,7 +1810,27 @@
     }
 
     function removeNativeCopyControls(highlight) {
-      queryAll(highlight, ":scope > .md-clipboard, :scope > .md-code__nav").forEach(function (node) {
+      queryAll(
+        highlight,
+        [
+          ".md-clipboard",
+          ".md-code__nav",
+          ".highlight > button",
+          ".highlight > pre > button",
+          "pre > .md-clipboard",
+          "pre > button.md-clipboard",
+          "button.md-clipboard",
+        ].join(", ")
+      ).forEach(function (node) {
+        if (!isHTMLElement(node)) return;
+
+        if (
+          node.classList.contains("custom-codeblock__copy") ||
+          node.closest(".custom-codeblock__header")
+        ) {
+          return;
+        }
+
         node.remove();
       });
     }
@@ -1871,7 +1921,13 @@
     }
 
     function enhanceCodeBlock(highlight) {
-      if (!isHTMLElement(highlight) || highlight.dataset.autoCodeEnhanced === "true") {
+      if (!isHTMLElement(highlight)) {
+        return;
+      }
+
+      removeNativeCopyControls(highlight);
+
+      if (highlight.dataset.autoCodeEnhanced === "true") {
         return;
       }
 
@@ -1895,6 +1951,18 @@
     return {
       init: function (root) {
         queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(enhanceCodeBlock);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 80);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 240);
+
+        window.setTimeout(function () {
+          cleanupNativeCopyControls(root);
+        }, 800);
       },
     };
   })();
@@ -1947,6 +2015,14 @@
       if (!isHTMLElement(table)) return;
       table.classList.add("fact-table");
       ensureWrapper(table);
+    }
+
+    function cleanupNativeCopyControls(root) {
+      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
+        if (isHTMLElement(highlight)) {
+          removeNativeCopyControls(highlight);
+        }
+      });
     }
 
     return {
