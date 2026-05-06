@@ -52,18 +52,10 @@
   --site-tabs-link-height: 40px;
   --site-tabs-link-min-width: 74px;
   --site-tabs-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --site-tabs-collapse-shift: calc(-1 * var(--site-tabs-min-height) - 0.08rem);
-  --site-sticky-sidebar-top: calc(var(--site-header-height) + var(--site-tabs-min-height) + 1rem);
-  --site-sticky-sidebar-top-collapsed: calc(var(--site-header-height) + 0.95rem);
-  --site-toc-sticky-top: calc(var(--site-header-height) + var(--site-tabs-min-height) + 2.45rem);
-  --site-toc-sticky-top-collapsed: calc(var(--site-header-height) + 1.95rem);
-  --site-top-button-top: calc(var(--site-header-height) + var(--site-tabs-min-height) + 0.02rem);
-  --site-top-button-top-collapsed: calc(var(--site-header-height) + 0.02rem);
+  --site-anchor-offset: calc(var(--site-header-height) + var(--site-tabs-min-height) + 0.3rem);
+  --site-fixed-sidebar-top: calc(var(--site-header-height) + var(--site-tabs-min-height) + 0.85rem);
   --site-top-button-inset: clamp(1rem, 2vw, 2rem);
   --site-footer-height: 82px;
-  --site-sticky-bottom-clearance: max(clamp(6.5rem, 10vh, 8.75rem), calc(var(--site-footer-height) + env(safe-area-inset-bottom, 0px) + 1rem));
-  --site-toc-max-height: calc(100dvh - var(--site-toc-sticky-top) - var(--site-sticky-bottom-clearance));
-  --site-toc-max-height-collapsed: calc(100dvh - var(--site-toc-sticky-top-collapsed) - var(--site-sticky-bottom-clearance));
 
   --site-codebar-height: calc(54px - 0.1cm);
   --site-code-dot-size: 16.6px;
@@ -183,21 +175,24 @@
    ========================================================= */
 
 html {
+  height: auto;
   min-height: 100%;
   background: var(--site-overscroll-bg);
+  overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
 }
 
 body {
   margin: 0;
+  height: auto;
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--site-overscroll-bg);
   background-color: var(--md-default-bg-color);
-  overflow-x: clip;
+  overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
 }
 
 .md-container {
@@ -206,8 +201,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: visible;
   background: var(--site-page-bg);
   isolation: isolate;
 }
@@ -337,7 +331,6 @@ body {
   }
 
   .md-sidebar--secondary {
-    --site-current-toc-max-height: var(--site-toc-max-height);
     display: block;
     grid-area: toc;
     grid-column: 3;
@@ -349,17 +342,12 @@ body {
     min-width: var(--site-toc-width);
     max-width: var(--site-toc-width);
     box-sizing: border-box;
-    position: sticky;
-    top: var(--site-toc-sticky-top);
+    position: relative;
+    top: auto;
     right: auto;
     z-index: 4;
     overflow: visible;
-    transition: top 0.34s var(--site-tabs-ease);
-  }
-
-  html.site-tabs-collapsed .md-sidebar--secondary {
-    top: var(--site-toc-sticky-top-collapsed);
-    --site-current-toc-max-height: var(--site-toc-max-height-collapsed);
+    transition: none;
   }
 
   .md-sidebar--secondary .md-sidebar__scrollwrap,
@@ -367,13 +355,13 @@ body {
     position: static;
     min-height: 0;
     height: auto;
-    max-height: none;
     background: transparent;
     box-shadow: none;
     border: 0;
   }
 
   .md-sidebar--secondary .md-sidebar__scrollwrap {
+    max-height: none;
     overflow: visible;
   }
 
@@ -382,8 +370,8 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    max-height: calc(var(--site-current-toc-max-height) - 0.25rem);
-    overflow: hidden;
+    max-height: none;
+    overflow: visible;
     padding-top: 0.65rem;
   }
 
@@ -401,16 +389,9 @@ body {
     box-shadow: none;
     max-height: none;
     overflow-x: visible;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+    overflow-y: visible;
     scrollbar-width: none;
     -ms-overflow-style: none;
-  }
-
-  html.site-tabs-collapsed .md-sidebar--secondary .md-nav--secondary,
-  html.site-tabs-collapsed .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    max-height: none;
   }
 
   .md-sidebar--secondary .md-nav--secondary::-webkit-scrollbar,
@@ -444,7 +425,7 @@ body {
   .md-sidebar--secondary .site-toc-heading {
     position: relative;
     z-index: 1;
-    margin: 0 0.9rem 1rem 0.02rem;
+    margin: 0 0.65rem 1rem 1rem;
     padding: 0.2rem 0 0.82rem;
     border-bottom: 0;
     background: transparent;
@@ -783,7 +764,7 @@ body {
 }
 
 .md-content .md-typeset :is(h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]) {
-  scroll-margin-top: calc(var(--site-sticky-sidebar-top) - 0.7rem);
+  scroll-margin-top: var(--site-anchor-offset);
 }
 
 .md-typeset :is(h1[id], h2[id], h3[id], h4[id], h5[id], h6[id])>.headerlink {
@@ -1462,11 +1443,7 @@ body {
   overflow: visible;
   background: linear-gradient(135deg, rgba(63, 81, 181, 0.94), rgba(79, 70, 229, 0.94));
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
-  transition:
-    height 0.22s ease,
-    min-height 0.22s ease,
-    max-height 0.22s ease,
-    box-shadow 0.22s ease;
+  transition: box-shadow 0.22s ease;
 }
 
 .md-header::before,
@@ -1481,11 +1458,7 @@ body {
   min-height: var(--site-header-height);
   max-height: var(--site-header-height);
   padding: 0 0.96rem 0 calc(1.08rem + 0.4cm);
-  transition:
-    height 0.22s ease,
-    min-height 0.22s ease,
-    max-height 0.22s ease,
-    padding 0.22s ease;
+  transition: none;
 }
 
 .md-header .md-grid,
@@ -1547,12 +1520,6 @@ body {
   color: inherit;
 }
 
-.md-header__title[data-site-title-ready="true"]>.md-header__ellipsis {
-  display: grid;
-  align-items: center;
-  min-width: 0;
-}
-
 .md-header__topic {
   position: static;
   max-width: min(46vw, 34rem);
@@ -1562,35 +1529,6 @@ body {
     opacity 0.18s ease,
     transform 0.22s ease,
     color 0.18s ease;
-}
-
-.md-header__title[data-site-title-ready="true"] .md-header__topic {
-  grid-area: 1 / 1;
-  min-width: 0;
-}
-
-.md-header__title[data-site-title-ready="true"] .md-header__topic:not([data-md-component="header-topic"]) {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.md-header__title[data-site-title-ready="true"] .md-header__topic[data-md-component="header-topic"] {
-  display: flex;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(0.8rem);
-}
-
-.md-header__title[data-site-title-mode="page"] .md-header__topic:not([data-md-component="header-topic"]) {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-0.8rem);
-}
-
-.md-header__title[data-site-title-mode="page"] .md-header__topic[data-md-component="header-topic"] {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(0);
 }
 
 .md-header__topic .md-ellipsis,
@@ -1711,9 +1649,9 @@ body {
 
 .md-tabs:not([hidden]) {
   display: block;
-  position: relative;
-  top: auto;
-  z-index: 3;
+  position: sticky;
+  top: var(--site-header-height);
+  z-index: 19;
   flex: 0 0 auto;
   width: 100%;
   min-height: var(--site-tabs-min-height);
@@ -1727,11 +1665,7 @@ body {
   pointer-events: auto;
   background: linear-gradient(135deg, rgba(63, 81, 181, 0.92), rgba(79, 70, 229, 0.92));
   box-shadow: none;
-  transition:
-    max-height 0.24s var(--site-tabs-ease),
-    transform 0.22s ease,
-    opacity 0.18s ease,
-    visibility 0.22s ease;
+  transition: none;
 }
 
 .md-tabs:not([hidden]) .md-grid {
@@ -1741,7 +1675,6 @@ body {
   min-height: var(--site-tabs-min-height);
   padding: 0 0.96rem 0 1.08rem;
   overflow: hidden;
-  transition: opacity 0.18s ease;
 }
 
 .md-tabs__list {
@@ -1823,71 +1756,8 @@ body {
     0 12px 24px rgba(15, 23, 42, 0.14);
 }
 
-html.site-tabs-collapsed .md-tabs {
-  min-height: 0;
-  max-height: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-0.45rem);
-  pointer-events: none;
-}
-
-html.site-tabs-collapsed .md-header {
-  height: 54px;
-  min-height: 54px;
-  max-height: 54px;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.16);
-}
-
-html.site-tabs-collapsed .md-header__inner {
-  height: 54px;
-  min-height: 54px;
-  max-height: 54px;
-  padding-left: calc(0.82rem + 0.28cm);
-  padding-right: 0.86rem;
-}
-
-html.site-tabs-collapsed .md-header__button.md-logo {
-  width: 42px;
-  height: 42px;
-  margin-right: 0.58rem;
-  border-radius: 10px;
-}
-
-html.site-tabs-collapsed .md-header__button.md-logo img,
-html.site-tabs-collapsed .md-header__button.md-logo svg {
-  width: 24px;
-  height: 24px;
-}
-
-html.site-tabs-collapsed .md-header__title {
-  font-size: 0.82rem;
-  line-height: 1.1;
-}
-
-html.site-tabs-collapsed .md-search__form {
-  min-height: 36px;
-  border-radius: 13px;
-}
-
 .md-tabs[hidden] {
   display: none;
-}
-
-html.site-tabs-collapsed .md-tabs .md-grid,
-html.site-tabs-collapsed .md-tabs__list {
-  opacity: 0;
-  pointer-events: none;
-}
-
-html:not(.site-tabs-collapsed) .md-tabs,
-html:not(.site-tabs-collapsed) .md-tabs__list,
-html:not(.site-tabs-collapsed) .md-tabs__item,
-html:not(.site-tabs-collapsed) .md-tabs__link {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  pointer-events: auto;
 }
 
 html.page-home .site-header-control[data-site-control="sidebar"],
@@ -1937,10 +1807,10 @@ html.page-overview .site-header-control[data-site-control="toc"] {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   box-shadow: none;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+  transform: none;
+  will-change: auto;
   isolation: isolate;
   overflow: visible;
 }
@@ -2321,54 +2191,117 @@ button.md-top[data-md-component="top"]:focus-visible {
   }
 
   button.md-top[data-md-component="top"] {
-    top: var(--site-top-button-top);
+    top: max(0.45rem, env(safe-area-inset-top));
     right: auto;
     bottom: auto;
-    left: 50vw;
-    inset: var(--site-top-button-top) auto auto 50vw;
-    transform: translate(-50%, 0);
+    left: 50%;
+    inset: max(0.45rem, env(safe-area-inset-top)) auto auto 50%;
+    transform: translateX(-50%);
   }
 
   button.md-top[data-md-component="top"]:hover,
   button.md-top[data-md-component="top"]:focus-visible {
-    transform: translate(-50%, -1px);
+    transform: translateX(-50%) translateY(-1px);
+  }
+
+  .md-sidebar,
+  .md-sidebar--primary,
+  .md-sidebar--secondary {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+    align-self: start;
+    transform: none;
   }
 
   .md-sidebar--primary {
     grid-area: sidebar;
     grid-column: 1;
     grid-row: 1;
-    position: sticky;
-    top: var(--site-sticky-sidebar-top);
-    left: auto;
     width: var(--site-sidebar-width);
     padding-top: 0.35rem;
     margin-top: 0;
-    transform: none;
     z-index: 2;
-    align-self: start;
-    transition: top 0.34s var(--site-tabs-ease);
+    transition: none;
   }
 
+  .md-sidebar--secondary {
+    grid-area: toc;
+    grid-column: 3;
+    grid-row: 1;
+    width: var(--site-toc-width);
+    min-width: var(--site-toc-width);
+    max-width: var(--site-toc-width);
+    margin: 0;
+    padding: 0.25rem 0 0;
+    z-index: 4;
+    box-sizing: border-box;
+    transition: none;
+  }
+
+  .md-sidebar__scrollwrap,
+  .md-sidebar__inner,
+  .md-sidebar .md-nav,
+  .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap,
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior: auto;
+  }
+
+  .md-sidebar--secondary .md-nav--secondary,
+  .md-sidebar--secondary .md-nav[data-md-level="1"] {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary,
   .md-sidebar--secondary .md-sidebar__inner,
   .md-sidebar--secondary .md-nav--secondary,
   .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  html.site-tabs-collapsed .md-sidebar--primary {
-    top: var(--site-sticky-sidebar-top-collapsed);
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transform: none;
+    will-change: auto;
   }
 
   .md-main__inner,
   .md-main__inner.md-grid,
   .md-sidebar--primary,
-  .md-sidebar--primary .md-sidebar__inner,
-  .md-sidebar--primary .md-sidebar__scrollwrap {
+  .md-sidebar--primary .md-sidebar__inner {
     overflow: visible;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   .md-sidebar .md-nav .md-nav,
@@ -2495,328 +2428,6 @@ button.md-top[data-md-component="top"]:focus-visible {
 
   [data-md-toggle="toc"] {
     display: none;
-  }
-
-  html.site-browser-safari .md-sidebar--primary,
-  html.site-browser-safari .md-sidebar--secondary,
-  html.site-browser-safari .md-tabs,
-  html.site-browser-safari .md-sidebar__scrollwrap,
-  html.site-browser-safari .md-sidebar__inner,
-  html.site-browser-safari .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary,
-  html.site-browser-safari .md-sidebar--secondary .md-nav--secondary,
-  html.site-browser-safari .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    transform: none;
-    will-change: auto;
-    backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    contain: none;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-sidebar__scrollwrap {
-    --site-current-primary-max-height:
-      calc(100dvh - var(--site-sticky-sidebar-top) - var(--site-sticky-bottom-clearance));
-    position: relative;
-    top: auto;
-    height: var(--site-current-primary-max-height);
-    min-height: var(--site-current-primary-max-height);
-    max-height: var(--site-current-primary-max-height);
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  html.site-tabs-collapsed.site-browser-safari .md-sidebar--primary .md-sidebar__scrollwrap {
-    --site-current-primary-max-height:
-      calc(100dvh - var(--site-sticky-sidebar-top-collapsed) - var(--site-sticky-bottom-clearance));
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-sidebar__scrollwrap {
-    position: static;
-    top: auto;
-    height: auto;
-    max-height: none;
-    overflow: visible;
-    -webkit-overflow-scrolling: auto;
-    overscroll-behavior: auto;
-    scrollbar-width: auto;
-    -ms-overflow-style: auto;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar,
-  html.site-browser-safari .md-sidebar--secondary .md-sidebar__scrollwrap::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-sidebar__inner,
-  html.site-browser-safari .md-sidebar--secondary .md-sidebar__inner {
-    min-height: 0;
-    height: auto;
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-sidebar__inner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    max-height: calc(var(--site-current-toc-max-height) - 0.25rem);
-    overflow: hidden;
-    padding-top: 0.65rem;
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-nav--secondary,
-  html.site-browser-safari .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    flex: 1 1 auto;
-    min-height: 0;
-    position: relative;
-    top: auto;
-    display: block;
-    max-height: none;
-    height: auto;
-    overflow-x: visible;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-right: 0;
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-nav--secondary::-webkit-scrollbar,
-  html.site-browser-safari .md-sidebar--secondary .md-nav[data-md-level="1"]::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  html.site-browser-safari .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary {
-    background: rgba(248, 250, 252, 0.94);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.78),
-      0 6px 14px rgba(148, 163, 184, 0.08);
-    isolation: auto;
-  }
-
-  html.site-browser-safari [data-md-color-scheme="slate"] .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary {
-    background: rgba(15, 23, 42, 0.92);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 6px 14px rgba(2, 6, 23, 0.14);
-  }
-
-  html.site-browser-safari .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary::before,
-  html.site-browser-safari .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary::after {
-    content: none;
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-nav--secondary::before,
-  html.site-browser-safari .md-sidebar--secondary .md-nav[data-md-level="1"]::before {
-    box-shadow: none;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-nav__link,
-  html.site-browser-safari .md-sidebar--primary label.md-nav__link,
-  html.site-browser-safari .md-sidebar--secondary .md-nav__link {
-    transition: none;
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link:hover,
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link:focus-visible {
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(203, 213, 225, 0.32);
-  }
-
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link--active,
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link--passed,
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link.site-toc-link--current,
-  html.site-browser-safari .md-sidebar--secondary .md-nav__item .md-nav__link[aria-current] {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: inherit;
-  }
-
-  html.site-browser-safari .md-sidebar--primary a.md-nav__link[href].md-nav__link--active {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.12);
-  }
-
-  html.site-browser-atlas {
-    scroll-behavior: auto;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary {
-    position: sticky;
-    left: auto;
-    max-height: none;
-    overflow: visible;
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary {
-    position: sticky;
-    right: auto;
-    max-height: none;
-    overflow: visible;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary,
-  html.site-browser-atlas .md-sidebar--secondary,
-  html.site-browser-atlas .md-tabs,
-  html.site-browser-atlas .md-sidebar__scrollwrap,
-  html.site-browser-atlas .md-sidebar__inner,
-  html.site-browser-atlas .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav--secondary,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    transform: none;
-    will-change: auto;
-    backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    contain: none;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-sidebar__scrollwrap {
-    position: relative;
-    height: auto;
-    min-height: 0;
-    max-height: calc(100dvh - var(--site-sticky-sidebar-top) - var(--site-sticky-bottom-clearance));
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary .md-sidebar__scrollwrap {
-    position: static;
-    height: auto;
-    max-height: none;
-    overflow: visible;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-sidebar__inner,
-  html.site-browser-atlas .md-sidebar--secondary .md-sidebar__inner {
-    min-height: 0;
-    max-height: none;
-    height: auto;
-    overflow: visible;
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary .md-nav--secondary,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav[data-md-level="1"] {
-    max-height: none;
-    height: auto;
-    overflow-x: visible;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-color: rgba(148, 163, 184, 0.36) transparent;
-    padding-right: 0;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav--secondary::-webkit-scrollbar,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav[data-md-level="1"]::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav--secondary::-webkit-scrollbar-thumb,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav[data-md-level="1"]::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(148, 163, 184, 0.36);
-  }
-
-  html.site-tabs-collapsed.site-browser-atlas .md-sidebar--primary .md-sidebar__scrollwrap {
-    max-height: calc(100dvh - var(--site-sticky-sidebar-top-collapsed) - var(--site-sticky-bottom-clearance));
-  }
-
-  html.site-browser-atlas .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 12px 24px rgba(148, 163, 184, 0.08);
-    isolation: auto;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-nav__title {
-    font-family: var(--site-heading-font);
-    font-weight: 540;
-    color: #707b8d;
-    font-synthesis: none;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-nav__link,
-  html.site-browser-atlas .md-sidebar--primary label.md-nav__link {
-    font-family: var(--site-heading-font);
-    font-weight: 400;
-    color: #374151;
-    font-synthesis: none;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-nav__item--active>.md-nav__link,
-  html.site-browser-atlas .md-sidebar--primary .md-nav__link--active {
-    font-family: var(--site-heading-font);
-    font-weight: 430;
-    color: #0f172a;
-    font-synthesis: none;
-  }
-
-  html.site-browser-atlas [data-md-color-scheme="slate"] .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary {
-    background: rgba(15, 23, 42, 0.92);
-    box-shadow: 0 12px 24px rgba(2, 6, 23, 0.22);
-  }
-
-  html.site-browser-atlas .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary::before,
-  html.site-browser-atlas .md-sidebar--primary>.md-sidebar__scrollwrap>.md-sidebar__inner>.md-nav--primary::after {
-    content: none;
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary .md-nav--secondary::before,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav[data-md-level="1"]::before {
-    box-shadow: none;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary .md-nav__link,
-  html.site-browser-atlas .md-sidebar--primary label.md-nav__link,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__link {
-    transition: none;
-    transition-delay: 0s;
-    animation: none;
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link:hover,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link:focus-visible {
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(203, 213, 225, 0.32);
-  }
-
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link--active,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link--passed,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link.site-toc-link--current,
-  html.site-browser-atlas .md-sidebar--secondary .md-nav__item .md-nav__link[aria-current] {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: inherit;
-  }
-
-  html.site-browser-atlas .md-sidebar--primary a.md-nav__link[href].md-nav__link--active {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.12);
   }
 
 }
@@ -3672,74 +3283,6 @@ button.md-top[data-md-component="top"]:focus-visible {
   }
 }
 
-@media screen and (min-width: 45em) and (max-width: 76.2344em) {
-
-  html.site-browser-safari .site-sidebar-toggle,
-  html.site-browser-safari .site-toc-toggle {
-    display: none;
-  }
-
-  html.site-browser-safari .md-sidebar--primary {
-    width: min(calc(100vw - 3rem), 15.125rem);
-    min-width: min(calc(100vw - 3rem), 15.125rem);
-    max-width: min(calc(100vw - 3rem), 15.125rem);
-    height: 100dvh;
-    max-height: 100dvh;
-    inset: 0 auto 0 0;
-    left: 0;
-    right: auto;
-    margin: 0;
-    padding: 0;
-    z-index: 1200;
-    transform: translate3d(-100%, 0, 0);
-    transition: transform 0.25s ease;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.985);
-    box-shadow: 12px 0 32px rgba(15, 23, 42, 0.18);
-    opacity: 1;
-  }
-
-  html.site-browser-safari [data-md-color-scheme="slate"] .md-sidebar--primary {
-    background: rgba(15, 23, 42, 0.985);
-    box-shadow: 12px 0 32px rgba(2, 6, 23, 0.30);
-  }
-
-  html.site-browser-safari [data-md-toggle="drawer"]:checked~.md-container .md-sidebar--primary {
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  html.site-browser-safari [data-md-toggle="drawer"]:not(:checked)~.md-container .md-sidebar--primary {
-    transform: translate3d(-100%, 0, 0);
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-sidebar__scrollwrap {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html.site-browser-safari .md-sidebar--primary .md-sidebar__inner {
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
-    max-height: 100%;
-    overflow: visible;
-    box-sizing: border-box;
-  }
-}
-
 @media screen and (max-width: 44.9375em) {
 
   .site-header-control[data-site-control="sidebar"],
@@ -3978,7 +3521,7 @@ button.md-top[data-md-component="top"]:focus-visible {
    ========================================================= */
 
 /* =========================================================
-   12. Safari / Edge 兼容性补丁（最小修复）
+   12. 视口滚动约束
    ========================================================= */
 
 html,
@@ -3988,7 +3531,7 @@ body {
 
 .md-container,
 .md-main__inner {
-  overflow-x: clip;
+  overflow-x: visible;
 }
 
 html {
@@ -4062,312 +3605,6 @@ html.page-home .md-content {
 }
 
 /* =========================================================
-   Safari / Atlas compatibility patch - final
-   ========================================================= */
-
-/* Safari: keep page scrollable, do not create inner page scrollers */
-html.site-browser-safari,
-html.site-browser-safari body {
-  height: auto !important;
-  min-height: 100% !important;
-  overflow-y: auto !important;
-  overscroll-behavior-y: auto !important;
-}
-
-html.site-browser-safari .md-container {
-  position: relative;
-  height: auto !important;
-  min-height: 100dvh !important;
-  overflow-y: visible !important;
-}
-
-html.site-browser-safari .md-main,
-html.site-browser-safari .md-main__inner,
-html.site-browser-safari .md-content,
-html.site-browser-safari .md-content__inner {
-  height: auto !important;
-  max-height: none !important;
-  overflow-y: visible !important;
-}
-
-/* Safari: header + tabs as one visual block */
-html.site-browser-safari .md-header {
-  z-index: 40 !important;
-  box-shadow: none !important;
-  border-bottom: 0 !important;
-  background: linear-gradient(135deg, rgb(63, 81, 181), rgb(79, 70, 229)) !important;
-}
-
-html.site-browser-safari .md-tabs:not([hidden]) {
-  position: relative !important;
-  z-index: 39 !important;
-  margin-top: -1px !important;
-  overflow: visible !important;
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-  background: linear-gradient(135deg, rgb(63, 81, 181), rgb(79, 70, 229)) !important;
-}
-
-/* Safari: cover 1px seam between header and tabs */
-html.site-browser-safari .md-tabs:not([hidden])::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -4px;
-  height: 5px;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(135deg, rgb(63, 81, 181), rgb(79, 70, 229));
-}
-
-/* Safari: disable tabs pseudo shadow, it is unstable after Safari repaint */
-html.site-browser-safari .md-tabs:not([hidden])::after {
-  content: none !important;
-}
-
-/* Safari: stable Atlas-like shadow layer below header + tabs */
-html.site-browser-safari .md-container::before {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: calc(var(--site-header-height) + var(--site-tabs-min-height) - 1px);
-  height: 34px;
-  z-index: 25;
-  pointer-events: none;
-  background: linear-gradient(180deg,
-      rgba(15, 23, 42, 0.26) 0%,
-      rgba(15, 23, 42, 0.17) 34%,
-      rgba(15, 23, 42, 0.075) 68%,
-      rgba(15, 23, 42, 0) 100%);
-}
-
-html.site-browser-safari .md-header::before,
-html.site-browser-safari .md-header::after {
-  content: none !important;
-}
-
-/* Atlas: keep document viewport as the only page scroller */
-html.site-browser-atlas,
-html.site-browser-atlas body {
-  height: auto !important;
-  min-height: 100% !important;
-  overflow-y: auto !important;
-  overscroll-behavior-y: auto !important;
-  scroll-behavior: auto !important;
-}
-
-html.site-browser-atlas .md-container {
-  height: auto !important;
-  min-height: 100dvh !important;
-  overflow-y: visible !important;
-}
-
-html.site-browser-atlas .md-main,
-html.site-browser-atlas .md-main__inner,
-html.site-browser-atlas .md-content,
-html.site-browser-atlas .md-content__inner {
-  height: auto !important;
-  max-height: none !important;
-  overflow-y: visible !important;
-}
-
-/* Atlas: prevent header/tabs repaint flicker while wheel scrolling */
-html.site-browser-atlas .md-header,
-html.site-browser-atlas .md-header__inner,
-html.site-browser-atlas .md-tabs,
-html.site-browser-atlas .md-tabs .md-grid,
-html.site-browser-atlas .md-tabs__list,
-html.site-browser-atlas .md-tabs__link {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-html.site-browser-atlas .md-header,
-html.site-browser-atlas .md-tabs:not([hidden]) {
-  transition: none !important;
-}
-
-html.site-browser-atlas .md-tabs:not([hidden]) {
-  box-shadow: none !important;
-}
-
-html.site-browser-atlas .md-header {
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14) !important;
-}
-
-/* =========================================================
-   Safari / Atlas top shadow final fix
-   ========================================================= */
-
-/* 禁用旧的伪元素阴影，避免和真实 shadow 层冲突 */
-html.site-browser-safari .md-container::before,
-html.site-browser-safari .md-tabs:not([hidden])::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* 不再通过 padding-top 给正文让位 */
-html.site-browser-safari .md-main {
-  padding-top: 0 !important;
-}
-
-html.site-browser-safari .md-main__inner {
-  margin-top: 0.55rem !important;
-}
-
-/* 独立阴影层：位置由 JS 实时写入 */
-.site-top-shadow {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: var(--site-top-shadow-top, 120px);
-  height: var(--site-top-shadow-height, 28px);
-  z-index: 37;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateZ(0);
-  will-change: top, opacity;
-  background: linear-gradient(180deg,
-      rgba(15, 23, 42, 0.24) 0%,
-      rgba(15, 23, 42, 0.14) 36%,
-      rgba(15, 23, 42, 0.06) 68%,
-      rgba(15, 23, 42, 0) 100%);
-}
-
-/* 只在 Safari / Atlas 兼容模式启用 */
-html.site-browser-safari .site-top-shadow,
-html.site-browser-atlas .site-top-shadow {
-  opacity: 1;
-}
-
-/* tabs 折叠后阴影变短，贴在 header 底部 */
-html.site-tabs-collapsed .site-top-shadow {
-  --site-top-shadow-height: 24px;
-  background: linear-gradient(180deg,
-      rgba(15, 23, 42, 0.22) 0%,
-      rgba(15, 23, 42, 0.12) 40%,
-      rgba(15, 23, 42, 0.045) 74%,
-      rgba(15, 23, 42, 0) 100%);
-}
-
-/* 让 header / tabs 永远在阴影上方 */
-html.site-browser-safari .md-header,
-html.site-browser-atlas .md-header {
-  z-index: 40 !important;
-}
-
-html.site-browser-safari .md-tabs,
-html.site-browser-atlas .md-tabs {
-  z-index: 39 !important;
-}
-
-/* 正文在阴影下方，但阴影不会挡点击 */
-html.site-browser-safari .md-main,
-html.site-browser-atlas .md-main {
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================================================
-   Edge unified header/tabs behavior
-   ========================================================= */
-
-html.site-browser-edge,
-html.site-browser-edge body {
-  height: auto !important;
-  min-height: 100% !important;
-  overflow-y: auto !important;
-  overscroll-behavior-y: auto !important;
-  scroll-behavior: auto !important;
-}
-
-html.site-browser-edge .md-container {
-  height: auto !important;
-  min-height: 100dvh !important;
-  overflow-y: visible !important;
-}
-
-html.site-browser-edge .md-main,
-html.site-browser-edge .md-main__inner,
-html.site-browser-edge .md-content,
-html.site-browser-edge .md-content__inner {
-  height: auto !important;
-  max-height: none !important;
-  overflow-y: visible !important;
-}
-
-html.site-browser-edge .md-header,
-html.site-browser-edge .md-header__inner,
-html.site-browser-edge .md-tabs,
-html.site-browser-edge .md-tabs .md-grid,
-html.site-browser-edge .md-tabs__list,
-html.site-browser-edge .md-tabs__link {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-html.site-browser-edge .md-header {
-  z-index: 40 !important;
-  box-shadow: none !important;
-}
-
-html.site-browser-edge .md-tabs:not([hidden]) {
-  display: block !important;
-  min-height: var(--site-tabs-min-height) !important;
-  max-height: var(--site-tabs-min-height) !important;
-  height: var(--site-tabs-min-height) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  pointer-events: auto !important;
-  z-index: 39 !important;
-  margin-top: -1px !important;
-  background: linear-gradient(135deg, rgb(63, 81, 181), rgb(79, 70, 229)) !important;
-  box-shadow: none !important;
-}
-
-html.site-browser-edge .md-tabs:not([hidden]) .md-grid,
-html.site-browser-edge .md-tabs__list,
-html.site-browser-edge .md-tabs__item,
-html.site-browser-edge .md-tabs__link {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-}
-
-html.site-browser-edge.site-tabs-collapsed .md-tabs:not([hidden]) {
-  min-height: 0 !important;
-  max-height: 0 !important;
-  height: 0 !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transform: translateY(-0.45rem) !important;
-  pointer-events: none !important;
-}
-
-html.site-browser-edge.site-tabs-collapsed .md-tabs:not([hidden]) .md-grid,
-html.site-browser-edge.site-tabs-collapsed .md-tabs__list {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-html.site-browser-edge .site-top-shadow {
-  opacity: 1;
-}
-
-html.site-browser-edge .md-main {
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================================================
    Native Material copy button cleanup
    ========================================================= */
 
@@ -4389,4 +3626,203 @@ html.site-browser-edge .md-main {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
+}
+
+/* =========================================================
+   Final desktop sidebar behavior
+   Desktop: 左右目录固定在视口两侧，不随正文滚动
+   ========================================================= */
+
+@media screen and (min-width: 76.25em) {
+  .md-main__inner.md-grid {
+    display: grid !important;
+    grid-template-columns: var(--site-sidebar-width) minmax(0, 1fr) var(--site-toc-width) !important;
+    grid-template-areas: "sidebar content toc" !important;
+    align-items: start !important;
+    align-content: start !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .md-main__inner.md-grid > .md-content {
+    grid-area: content !important;
+    grid-column: 2 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+  }
+
+  .md-main__inner.md-grid > .md-sidebar--primary,
+  .md-main__inner.md-grid > .md-sidebar--secondary {
+    position: fixed !important;
+    top: var(--site-fixed-sidebar-top) !important;
+    bottom: auto !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+    transform: none !important;
+    contain: none !important;
+    will-change: auto !important;
+
+    z-index: 10 !important;
+  }
+
+  .md-main__inner.md-grid > .md-sidebar--primary {
+    left: max(
+      var(--site-shell-padding-left),
+      calc((100vw - var(--site-shell-max-width)) / 2 + var(--site-shell-padding-left))
+    ) !important;
+
+    right: auto !important;
+    width: var(--site-sidebar-width) !important;
+    min-width: var(--site-sidebar-width) !important;
+    max-width: var(--site-sidebar-width) !important;
+  }
+
+  .md-main__inner.md-grid > .md-sidebar--secondary {
+    right: max(
+      var(--site-shell-padding-right),
+      calc((100vw - var(--site-shell-max-width)) / 2 + var(--site-shell-padding-right))
+    ) !important;
+
+    left: auto !important;
+    width: var(--site-toc-width) !important;
+    min-width: var(--site-toc-width) !important;
+    max-width: var(--site-toc-width) !important;
+  }
+
+  .md-main__inner.md-grid > .md-sidebar--primary > .md-sidebar__scrollwrap,
+  .md-main__inner.md-grid > .md-sidebar--secondary > .md-sidebar__scrollwrap,
+  .md-main__inner.md-grid > .md-sidebar--primary .md-sidebar__inner,
+  .md-main__inner.md-grid > .md-sidebar--secondary .md-sidebar__inner,
+  .md-main__inner.md-grid > .md-sidebar--primary .md-nav,
+  .md-main__inner.md-grid > .md-sidebar--secondary .md-nav {
+    position: static !important;
+    inset: auto !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+
+    transform: none !important;
+    translate: none !important;
+    contain: none !important;
+    will-change: auto !important;
+  }
+
+  html.sidebar-collapsed .md-main__inner.md-grid {
+    grid-template-columns: minmax(0, 1fr) var(--site-toc-width) !important;
+    grid-template-areas: "content toc" !important;
+  }
+
+  html.sidebar-collapsed .md-main__inner.md-grid > .md-content {
+    grid-column: 1 !important;
+  }
+
+  html.sidebar-collapsed .md-main__inner.md-grid > .md-sidebar--primary {
+    display: none !important;
+  }
+
+  html.sidebar-collapsed .md-main__inner.md-grid > .md-sidebar--secondary {
+    display: block !important;
+  }
+
+  html.toc-collapsed .md-main__inner.md-grid,
+  html.toc-empty .md-main__inner.md-grid,
+  html.page-overview .md-main__inner.md-grid {
+    grid-template-columns: var(--site-sidebar-width) minmax(0, 1fr) !important;
+    grid-template-areas: "sidebar content" !important;
+  }
+
+  html.toc-collapsed .md-main__inner.md-grid > .md-sidebar--secondary,
+  html.toc-empty .md-main__inner.md-grid > .md-sidebar--secondary,
+  html.page-overview .md-main__inner.md-grid > .md-sidebar--secondary {
+    display: none !important;
+  }
+
+  html.page-overview.sidebar-collapsed .md-main__inner.md-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "content" !important;
+  }
+
+  html.page-overview.sidebar-collapsed .md-main__inner.md-grid > .md-content {
+    grid-area: content !important;
+    grid-column: 1 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+  }
+
+  html.page-overview.sidebar-collapsed .md-main__inner.md-grid > .md-content > .md-content__inner {
+    width: 100% !important;
+    max-width: 84rem !important;
+    margin: 0 !important;
+  }
+
+  html.page-overview.sidebar-collapsed .md-sidebar--primary,
+  html.page-overview.sidebar-collapsed .md-sidebar--secondary {
+    display: none !important;
+  }
+
+  html.sidebar-collapsed.toc-collapsed .md-main__inner.md-grid,
+  html.sidebar-collapsed.toc-empty .md-main__inner.md-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "content" !important;
+  }
+
+  html.sidebar-collapsed.toc-collapsed .md-main__inner.md-grid > .md-content,
+  html.sidebar-collapsed.toc-empty .md-main__inner.md-grid > .md-content {
+    grid-area: content !important;
+    grid-column: 1 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+  }
+
+  html.sidebar-collapsed.toc-collapsed .md-main__inner.md-grid > .md-content > .md-content__inner,
+  html.sidebar-collapsed.toc-empty .md-main__inner.md-grid > .md-content > .md-content__inner {
+    width: 100% !important;
+    max-width: 84rem !important;
+    margin: 0 !important;
+  }
+
+  html.sidebar-collapsed.toc-collapsed .md-sidebar--primary,
+  html.sidebar-collapsed.toc-collapsed .md-sidebar--secondary,
+  html.sidebar-collapsed.toc-empty .md-sidebar--primary,
+  html.sidebar-collapsed.toc-empty .md-sidebar--secondary {
+    display: none !important;
+  }
+
+  html.page-home .md-main__inner.md-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "content" !important;
+  }
+
+  html.page-home .md-main__inner.md-grid > .md-content {
+    grid-column: 1 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  html.page-home .md-sidebar--primary,
+  html.page-home .md-sidebar--secondary {
+    display: none !important;
+  }
 }

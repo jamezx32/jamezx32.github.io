@@ -2,38 +2,7 @@
   const STORAGE_KEYS = {
     sidebarCollapsed: "sxy-site-sidebar-collapsed",
     tocCollapsed: "sxy-site-toc-collapsed",
-    safariSidebarLayoutVersion: "sxy-site-safari-sidebar-layout-version",
   };
-  const SAFARI_SIDEBAR_LAYOUT_VERSION = "2026-04-09-v5";
-  const EARLY_USER_AGENT = navigator.userAgent || "";
-  const EARLY_VENDOR = navigator.vendor || "";
-  const NON_SAFARI_UA_RE = /Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|DuckDuckGo|Electron|Atlas|Android/i;
-  const IS_EARLY_SAFARI =
-    /Safari/i.test(EARLY_USER_AGENT) &&
-    /Apple/i.test(EARLY_VENDOR) &&
-    !NON_SAFARI_UA_RE.test(EARLY_USER_AGENT);
-
-  function migrateEarlySafariSidebarState() {
-    try {
-      if (!IS_EARLY_SAFARI) return;
-
-      const currentVersion = window.localStorage.getItem(STORAGE_KEYS.safariSidebarLayoutVersion);
-      if (currentVersion === SAFARI_SIDEBAR_LAYOUT_VERSION) {
-        return;
-      }
-
-      window.localStorage.removeItem(STORAGE_KEYS.sidebarCollapsed);
-      window.localStorage.removeItem(STORAGE_KEYS.tocCollapsed);
-      window.localStorage.setItem(
-        STORAGE_KEYS.safariSidebarLayoutVersion,
-        SAFARI_SIDEBAR_LAYOUT_VERSION
-      );
-    } catch {
-      // Ignore storage failures in private or restricted environments.
-    }
-  }
-
-  migrateEarlySafariSidebarState();
 
   try {
     if (window.localStorage.getItem(STORAGE_KEYS.sidebarCollapsed) === "true") {
@@ -51,14 +20,8 @@
     footerInner: ".md-footer-meta__inner",
     footerTime: ".custom-footer-time",
     headerRoot: ".md-header",
-    headerTitle: '.md-header__title[data-md-component="header-title"]',
-    headerSiteTopicText:
-      '.md-header__title .md-header__topic:not([data-md-component="header-topic"]) .md-ellipsis',
-    headerTopic: '.md-header__topic[data-md-component="header-topic"]',
-    headerTopicText: '.md-header__topic[data-md-component="header-topic"] .md-ellipsis',
     pageHeading: ".md-content__inner h1",
     sidebarToggle: ".site-sidebar-toggle",
-    tabsRoot: ".md-tabs",
     topButton: '[data-md-component="top"]',
     tocRoot: ".md-sidebar--secondary",
     tocInner: ".md-sidebar--secondary .md-sidebar__inner",
@@ -74,7 +37,6 @@
     },
     observers: {
       footer: null,
-      headerTitle: null,
     },
   };
 
@@ -205,36 +167,6 @@
       document.querySelector('[id="' + escaped + '"]') ||
       document.querySelector('[name="' + escaped + '"]')
     );
-  }
-
-  function isSafariBrowser() {
-    const ua = navigator.userAgent || "";
-    const vendor = navigator.vendor || "";
-
-    return (
-      /Safari/i.test(ua) &&
-      /Apple/i.test(vendor) &&
-      !NON_SAFARI_UA_RE.test(ua)
-    );
-  }
-
-  function isAtlasBrowser() {
-    const ua = navigator.userAgent || "";
-    const vendor = navigator.vendor || "";
-
-    return (
-      /Atlas/i.test(ua) ||
-      /Atlas/i.test(vendor) ||
-      /OpenAI/i.test(ua) ||
-      /ChatGPT/i.test(ua) ||
-      /ChatGPT/i.test(vendor)
-    );
-  }
-
-  function isEdgeBrowser() {
-
-    return /Edg\//i.test(navigator.userAgent || "");
-
   }
 
   function subscribePageChanges(callback) {
@@ -383,132 +315,6 @@
     };
   })();
 
-  const browserClassModule = (function () {
-    return {
-      init: function () {
-        const isSafari = isSafariBrowser();
-        const isEdge = isEdgeBrowser();
-        const forcedAtlas =
-          !isSafari &&
-          (
-            window.location.search.includes("force_atlas=1") ||
-            window.localStorage.getItem("sxy-force-atlas") === "true"
-          );
-        const isAtlas = !isSafari && (forcedAtlas || isAtlasBrowser());
-
-        document.documentElement.classList.toggle("site-browser-safari", isSafari);
-        document.documentElement.classList.toggle("site-browser-atlas", isAtlas);
-        document.documentElement.classList.toggle("site-browser-edge", isEdge);
-
-        if (document.body) {
-          document.body.classList.toggle("is-atlas", isAtlas);
-          document.body.classList.toggle("is-safari", isSafari);
-          document.body.classList.toggle("is-edge", isEdge);
-        }
-      },
-    };
-  })();
-
-  const headerTitleModule = (function () {
-    function isDesktopTabsViewport() {
-      return window.matchMedia("(min-width: 45em)").matches;
-    }
-
-    function syncHeaderTitle() {
-      const root = document.documentElement;
-      const headerTopic = document.querySelector(SELECTORS.headerTopicText);
-      const headerSiteTopic = document.querySelector(SELECTORS.headerSiteTopicText);
-      const headerTitle = document.querySelector(SELECTORS.headerTitle);
-      const title = getPageHeadingText();
-
-      if (!headerTitle) return;
-
-      const defaultTitle =
-        headerTitle.dataset.siteTitleDefault ||
-        getTextContent(headerSiteTopic) ||
-        "SXY Research Notes";
-
-      headerTitle.dataset.siteTitleDefault = defaultTitle;
-
-      if (!isDesktopTabsViewport()) {
-        headerTitle.removeAttribute("data-site-title-ready");
-        headerTitle.removeAttribute("data-site-title-mode");
-        if (headerSiteTopic) {
-          headerSiteTopic.textContent = defaultTitle;
-        }
-        if (headerTopic && title) {
-          headerTopic.textContent = title;
-        }
-        return;
-      }
-
-      if (title) {
-        headerTitle.setAttribute("data-page-title", title);
-      } else {
-        headerTitle.removeAttribute("data-page-title");
-      }
-
-      if (headerSiteTopic) {
-        headerSiteTopic.textContent = defaultTitle;
-      }
-
-      if (headerTopic && title) {
-        headerTopic.textContent = title;
-      }
-
-      headerTitle.setAttribute("data-site-title-ready", "true");
-      headerTitle.setAttribute(
-        "data-site-title-mode",
-        root.classList.contains("site-tabs-collapsed") && title ? "page" : "site"
-      );
-    }
-
-    function observeHeaderState() {
-      if (APP.observers.headerTitle) {
-        APP.observers.headerTitle.disconnect();
-        APP.observers.headerTitle = null;
-      }
-
-      if (typeof MutationObserver !== "function" || !document.documentElement) {
-        return;
-      }
-
-      APP.observers.headerTitle = new MutationObserver(function (mutations) {
-        const shouldSync = mutations.some(function (mutation) {
-          return mutation.type === "attributes" && mutation.attributeName === "class";
-        });
-
-        if (shouldSync) {
-          window.requestAnimationFrame(syncHeaderTitle);
-        }
-      });
-
-      APP.observers.headerTitle.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-    }
-
-    function bindEvents() {
-      if (document.documentElement.dataset.siteHeaderTitleBound === "true") {
-        return;
-      }
-
-      window.addEventListener("resize", function () {
-        window.requestAnimationFrame(syncHeaderTitle);
-      }, { passive: true });
-      document.documentElement.dataset.siteHeaderTitleBound = "true";
-    }
-
-    return {
-      init: function () {
-        bindEvents();
-        observeHeaderState();
-        window.requestAnimationFrame(syncHeaderTitle);
-      },
-    };
-  })();
-
   const tocModule = (function () {
     let activeEntries = [];
 
@@ -569,14 +375,13 @@
     function getTopOffset() {
       let offset = 24;
       const header = document.querySelector(SELECTORS.headerRoot);
-      const tabs = document.querySelector(SELECTORS.tabsRoot);
-      const tabsCollapsed = document.documentElement.classList.contains("site-tabs-collapsed");
+      const tabs = document.querySelector(".md-tabs");
 
       if (isHTMLElement(header)) {
         offset += header.getBoundingClientRect().height;
       }
 
-      if (isHTMLElement(tabs) && !tabsCollapsed) {
+      if (isHTMLElement(tabs)) {
         offset += tabs.getBoundingClientRect().height;
       }
 
@@ -1037,418 +842,12 @@
     };
   })();
 
-  const scrollCoordinatorModule = (function () {
-    const subscribers = new Set();
-    let currentScrollTop = Math.max(window.scrollY || 0, 0);
-    let ticking = false;
-
-    function notifySubscribers() {
-      ticking = false;
-      currentScrollTop = Math.max(window.scrollY || 0, 0);
-
-      subscribers.forEach(function (callback) {
-        callback(currentScrollTop);
-      });
-    }
-
-    function requestSync() {
-      if (ticking) return;
-
-      ticking = true;
-      window.requestAnimationFrame(notifySubscribers);
-    }
-
-    function bindEvents() {
-      if (document.documentElement.dataset.siteScrollCoordinatorBound === "true") {
-        return;
-      }
-
-      window.addEventListener("scroll", requestSync, { passive: true });
-      document.documentElement.dataset.siteScrollCoordinatorBound = "true";
-    }
-
-    return {
-      init: function () {
-        bindEvents();
-        requestSync();
-      },
-      getScrollTop: function () {
-        return currentScrollTop;
-      },
-      requestSync: requestSync,
-      subscribe: function (callback, options) {
-        if (typeof callback !== "function") {
-          return function () { };
-        }
-
-        subscribers.add(callback);
-        bindEvents();
-
-        if (!options || options.immediate !== false) {
-          callback(currentScrollTop);
-        }
-
-        return function () {
-          subscribers.delete(callback);
-        };
-      },
-    };
-  })();
-
-  const tabsCollapseModule = (function () {
-    const COLLAPSE_CLASS = "site-tabs-collapsed";
-    const COLLAPSE_SCROLL_LIMIT = 24;
-    const EXPAND_SCROLL_LIMIT = 6;
-    let subscribed = false;
-    let initialized = false;
-
-    function hasTabs() {
-      const tabs = document.querySelector(SELECTORS.tabsRoot);
-      return isHTMLElement(tabs) && tabs.querySelector(".md-tabs__list");
-    }
-
-    function setCollapsed(collapsed) {
-      document.documentElement.classList.toggle(COLLAPSE_CLASS, collapsed);
-    }
-
-    function getRealScrollTop(scrollTop) {
-      return Math.max(
-        typeof scrollTop === "number" ? scrollTop : 0,
-        window.scrollY || 0,
-        document.documentElement.scrollTop || 0,
-        document.body.scrollTop || 0
-      );
-    }
-
-    function syncState(scrollTop) {
-      if (!hasTabs()) {
-        setCollapsed(false);
-        return;
-      }
-
-      const currentScrollTop = getRealScrollTop(scrollTop);
-
-      if (!initialized) {
-        initialized = true;
-        setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
-        return;
-      }
-
-      if (document.documentElement.classList.contains(COLLAPSE_CLASS)) {
-        setCollapsed(currentScrollTop > EXPAND_SCROLL_LIMIT);
-        return;
-      }
-
-      setCollapsed(currentScrollTop > COLLAPSE_SCROLL_LIMIT);
-    }
-
-    function subscribeScroll() {
-      if (subscribed) return;
-      subscribed = true;
-      scrollCoordinatorModule.subscribe(syncState, { immediate: false });
-    }
-
-    return {
-      init: function () {
-        subscribeScroll();
-
-        window.requestAnimationFrame(function () {
-          syncState(scrollCoordinatorModule.getScrollTop());
-
-          window.setTimeout(function () {
-            syncState(scrollCoordinatorModule.getScrollTop());
-          }, 80);
-        });
-      },
-    };
-  })();
-
-  const topShadowModule = (function () {
-    let shadowNode = null;
-    let ticking = false;
-
-    function needsTopShadow() {
-      const root = document.documentElement;
-      return (
-        root.classList.contains("site-browser-safari") ||
-        root.classList.contains("site-browser-atlas")
-      );
-    }
-
-    function ensureShadowNode() {
-      if (shadowNode && document.body.contains(shadowNode)) {
-        return shadowNode;
-      }
-
-      shadowNode = document.querySelector(".site-top-shadow");
-
-      if (!shadowNode) {
-        shadowNode = document.createElement("div");
-        shadowNode.className = "site-top-shadow";
-        shadowNode.setAttribute("aria-hidden", "true");
-        document.body.appendChild(shadowNode);
-      }
-
-      return shadowNode;
-    }
-
-    function getVisibleBottom(element) {
-      if (!isHTMLElement(element)) {
-        return 0;
-      }
-
-      const rect = element.getBoundingClientRect();
-
-      if (rect.height <= 0) {
-        return 0;
-      }
-
-      const style = window.getComputedStyle(element);
-
-      if (
-        style.display === "none" ||
-        style.visibility === "hidden" ||
-        style.opacity === "0"
-      ) {
-        return 0;
-      }
-
-      return Math.max(0, rect.bottom);
-    }
-
-    function syncShadowPosition() {
-      ticking = false;
-
-      const shadow = ensureShadowNode();
-
-      if (!needsTopShadow()) {
-        shadow.style.opacity = "0";
-        return;
-      }
-
-      const header = document.querySelector(SELECTORS.headerRoot);
-      const tabs = document.querySelector(SELECTORS.tabsRoot);
-      const root = document.documentElement;
-      const tabsCollapsed = root.classList.contains("site-tabs-collapsed");
-
-      const headerBottom = getVisibleBottom(header);
-      const tabsBottom = tabsCollapsed ? 0 : getVisibleBottom(tabs);
-      const bottom = Math.max(headerBottom, tabsBottom);
-
-      if (bottom <= 0) {
-        shadow.style.opacity = "0";
-        return;
-      }
-
-      root.style.setProperty("--site-top-shadow-top", Math.round(bottom - 1) + "px");
-      shadow.style.opacity = "1";
-    }
-
-    function requestSync() {
-      if (ticking) return;
-
-      ticking = true;
-      window.requestAnimationFrame(syncShadowPosition);
-    }
-
-    function bindEvents() {
-      if (document.documentElement.dataset.siteTopShadowBound === "true") {
-        return;
-      }
-
-      window.addEventListener("scroll", requestSync, { passive: true });
-      window.addEventListener("resize", requestSync, { passive: true });
-
-      if (window.visualViewport && typeof window.visualViewport.addEventListener === "function") {
-        window.visualViewport.addEventListener("resize", requestSync, { passive: true });
-        window.visualViewport.addEventListener("scroll", requestSync, { passive: true });
-      }
-
-      if (typeof ResizeObserver === "function") {
-        const observer = new ResizeObserver(requestSync);
-        const header = document.querySelector(SELECTORS.headerRoot);
-        const tabs = document.querySelector(SELECTORS.tabsRoot);
-
-        if (isHTMLElement(header)) observer.observe(header);
-        if (isHTMLElement(tabs)) observer.observe(tabs);
-      }
-
-      if (typeof MutationObserver === "function") {
-        const observer = new MutationObserver(requestSync);
-        observer.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ["class"],
-        });
-      }
-
-      document.documentElement.dataset.siteTopShadowBound = "true";
-    }
-
-    return {
-      init: function () {
-        bindEvents();
-        ensureShadowNode();
-        requestSync();
-        window.setTimeout(requestSync, 80);
-        window.setTimeout(requestSync, 240);
-      },
-    };
-  })();
-
-  const atlasWheelModule = (function () {
-    function isSafariForcedOrDetected() {
-      const root = document.documentElement;
-
-      return (
-        root.classList.contains("site-browser-safari") ||
-        (document.body && document.body.classList.contains("is-safari"))
-      );
-    }
-
-    function isAtlasForcedOrDetected() {
-      const root = document.documentElement;
-
-      return (
-        root.classList.contains("site-browser-atlas") ||
-        (document.body && document.body.classList.contains("is-atlas"))
-      );
-    }
-
-    function isDesktopCompatViewport() {
-      return window.matchMedia("(min-width: 76.25em)").matches;
-    }
-
-    function getTargetElement(target) {
-      if (target instanceof Node && !(target instanceof Element)) {
-        return target.parentElement;
-      }
-
-      return target instanceof Element ? target : null;
-    }
-
-    function shouldIgnoreWheelTarget(target) {
-      const element = getTargetElement(target);
-      if (!element) return false;
-
-      return Boolean(
-        element.closest(
-          [
-            ".md-header",
-            ".md-tabs",
-            ".md-sidebar--primary",
-            ".md-sidebar--secondary",
-            ".md-search",
-            ".md-dialog",
-            ".custom-codeblock__body",
-            ".custom-codeblock__copy",
-            "input",
-            "textarea",
-            "select",
-            "button",
-            '[contenteditable=""]',
-            '[contenteditable="true"]'
-          ].join(", ")
-        )
-      );
-    }
-
-    function isMainContentTarget(target) {
-      const element = getTargetElement(target);
-      if (!element) return false;
-
-      return Boolean(
-        element.closest(
-          ".md-main, .md-main__inner, .md-content, .md-content__inner, .md-typeset"
-        )
-      );
-    }
-
-    function getScrollRoot() {
-      return document.scrollingElement || document.documentElement || document.body;
-    }
-
-    function getMaxScrollTop(root) {
-      return Math.max(
-        0,
-        root.scrollHeight - root.clientHeight,
-        document.documentElement.scrollHeight - window.innerHeight,
-        document.body.scrollHeight - window.innerHeight
-      );
-    }
-
-    function getCurrentScrollTop(root) {
-      return Math.max(
-        window.scrollY || 0,
-        root ? root.scrollTop || 0 : 0,
-        document.documentElement.scrollTop || 0,
-        document.body.scrollTop || 0
-      );
-    }
-
-    function forcePageScroll(deltaY) {
-      const root = getScrollRoot();
-      if (!root) return false;
-
-      const current = getCurrentScrollTop(root);
-      const max = getMaxScrollTop(root);
-      const next = Math.min(Math.max(0, current + deltaY), max);
-
-      if (next === current) return false;
-
-      root.scrollTop = next;
-      document.documentElement.scrollTop = next;
-      document.body.scrollTop = next;
-
-      return true;
-    }
-
-    function handleWheel(event) {
-      const needsCompatScroll = isDesktopCompatViewport();
-
-      if (!needsCompatScroll) return;
-      if (event.defaultPrevented) return;
-      if (shouldIgnoreWheelTarget(event.target)) return;
-      if (!isMainContentTarget(event.target)) return;
-
-      const deltaY = event.deltaY || 0;
-      if (!deltaY) return;
-
-      if (Math.abs(deltaY) < Math.abs(event.deltaX || 0)) {
-        return;
-      }
-
-      const moved = forcePageScroll(deltaY);
-
-      if (moved) {
-        event.preventDefault();
-        scrollCoordinatorModule.requestSync();
-      }
-    }
-
-    function bindWheel() {
-      if (document.documentElement.dataset.siteCompatWheelBound === "true") {
-        return;
-      }
-
-      window.addEventListener("wheel", handleWheel, {
-        passive: false,
-        capture: true,
-      });
-
-      document.documentElement.dataset.siteCompatWheelBound = "true";
-    }
-
-    return {
-      init: bindWheel,
-    };
-  })();
-
   const topButtonModule = (function () {
     const SHOW_AFTER_SCROLL = 140;
     const DIRECTION_THRESHOLD = 10;
     let activeButton = null;
     let lastScrollTop = Math.max(window.scrollY || 0, 0);
-    let subscribed = false;
+    let ticking = false;
 
     function handleClick(event) {
       if (event) {
@@ -1499,9 +898,6 @@
       if (textNode) {
         textNode.textContent = " " + TOP_BUTTON_LABEL;
       }
-      button.style.removeProperty("margin-left");
-      button.style.removeProperty("margin-right");
-      button.style.removeProperty("transform");
       if (button.dataset.siteTopClickBound !== "true") {
         button.addEventListener("click", handleClick);
         button.dataset.siteTopClickBound = "true";
@@ -1513,7 +909,7 @@
       if (!isHTMLElement(activeButton)) return;
 
       const currentScrollTop =
-        typeof scrollTop === "number" ? scrollTop : scrollCoordinatorModule.getScrollTop();
+        typeof scrollTop === "number" ? scrollTop : Math.max(window.scrollY || 0, 0);
 
       if (forceHidden || currentScrollTop <= SHOW_AFTER_SCROLL) {
         setVisible(activeButton, false);
@@ -1531,8 +927,14 @@
       lastScrollTop = currentScrollTop;
     }
 
-    function handleViewportChange() {
-      scrollCoordinatorModule.requestSync();
+    function requestSync() {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        syncVisibility(Math.max(window.scrollY || 0, 0), false);
+      });
     }
 
     function bindEvents() {
@@ -1540,10 +942,11 @@
         return;
       }
 
-      window.addEventListener("resize", handleViewportChange, { passive: true });
+      window.addEventListener("scroll", requestSync, { passive: true });
+      window.addEventListener("resize", requestSync, { passive: true });
 
       if (window.visualViewport && typeof window.visualViewport.addEventListener === "function") {
-        window.visualViewport.addEventListener("resize", handleViewportChange, { passive: true });
+        window.visualViewport.addEventListener("resize", requestSync, { passive: true });
       }
 
       document.documentElement.dataset.siteTopButtonBound = "true";
@@ -1557,16 +960,9 @@
         prepareButton(activeButton);
         bindEvents();
 
-        if (!subscribed) {
-          scrollCoordinatorModule.subscribe(function (scrollTop) {
-            syncVisibility(scrollTop, false);
-          }, { immediate: false });
-          subscribed = true;
-        }
-
-        lastScrollTop = scrollCoordinatorModule.getScrollTop();
+        lastScrollTop = Math.max(window.scrollY || 0, 0);
         syncVisibility(lastScrollTop, true);
-        scrollCoordinatorModule.requestSync();
+        requestSync();
       },
     };
   })();
@@ -1835,6 +1231,14 @@
       });
     }
 
+    function cleanupNativeCopyControls(root) {
+      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
+        if (isHTMLElement(highlight)) {
+          removeNativeCopyControls(highlight);
+        }
+      });
+    }
+
     function createCodeHeader(languageName, code) {
       const header = document.createElement("div");
       const leading = document.createElement("div");
@@ -2017,14 +1421,6 @@
       ensureWrapper(table);
     }
 
-    function cleanupNativeCopyControls(root) {
-      queryAll(resolveRoot(root), SELECTORS.codeBlocks).forEach(function (highlight) {
-        if (isHTMLElement(highlight)) {
-          removeNativeCopyControls(highlight);
-        }
-      });
-    }
-
     return {
       init: function (root) {
         queryAll(resolveRoot(root), ".md-content .md-typeset h2").forEach(function (heading) {
@@ -2039,21 +1435,94 @@
     };
   })();
 
+  const fixedSidebarTopModule = (function () {
+    const DEFAULT_TOP = 12;
+    const GAP = 12;
+    let ticking = false;
+
+    function getVisibleBottom(element) {
+      if (!isHTMLElement(element)) return 0;
+
+      const style = window.getComputedStyle(element);
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        style.opacity === "0"
+      ) {
+        return 0;
+      }
+
+      const rect = element.getBoundingClientRect();
+      if (rect.height <= 0 || rect.bottom <= 0) {
+        return 0;
+      }
+
+      const viewportHeight = window.visualViewport
+        ? window.visualViewport.height
+        : window.innerHeight;
+      if (rect.top >= viewportHeight) {
+        return 0;
+      }
+
+      return Math.max(0, Math.min(rect.bottom, viewportHeight));
+    }
+
+    function syncTop() {
+      ticking = false;
+
+      const header = document.querySelector(SELECTORS.headerRoot);
+      const tabs = document.querySelector(".md-tabs:not([hidden])");
+      const visibleBottom = Math.max(getVisibleBottom(header), getVisibleBottom(tabs));
+      const top = visibleBottom > 0
+        ? Math.max(DEFAULT_TOP, Math.round(visibleBottom + GAP))
+        : DEFAULT_TOP;
+
+      document.documentElement.style.setProperty("--site-fixed-sidebar-top", top + "px");
+    }
+
+    function requestSync() {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(syncTop);
+    }
+
+    function bindEvents() {
+      if (document.documentElement.dataset.siteFixedSidebarTopBound === "true") {
+        return;
+      }
+
+      window.addEventListener("scroll", requestSync, { passive: true });
+      window.addEventListener("resize", requestSync, { passive: true });
+
+      if (window.visualViewport && typeof window.visualViewport.addEventListener === "function") {
+        window.visualViewport.addEventListener("resize", requestSync, { passive: true });
+      }
+
+      document.documentElement.dataset.siteFixedSidebarTopBound = "true";
+    }
+
+    return {
+      init: function () {
+        bindEvents();
+        syncTop();
+        window.requestAnimationFrame(syncTop);
+        window.setTimeout(syncTop, 80);
+        window.setTimeout(syncTop, 240);
+      },
+    };
+  })();
+
   const modules = [
-    browserClassModule,
     pageTypeModule,
     footerModule,
-    headerTitleModule,
     tocModule,
     layoutToggleModule,
-    scrollCoordinatorModule,
-    tabsCollapseModule,
-    topShadowModule,
-    atlasWheelModule,
     topButtonModule,
     themeToggleModule,
     codeBlockModule,
     factTableModule,
+    fixedSidebarTopModule,
   ];
 
   pageTypeModule.init();
