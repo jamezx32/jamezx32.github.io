@@ -544,154 +544,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#v8_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V8 环境搭建
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="V8 环境搭建">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-depot_tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 安装 depot_tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-v8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 拉取 V8 源码
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 代理开关（可选）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 切到指定版本/漏洞版本（可选）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-x64debug" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5) 调试构建：x64.debug
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-x64release_with_symbol" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6) 复现构建：x64.release_with_symbol
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gdbinit_v8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gdbinit_v8 脚本
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="gdbinit_v8 脚本">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 获取并加载
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 启动方式
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 常用命令
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 常用配合
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        最常用启动参数
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depot_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 depot_tools
       
     </span>
   </a>
@@ -702,68 +569,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常用命令模板
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="常用命令模板">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-bytecode" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 只看 bytecode
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-deopt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 看优化和 deopt
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-turbofan" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 看 TurboFan 图
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 提升复现稳定性
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gdb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gdb 常用操作
+        获取源码
       
     </span>
   </a>
@@ -774,7 +580,40 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        调试时常用 % 内建
+        代理配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-with-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release With Symbol 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbinit_v8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdbinit_v8
       
     </span>
   </a>
@@ -785,71 +624,32 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        漏洞分析流程
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="漏洞分析流程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#poc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第一步：最小化 PoC
+        常用启动参数
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#bytecode" class="md-nav__link">
-    <span class="md-ellipsis">
       
-        第二步：先看 bytecode
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
+        <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第三步：确认是否依赖优化态
+        命令模板
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#debugprint" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第四步：关键对象都 DebugPrint
+        GDB 常用操作
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#patch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第五步：对照 patch
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -857,7 +657,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        速查
+        % 内建
       
     </span>
   </a>
@@ -868,7 +668,29 @@
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        漏洞分析流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -1156,6 +978,34 @@
     
   
     Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux 编译要点
   
 
     
@@ -1493,154 +1343,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#v8_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        V8 环境搭建
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="V8 环境搭建">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-depot_tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 安装 depot_tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-v8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 拉取 V8 源码
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 代理开关（可选）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 切到指定版本/漏洞版本（可选）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-x64debug" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5) 调试构建：x64.debug
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-x64release_with_symbol" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6) 复现构建：x64.release_with_symbol
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gdbinit_v8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gdbinit_v8 脚本
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="gdbinit_v8 脚本">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 获取并加载
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 启动方式
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 常用命令
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 常用配合
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        最常用启动参数
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depot_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 depot_tools
       
     </span>
   </a>
@@ -1651,68 +1368,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常用命令模板
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="常用命令模板">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-bytecode" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1) 只看 bytecode
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-deopt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2) 看优化和 deopt
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-turbofan" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3) 看 TurboFan 图
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4) 提升复现稳定性
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gdb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gdb 常用操作
+        获取源码
       
     </span>
   </a>
@@ -1723,7 +1379,40 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        调试时常用 % 内建
+        代理配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-with-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release With Symbol 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbinit_v8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdbinit_v8
       
     </span>
   </a>
@@ -1734,71 +1423,32 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        漏洞分析流程
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="漏洞分析流程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#poc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第一步：最小化 PoC
+        常用启动参数
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#bytecode" class="md-nav__link">
-    <span class="md-ellipsis">
       
-        第二步：先看 bytecode
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
+        <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第三步：确认是否依赖优化态
+        命令模板
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#debugprint" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第四步：关键对象都 DebugPrint
+        GDB 常用操作
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#patch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第五步：对照 patch
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1806,7 +1456,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        速查
+        % 内建
       
     </span>
   </a>
@@ -1817,7 +1467,29 @@
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        漏洞分析流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -1842,53 +1514,71 @@
 
 
 <h1 id="v8">V8 调试手册<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h1>
-<p>这篇笔记只保留 V8 漏洞分析最常用的环境、命令和调试步骤。</p>
-<hr />
-<h2 id="v8_1">V8 环境搭建<a class="headerlink" href="#v8_1" title="Permanent link">&para;</a></h2>
-<p>两条构建线：<code>x64.debug</code>（调试）和 <code>x64.release_with_symbol</code>（复现）。</p>
-<h3 id="1-depot_tools">1) 安装 <code>depot_tools</code><a class="headerlink" href="#1-depot_tools" title="Permanent link">&para;</a></h3>
+<h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>本文记录 V8 漏洞分析常用的源码获取、构建配置、<code>d8</code> 参数、<code>gdb</code> 辅助命令和分析流程。</p>
+<p>建议同时准备两个构建目录：</p>
+<table>
+<thead>
+<tr>
+<th>构建目录</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x64.debug</code></td>
+<td>源码调试、断点、对象打印</td>
+</tr>
+<tr>
+<td><code>x64.release_with_symbol</code></td>
+<td>漏洞复现、符号化分析</td>
+</tr>
+</tbody>
+</table>
+<h2 id="depot_tools">安装 <code>depot_tools</code><a class="headerlink" href="#depot_tools" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://chromium.googlesource.com/chromium/tools/depot_tools.git<span class="w"> </span>~/depot_tools
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$HOME/depot_tools:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>gclient
 </code></pre></div>
-<p>建议把 <code>depot_tools</code> 放在 PATH 前面，避免系统自带 <code>gn/ninja</code> 混入。</p>
-<h3 id="2-v8">2) 拉取 V8 源码<a class="headerlink" href="#2-v8" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/v8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/v8
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>fetch<span class="w"> </span>v8
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">cd</span><span class="w"> </span>v8
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>gclient<span class="w"> </span>sync
+<p><code>depot_tools</code> 建议放在 <code>PATH</code> 前部，避免系统自带 <code>gn</code>、<code>ninja</code> 影响构建。</p>
+<h2 id="_2">获取源码<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/v8
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>~/v8
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>fetch<span class="w"> </span>v8
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">cd</span><span class="w"> </span>v8
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>gclient<span class="w"> </span>sync
 </code></pre></div>
-<p>Linux 额外依赖：</p>
+<p>Linux 依赖：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./build/install-build-deps.sh
 </code></pre></div>
-<h3 id="3">3) 代理开关（可选）<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
-<p>网络较慢可在 <code>~/.bashrc</code> 添加：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>proxy_on<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:xxx
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">https_proxy</span><span class="o">=</span><span class="nv">$http_proxy</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>https.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="o">}</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>proxy_off<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nb">unset</span><span class="w"> </span>http_proxy
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="nb">unset</span><span class="w"> </span>https_proxy
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>http.proxy
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>https.proxy
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="o">}</span>
+<p>切换到指定 tag 或 commit：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~/v8/v8
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>checkout<span class="w"> </span>&lt;tag-or-commit&gt;
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>gclient<span class="w"> </span>sync<span class="w"> </span>-D
 </code></pre></div>
-<h3 id="4">4) 切到指定版本/漏洞版本（可选）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/v8/v8
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>git<span class="w"> </span>checkout<span class="w"> </span>&lt;tag-or-commit&gt;
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>gclient<span class="w"> </span>sync<span class="w"> </span>-D
+<h2 id="_3">代理配置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>网络受限环境可临时配置代理：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>proxy_on<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:xxx
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nb">export</span><span class="w"> </span><span class="nv">https_proxy</span><span class="o">=</span><span class="nv">$http_proxy</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>https.proxy<span class="w"> </span><span class="nv">$http_proxy</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="o">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>proxy_off<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="nb">unset</span><span class="w"> </span>http_proxy
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="nb">unset</span><span class="w"> </span>https_proxy
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>http.proxy
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--unset<span class="w"> </span>https.proxy
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="o">}</span>
 </code></pre></div>
-<h3 id="5-x64debug">5) 调试构建：<code>x64.debug</code><a class="headerlink" href="#5-x64debug" title="Permanent link">&para;</a></h3>
+<h2 id="debug">Debug 构建<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tools/dev/v8gen.py<span class="w"> </span>x64.debug
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ninja<span class="w"> </span>-C<span class="w"> </span>out/x64.debug<span class="w"> </span>d8
 </code></pre></div>
-<h3 id="6-x64release_with_symbol">6) 复现构建：<code>x64.release_with_symbol</code><a class="headerlink" href="#6-x64release_with_symbol" title="Permanent link">&para;</a></h3>
+<h2 id="release-with-symbol">Release With Symbol 构建<a class="headerlink" href="#release-with-symbol" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>gn<span class="w"> </span>gen<span class="w"> </span>out/x64.release_with_symbol<span class="w"> </span>--args<span class="o">=</span><span class="s1">&#39;</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s1">is_debug=false</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s1">is_component_build=true</span>
@@ -1903,36 +1593,63 @@
 <a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>ninja<span class="w"> </span>-C<span class="w"> </span>out/x64.release_with_symbol<span class="w"> </span>d8
 </code></pre></div>
 <p>验证版本：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./out.gn/x64.release_with_symbol/d8<span class="w"> </span>--version
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./out/x64.release_with_symbol/d8<span class="w"> </span>--version
 </code></pre></div>
-<hr />
-<h2 id="gdbinit_v8"><code>gdbinit_v8</code> 脚本<a class="headerlink" href="#gdbinit_v8" title="Permanent link">&para;</a></h2>
-<p><code>gdbinit_v8</code> 对应仓库里的 <code>tools/gdbinit</code>，用于给 gdb 注入 V8 专用命令。</p>
-<h3 id="1">1) 获取并加载<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<h2 id="gdbinit_v8"><code>gdbinit_v8</code><a class="headerlink" href="#gdbinit_v8" title="Permanent link">&para;</a></h2>
+<p>V8 仓库提供 <code>tools/gdbinit</code>，可向 <code>gdb</code> 注入 V8 专用命令。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cp<span class="w"> </span>tools/gdbinit<span class="w"> </span>~/.gdbinit_v8
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;source ~/.gdbinit_v8&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.gdbinit
 </code></pre></div>
-<h3 id="2">2) 启动方式<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
+<p>启动方式：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
 </code></pre></div>
-<h3 id="3_1">3) 常用命令<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>job &lt;tagged_ptr&gt;</code>：打印对象</li>
-<li><code>jlh &lt;local_handle&gt;</code> / <code>jh &lt;internal_handle&gt;</code>：打印 handle 指向对象</li>
-<li><code>jco [pc]</code>：打印 PC 对应 Code 对象</li>
-<li><code>jca [pc] [n]</code>：打印附近反汇编</li>
-<li><code>jst</code> / <code>jstc</code>：打印 JS 栈</li>
-<li><code>jtt &lt;map&gt;</code>：打印 map transition tree</li>
-</ul>
-<h3 id="4_1">4) 常用配合<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>job &lt;tagged_ptr&gt;</code></td>
+<td>打印对象</td>
+</tr>
+<tr>
+<td><code>jlh &lt;local_handle&gt;</code></td>
+<td>打印 local handle 指向对象</td>
+</tr>
+<tr>
+<td><code>jh &lt;internal_handle&gt;</code></td>
+<td>打印 internal handle 指向对象</td>
+</tr>
+<tr>
+<td><code>jco [pc]</code></td>
+<td>打印 PC 对应 Code 对象</td>
+</tr>
+<tr>
+<td><code>jca [pc] [n]</code></td>
+<td>打印附近反汇编</td>
+</tr>
+<tr>
+<td><code>jst</code> / <code>jstc</code></td>
+<td>打印 JS 栈</td>
+</tr>
+<tr>
+<td><code>jtt &lt;map&gt;</code></td>
+<td>打印 map transition tree</td>
+</tr>
+</tbody>
+</table>
+<p>常用配合：</p>
 <ol>
-<li>JS 里 <code>%DebugPrint(obj)</code> 拿地址</li>
-<li><code>%SystemBreak()</code> 停住进程</li>
-<li>gdb 里 <code>job &lt;地址&gt;</code></li>
+<li>在 JS 中使用 <code>%DebugPrint(obj)</code> 输出对象地址</li>
+<li>在 JS 中使用 <code>%SystemBreak()</code> 中断进程</li>
+<li>在 <code>gdb</code> 中使用 <code>job &lt;addr&gt;</code> 查看对象</li>
 </ol>
-<hr />
-<h2 id="_1">最常用启动参数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
+<h2 id="_4">常用启动参数<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--allow-natives-syntax<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--print-bytecode<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>--print-bytecode-filter<span class="o">=</span>trigger<span class="w"> </span><span class="se">\</span>
@@ -1945,132 +1662,120 @@
 <thead>
 <tr>
 <th>参数</th>
-<th>作用</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>--allow-natives-syntax</code></td>
-<td>打开 <code>%DebugPrint</code>、<code>%OptimizeFunctionOnNextCall</code></td>
+<td>启用 <code>%DebugPrint</code>、<code>%OptimizeFunctionOnNextCall</code> 等内建</td>
 </tr>
 <tr>
 <td><code>--print-bytecode</code></td>
-<td>打印 Ignition bytecode</td>
+<td>输出 Ignition bytecode</td>
 </tr>
 <tr>
-<td><code>--print-bytecode-filter=trigger</code></td>
-<td>只打印目标函数</td>
+<td><code>--print-bytecode-filter=&lt;name&gt;</code></td>
+<td>过滤指定函数 bytecode</td>
 </tr>
 <tr>
 <td><code>--trace-opt</code></td>
-<td>优化编译日志</td>
+<td>输出优化编译日志</td>
 </tr>
 <tr>
 <td><code>--trace-deopt</code></td>
-<td>反优化原因</td>
+<td>输出 deoptimization 日志</td>
 </tr>
 <tr>
 <td><code>--trace-ic</code></td>
-<td>IC 状态迁移</td>
+<td>输出 IC 状态迁移</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="_2">常用命令模板<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="1-bytecode">1) 只看 bytecode<a class="headerlink" href="#1-bytecode" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
+<h2 id="_5">命令模板<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>输出 bytecode：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--print-bytecode<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--print-bytecode-filter<span class="o">=</span>trigger
 </code></pre></div>
-<h3 id="2-deopt">2) 看优化和 deopt<a class="headerlink" href="#2-deopt" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
+<p>输出优化和 deoptimization：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>--allow-natives-syntax<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>--trace-opt<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span>--trace-deopt
 </code></pre></div>
-<h3 id="3-turbofan">3) 看 TurboFan 图<a class="headerlink" href="#3-turbofan" title="Permanent link">&para;</a></h3>
+<p>输出 TurboFan 图：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>turbo
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--trace-turbo<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>--trace-turbo-path<span class="o">=</span>./turbo<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span>--trace-turbo-filter<span class="o">=</span>trigger
 </code></pre></div>
-<h3 id="4_2">4) 提升复现稳定性<a class="headerlink" href="#4_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
+<p>提升复现稳定性：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--predictable<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--random-seed<span class="o">=</span><span class="m">1337</span>
 </code></pre></div>
-<p>flag 名称可能随版本变化，先用 <code>./out.gn/x64.debug/d8 --help</code> 校对。</p>
-<hr />
-<h2 id="gdb"><code>gdb</code> 常用操作<a class="headerlink" href="#gdb" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
+<p>参数名称可能随 V8 版本变化，使用前应通过以下命令校对：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>./out/x64.debug/d8<span class="w"> </span>--help
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>(gdb) set pagination off
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>(gdb) run
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>(gdb) bt
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>(gdb) info registers
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>(gdb) x/20gx $rsp
+<h2 id="gdb">GDB 常用操作<a class="headerlink" href="#gdb" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(gdb) set pagination off
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>(gdb) run
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>(gdb) bt
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>(gdb) info registers
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>(gdb) x/20gx $rsp
 </code></pre></div>
 <p>常见断点：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(gdb) rbreak Builtins_
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>(gdb) b v8::internal::Runtime_ThrowReferenceError
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>(gdb) b v8::internal::BytecodeGenerator::ControlScopeForBreakable::Execute
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>(gdb) rbreak Builtins_
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>(gdb) b v8::internal::Runtime_ThrowReferenceError
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>(gdb) b v8::internal::BytecodeGenerator::ControlScopeForBreakable::Execute
 </code></pre></div>
-<p>建议先 <code>rbreak</code> 缩小范围，再保留关键断点。</p>
-<hr />
-<h2 id="_3">调试时常用 <code>%</code> 内建<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="o">%</span><span class="nx">DebugPrint</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="o">%</span><span class="nx">SystemBreak</span><span class="p">();</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="o">%</span><span class="nx">PrepareFunctionForOptimization</span><span class="p">(</span><span class="nx">f</span><span class="p">);</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="o">%</span><span class="nx">OptimizeFunctionOnNextCall</span><span class="p">(</span><span class="nx">f</span><span class="p">);</span>
+<h2 id="_6"><code>%</code> 内建<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="o">%</span><span class="nx">DebugPrint</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="o">%</span><span class="nx">SystemBreak</span><span class="p">();</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="o">%</span><span class="nx">PrepareFunctionForOptimization</span><span class="p">(</span><span class="nx">f</span><span class="p">);</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="o">%</span><span class="nx">OptimizeFunctionOnNextCall</span><span class="p">(</span><span class="nx">f</span><span class="p">);</span>
 </code></pre></div>
-<p>做 type confusion 时，配合 <code>x/gx</code> 校对“语义字段”和“内存偏移”。</p>
-<hr />
-<h2 id="_4">漏洞分析流程<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<h3 id="poc">第一步：最小化 PoC<a class="headerlink" href="#poc" title="Permanent link">&para;</a></h3>
-<p>保留最短可稳定触发版本。</p>
-<h3 id="bytecode">第二步：先看 bytecode<a class="headerlink" href="#bytecode" title="Permanent link">&para;</a></h3>
-<p>bytecode 已异常先不看汇编；bytecode 正常再看优化图/反汇编。</p>
-<h3 id="_5">第三步：确认是否依赖优化态<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>同一份 PoC 对比“未优化/已优化”，判断问题类型：</p>
-<ul>
-<li>前端语义生成问题</li>
-<li>IC handler 选择问题</li>
-<li>优化阶段错误折叠/错误假设</li>
-</ul>
-<h3 id="debugprint">第四步：关键对象都 <code>DebugPrint</code><a class="headerlink" href="#debugprint" title="Permanent link">&para;</a></h3>
-<p>至少打印 <code>receiver</code>、<code>lookup_start_object</code>、返回值对象。</p>
-<h3 id="patch">第五步：对照 patch<a class="headerlink" href="#patch" title="Permanent link">&para;</a></h3>
-<p>先定位 patch 落点，再确认本地断点是否命中同一路径。</p>
-<hr />
-<h2 id="_6">速查<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># 0) gdbinit_v8</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>cp<span class="w"> </span>tools/gdbinit<span class="w"> </span>~/.gdbinit_v8
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;source ~/.gdbinit_v8&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.gdbinit
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># 1) 字节码</span>
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--print-bytecode<span class="w"> </span>--print-bytecode-filter<span class="o">=</span>trigger
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
-<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="c1"># 2) 优化/反优化</span>
-<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax<span class="w"> </span>--trace-opt<span class="w"> </span>--trace-deopt
-<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
-<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="c1"># 3) IC 迁移</span>
-<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--trace-ic
-<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
-<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="c1"># 4) TurboFan 图</span>
-<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--trace-turbo<span class="w"> </span>--trace-turbo-path<span class="o">=</span>./turbo<span class="w"> </span>--trace-turbo-filter<span class="o">=</span>trigger
-<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
-<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="c1"># 5) gdb</span>
-<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out.gn/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
+<p>类型混淆分析中，可结合 <code>x/gx</code> 核对语义字段和内存偏移。</p>
+<h2 id="_7">漏洞分析流程<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>最小化 PoC，保留稳定触发条件</li>
+<li>输出 bytecode，确认前端语义和控制流</li>
+<li>对比未优化与已优化行为，判断是否依赖 JIT</li>
+<li>打印关键对象，包括 receiver、lookup object、返回值和数组 backing store</li>
+<li>输出优化日志、deopt 日志、IC 日志和 TurboFan 图</li>
+<li>对照 patch，确认修复点与本地断点是否位于同一路径</li>
+</ol>
+<h2 id="_8">速查<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># gdbinit_v8</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>cp<span class="w"> </span>tools/gdbinit<span class="w"> </span>~/.gdbinit_v8
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;source ~/.gdbinit_v8&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.gdbinit
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># bytecode</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--print-bytecode<span class="w"> </span>--print-bytecode-filter<span class="o">=</span>trigger
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># opt / deopt</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax<span class="w"> </span>--trace-opt<span class="w"> </span>--trace-deopt
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="c1"># IC</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--trace-ic
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="c1"># TurboFan</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--trace-turbo<span class="w"> </span>--trace-turbo-path<span class="o">=</span>./turbo<span class="w"> </span>--trace-turbo-filter<span class="o">=</span>trigger
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="c1"># gdb</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>gdb<span class="w"> </span>--args<span class="w"> </span>./out/x64.debug/d8<span class="w"> </span>poc.js<span class="w"> </span>--allow-natives-syntax
 </code></pre></div>
-<hr />
-<h2 id="_7">参考<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
-<ul>
+<h2 id="_9">参考资料<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ol>
 <li><a href="https://gtoad.github.io/2019/07/25/V8-Debug/">V8 引擎漏洞分析环境与调试方法基础（GToad）</a></li>
 <li><a href="https://v8.dev/docs/source-code">V8 官方：Checking out the V8 source code</a></li>
 <li><a href="https://v8.dev/docs/build">V8 官方：Building V8 from source</a></li>
 <li><a href="https://chromium.googlesource.com/v8/v8/+/refs/heads/main/tools/gdbinit">V8 官方 <code>tools/gdbinit</code></a></li>
-</ul>
+</ol>
 
 
 

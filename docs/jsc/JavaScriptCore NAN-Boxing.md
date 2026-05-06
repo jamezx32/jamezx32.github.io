@@ -1,20 +1,14 @@
 # JavaScriptCore NAN-Boxing
 
-这篇笔记整理的是 JavaScriptCore 在 64 位平台上的 `JSValue` 表示。后面看 JSC 的对象布局、寄存器值、JIT 输出或者 exploit 原语时，`NaN-boxing` 基本都会反复碰到。
+## 概述
 
----
+JavaScriptCore 在 64 位平台启用 `USE(JSVALUE64)` 时，使用 NaN-encoded 表示 `JSValue`。该表示方式利用 IEEE 754 双精度浮点数的 NaN payload 空间，将 Cell 指针、`int32`、`double`、`boolean`、`null`、`undefined` 等值编码到同一个 64 bit 机器字中。
 
-## 背景
+该机制用于在运行时保持统一的 `JSValue` 表示，同时为 JIT 和 runtime helper 提供快速类型判断能力。
 
-在 64 位平台上，如果开启 `USE(JSVALUE64)`，JSC 会使用 NaN-encoded 的方式来表示 `JSValue`。它利用 IEEE754 双精度浮点数里一部分不会被正常数值占用的 NaN 空间，把指针、整数和几个特殊 immediate 一起编码进 64 bit。
+## 基本布局
 
-这样做的目的很直接：JavaScript 层看到的是统一的 `JSValue`，底层则可以在同一个机器字里同时表示 Cell 指针、`int32`、`double`、`boolean`、`null`、`undefined` 等类型。
-
----
-
-## 64 位下的基本布局
-
-原始说明里把高位模式概括成下面这样：
+高位模式可概括如下：
 
 ```text
 Pointer {  0000:PPPP:PPPP:PPPP
@@ -24,76 +18,54 @@ Double  {         ...
 Integer {  FFFE:0000:IIII:IIII
 ```
 
-可以先按三大类去记：
-
-| 类型 | 高位模式 | 含义 |
+| 类型 | 高位模式 | 说明 |
 |---|---|---|
-| Pointer / tagged immediate | 0x0000 一段 | 指向堆对象，或者编码成特殊 immediate |
-| Double | 普通 double 区间，以及 0xFFFC 一段 | 通过额外加减偏移来避开指针 / 整数标签 |
-| Int32 | 0xFFFE:0000:IIII:IIII | 32 位有符号整数 |
+| Pointer / tagged immediate | `0x0000` 区间 | Cell 指针或特殊 immediate |
+| Double | 普通 double 区间与 `0xFFFC` 区间 | 通过偏移编码避开指针和整数标签 |
+| Int32 | `0xFFFE:0000:IIII:IIII` | 32 位有符号整数 |
 
-JSC 依赖的一点是：双精度 NaN 空间里有大量不会被普通数值占用的位模式，而这些空间又足够容纳指针和整数标签。
+JSC 依赖 NaN 空间中大量不会被普通双精度数值占用的位模式，用于容纳非 double 类型的标签和值。
 
----
+## NaN Payload 编码
 
-## 为什么可以拿 NaN 空间来编码
+双精度浮点数在指数位全为 1 且尾数非 0 时表示 NaN。JSC 使用其中一部分 NaN payload 空间编码非 double 类型，并保留普通 double 的可表示范围。
 
-双精度浮点数里，顶部若干位满足特定条件时会表示 NaN。JSC 这里使用的是带 payload 的 NaN 空间，也就是“硬件和标准库通常不会主动拿来产生普通计算结果”的那一部分位模式。这样既能保留 double，又能把剩余空间拿来表示其它类型。
+该设计使 `double`、`int32`、Cell 指针和特殊 immediate 可通过高位标签区分，避免在常见路径中引入额外对象封装。
 
-原始说明里提到，JSC 依赖的是以 `0xFFFC` 和 `0xFFFE` 开头的那一段 NaN 范围，并假定正常双精度数不会落进去。于是 `double`、`int32` 和 Cell 指针就能靠高位标签分出来。
+## Double 编码
 
----
+`double` 进入 `JSValue` 时不会直接保存原始 IEEE 754 bit pattern。JSC 会对其 64 bit 表示执行偏移编码，使编码后的 double 不与指针区间或 `int32` 标签区间冲突。
 
-## Double 是怎么编码的
+读取 `double` 时需要执行反向转换。调试寄存器、栈槽或 dump 输出时，应先确认当前值是否仍处于 `JSValue` 编码形式。
 
-JSC 对 `double` 的处理不是“原样塞进去”，而是会先做一次整数加法，把 `2^49` 加到这个 64 bit 表示上。做完这一步之后，编码后的 `double` 就不会和 `0x0000` 指针区间或者 `0xFFFE` 整数区间撞上。
+## Int32 与特殊 Immediate
 
-后面如果还要继续按浮点数使用，再把这一步反过来做回来。也就是说，`double` 的关键不只是“值长什么样”，而是“它进入 `JSValue` 之前会先经过一次重新编码”。
+`int32` 使用 `0xFFFE` 高位标签，低 32 bit 保存有符号整数值。该布局支持快速判断和解码。
 
-这也是调试里经常容易看错的点。寄存器里看到的 `JSValue` 并不一定就是“把这个 64 bit 直接按 IEEE754 解出来”的结果，它有可能还处在 JSC 自己的编码形式里。
-
----
-
-## Int32 和特殊 immediate
-
-`int32` 使用的是 `0xFFFE` 这一类高位标签。这样做的好处是区分简单，JIT 和 runtime helper 都可以很快判断“当前值是不是一个 32 位整数”。
-
-除了整数和 Cell 指针，JSC 还把几个常见的特殊值编码成固定的非法指针值：
+特殊 immediate 使用固定编码：
 
 | 值 | 编码 |
 |---|---|
-| false | 0x06 |
-| true | 0x07 |
-| undefined | 0x0a |
-| null | 0x02 |
+| `false` | `0x06` |
+| `true` | `0x07` |
+| `undefined` | `0x0a` |
+| `null` | `0x02` |
 
-这些值的设计不是随便挑出来的。原始说明里提到，它们会配合若干 tag bit，让 JSC 能更快地区分“真实 Cell 指针”和“立即数”，同时也方便快速判断 `null` / `undefined` 这一类值。
+这些编码用于区分 Cell 指针和立即数，并支持 `null`、`undefined`、布尔值的快速判断。
 
----
+## `0x0` 与 Hole
 
-## `0x0` 和 hole
+合法 `JSValue` 不使用 `0x0` 表示普通 JavaScript 值。该模式通常用于表示 array hole、空结果或 C++ 层的 no value 状态。
 
-JSC 里不会把合法的 `JSValue` 编码成 `0x0`。这个模式通常被保留给“没有值”的场景使用，比如 array hole，或者 C++ 层的空结果。调试数组、稀疏元素、butterfly 数据区时，碰到 `0x0` 往往就要先想到 hole / no value，而不是直接把它当成普通 `null`。
+分析稀疏数组、`Butterfly` 元素区或未初始化值时，`0x0` 应按 hole / no value 语义处理，不应直接解释为 `null`。
 
-这点在漏洞分析里也很常见。某些 bug 不是把一个对象指针直接读出来，而是把 hole、未初始化值或者错误 tag 的 `JSValue` 带到了后续路径里，最后才在更远的位置出问题。
+## 调试检查项
 
----
-
-## 调试时怎么读这些值
-
-### 先分清当前看到的是“值”还是“编码后的 JSValue”
-
-在 C++ 源码里、JIT 寄存器里、dump 输出里看到的内容，不一定已经被还原成人类直觉里的 JavaScript 值。有时它还是 NaN-boxing 之后的内部表示，这时要先看高位 tag，而不是急着把它当成普通 `double` 或普通地址解释。
-
-### 再看它落在哪个标签区间
-
-如果高位模式落在指针区，重点看它是不是一个 Cell；如果落在 `0xFFFE` 一类整数区，优先按 `int32` 看；如果看起来像 double，也要先确认是不是编码后的 double，而不是直接按 IEEE754 读。
-
-### 最后再结合对象模型
-
-`NaN-boxing` 只解决“一个 64 bit 值代表什么”的问题，不能单独解释对象布局。真正做 Root Cause 时，还要继续把它和 `JSCell`、`Structure`、`Butterfly` 一起看，才能知道这个值为什么会出现在这里。
-
----
+- 当前 64 bit 值是否为编码后的 `JSValue`
+- 高位标签是否落入 Cell 指针、`int32` 或 `double` 区间
+- `0x0` 是否表示 hole / no value
+- Cell 指针是否需要结合 `JSCell`、`Structure`、`Butterfly` 继续解析
+- JIT 图、寄存器值和对象布局中的类型假设是否一致
 
 ## 参考
 

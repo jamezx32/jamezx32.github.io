@@ -12,13 +12,13 @@
         <meta name="author" content="SXY">
       
       
-        <link rel="canonical" href="https://jamezx32.github.io/jsc/JavaScriptCore%20NAN-Boxing/">
+        <link rel="canonical" href="https://jamezx32.github.io/jsc/JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/">
       
       
-        <link rel="prev" href="../JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/">
+        <link rel="prev" href="../JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/">
       
       
-        <link rel="next" href="../JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/">
+        <link rel="next" href="../JavaScriptCore%20NAN-Boxing/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>NAN-Boxing - SXY Research Notes</title>
+        <title>Linux 编译要点 - SXY Research Notes</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#javascriptcore-nan-boxing" class="md-skip">
+        <a href="#javascriptcore-linux" class="md-skip">
           跳转至
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NAN-Boxing
+              Linux 编译要点
             
           </span>
         </div>
@@ -794,34 +794,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Linux 编译要点
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -841,7 +813,7 @@
   <span class="md-ellipsis">
     
   
-    NAN-Boxing
+    Linux 编译要点
   
 
     
@@ -859,7 +831,7 @@
   <span class="md-ellipsis">
     
   
-    NAN-Boxing
+    Linux 编译要点
   
 
     
@@ -899,51 +871,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        基本布局
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nan-payload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        NaN Payload 编码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#double" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Double 编码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#int32-immediate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Int32 与特殊 Immediate
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x0-hole" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        0x0 与 Hole
+        获取源码
       
     </span>
   </a>
@@ -954,7 +882,51 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        调试检查项
+        安装依赖
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 Clang
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clang_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指定 Clang 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        带符号且关闭断言的 Debug 构建
       
     </span>
   </a>
@@ -965,7 +937,40 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        静态链接构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fuzzilli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fuzzilli 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        构建产物
       
     </span>
   </a>
@@ -976,6 +981,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JavaScriptCore%20NAN-Boxing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAN-Boxing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1291,51 +1324,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        基本布局
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nan-payload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        NaN Payload 编码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#double" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Double 编码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#int32-immediate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Int32 与特殊 Immediate
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x0-hole" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        0x0 与 Hole
+        获取源码
       
     </span>
   </a>
@@ -1346,7 +1335,51 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        调试检查项
+        安装依赖
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 Clang
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clang_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指定 Clang 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        带符号且关闭断言的 Debug 构建
       
     </span>
   </a>
@@ -1357,7 +1390,40 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        静态链接构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fuzzilli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fuzzilli 构建
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        构建产物
       
     </span>
   </a>
@@ -1381,97 +1447,154 @@
 
 
 
-<h1 id="javascriptcore-nan-boxing">JavaScriptCore NAN-Boxing<a class="headerlink" href="#javascriptcore-nan-boxing" title="Permanent link">&para;</a></h1>
+<h1 id="javascriptcore-linux">JavaScriptCore Linux 编译要点<a class="headerlink" href="#javascriptcore-linux" title="Permanent link">&para;</a></h1>
 <h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>JavaScriptCore 在 64 位平台启用 <code>USE(JSVALUE64)</code> 时，使用 NaN-encoded 表示 <code>JSValue</code>。该表示方式利用 IEEE 754 双精度浮点数的 NaN payload 空间，将 Cell 指针、<code>int32</code>、<code>double</code>、<code>boolean</code>、<code>null</code>、<code>undefined</code> 等值编码到同一个 64 bit 机器字中。</p>
-<p>该机制用于在运行时保持统一的 <code>JSValue</code> 表示，同时为 JIT 和 runtime helper 提供快速类型判断能力。</p>
-<h2 id="_2">基本布局<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>高位模式可概括如下：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Pointer {  0000:PPPP:PPPP:PPPP
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>         / 0002:****:****:****
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Double  {         ...
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>         \ FFFC:****:****:****
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Integer {  FFFE:0000:IIII:IIII
+<p>JavaScriptCore 是 WebKit 项目的一部分。Linux 环境下编译 <code>jsc</code> 需要获取完整 WebKit 源码，并通过 WebKit 提供的构建脚本启用 <code>--jsc-only</code>。</p>
+<p>本文记录 Linux 下常用的 JSC 编译依赖、工具链配置和构建命令。</p>
+<h2 id="_2">获取源码<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:WebKit/WebKit.git
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>WebKit
 </code></pre></div>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>高位模式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Pointer / tagged immediate</td>
-<td><code>0x0000</code> 区间</td>
-<td>Cell 指针或特殊 immediate</td>
-</tr>
-<tr>
-<td>Double</td>
-<td>普通 double 区间与 <code>0xFFFC</code> 区间</td>
-<td>通过偏移编码避开指针和整数标签</td>
-</tr>
-<tr>
-<td>Int32</td>
-<td><code>0xFFFE:0000:IIII:IIII</code></td>
-<td>32 位有符号整数</td>
-</tr>
-</tbody>
-</table>
-<p>JSC 依赖 NaN 空间中大量不会被普通双精度数值占用的位模式，用于容纳非 double 类型的标签和值。</p>
-<h2 id="nan-payload">NaN Payload 编码<a class="headerlink" href="#nan-payload" title="Permanent link">&para;</a></h2>
-<p>双精度浮点数在指数位全为 1 且尾数非 0 时表示 NaN。JSC 使用其中一部分 NaN payload 空间编码非 double 类型，并保留普通 double 的可表示范围。</p>
-<p>该设计使 <code>double</code>、<code>int32</code>、Cell 指针和特殊 immediate 可通过高位标签区分，避免在常见路径中引入额外对象封装。</p>
-<h2 id="double">Double 编码<a class="headerlink" href="#double" title="Permanent link">&para;</a></h2>
-<p><code>double</code> 进入 <code>JSValue</code> 时不会直接保存原始 IEEE 754 bit pattern。JSC 会对其 64 bit 表示执行偏移编码，使编码后的 double 不与指针区间或 <code>int32</code> 标签区间冲突。</p>
-<p>读取 <code>double</code> 时需要执行反向转换。调试寄存器、栈槽或 dump 输出时，应先确认当前值是否仍处于 <code>JSValue</code> 编码形式。</p>
-<h2 id="int32-immediate">Int32 与特殊 Immediate<a class="headerlink" href="#int32-immediate" title="Permanent link">&para;</a></h2>
-<p><code>int32</code> 使用 <code>0xFFFE</code> 高位标签，低 32 bit 保存有符号整数值。该布局支持快速判断和解码。</p>
-<p>特殊 immediate 使用固定编码：</p>
-<table>
-<thead>
-<tr>
-<th>值</th>
-<th>编码</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>false</code></td>
-<td><code>0x06</code></td>
-</tr>
-<tr>
-<td><code>true</code></td>
-<td><code>0x07</code></td>
-</tr>
-<tr>
-<td><code>undefined</code></td>
-<td><code>0x0a</code></td>
-</tr>
-<tr>
-<td><code>null</code></td>
-<td><code>0x02</code></td>
-</tr>
-</tbody>
-</table>
-<p>这些编码用于区分 Cell 指针和立即数，并支持 <code>null</code>、<code>undefined</code>、布尔值的快速判断。</p>
-<h2 id="0x0-hole"><code>0x0</code> 与 Hole<a class="headerlink" href="#0x0-hole" title="Permanent link">&para;</a></h2>
-<p>合法 <code>JSValue</code> 不使用 <code>0x0</code> 表示普通 JavaScript 值。该模式通常用于表示 array hole、空结果或 C++ 层的 no value 状态。</p>
-<p>分析稀疏数组、<code>Butterfly</code> 元素区或未初始化值时，<code>0x0</code> 应按 hole / no value 语义处理，不应直接解释为 <code>null</code>。</p>
-<h2 id="_3">调试检查项<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<ul>
-<li>当前 64 bit 值是否为编码后的 <code>JSValue</code></li>
-<li>高位标签是否落入 Cell 指针、<code>int32</code> 或 <code>double</code> 区间</li>
-<li><code>0x0</code> 是否表示 hole / no value</li>
-<li>Cell 指针是否需要结合 <code>JSCell</code>、<code>Structure</code>、<code>Butterfly</code> 继续解析</li>
-<li>JIT 图、寄存器值和对象布局中的类型假设是否一致</li>
-</ul>
-<h2 id="_4">参考<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<ol>
-<li><a href="https://cloud.tencent.com/developer/news/820076">腾讯云开发者社区：JavaScriptCore NaN Boxing 简介</a></li>
-<li><code>Source/JavaScriptCore/runtime/JSCJSValue.h</code>，commit <code>7e485991f408cd0d38734297936fc449c260fc2f</code></li>
-</ol>
+<p>如需复现固定版本，可切换到指定 commit：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>xxx
+</code></pre></div>
+<h2 id="_3">安装依赖<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>Ubuntu / Debian 环境可安装以下基础依赖：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>build-essential<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>cmake<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>git<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>python3<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>autoconf<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span>bison<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span>gperf<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span>ruby<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span>gcc<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span>g++<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span>libicu-dev<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span>libsqlite3-dev<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span>libxml2-dev<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span>libcurl4-openssl-dev<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span>libpng-dev
+</code></pre></div>
+<h2 id="clang">安装 Clang<a class="headerlink" href="#clang" title="Permanent link">&para;</a></h2>
+<p>构建旧版本 WebKit 时，建议使用与目标 commit 时间接近的 Clang 版本。以按照 Clang 18为例：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>wget<span class="w"> </span>https://apt.llvm.org/llvm.sh
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>llvm.sh
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>./llvm.sh<span class="w"> </span><span class="m">18</span><span class="w"> </span>all
+</code></pre></div>
+<p>安装完成后可检查编译器版本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>clang-18<span class="w"> </span>--version
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>clang++-18<span class="w"> </span>--version
+</code></pre></div>
+<h2 id="debug">Debug 构建<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h2>
+<p>Debug 版本适合源码调试和断点分析。以下命令只构建 JavaScriptCore，并关闭 fatal warnings：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DDEVELOPER_MODE_FATAL_WARNINGS=OFF&quot;</span>
+</code></pre></div>
+<p>生成 <code>compile_commands.json</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DDEVELOPER_MODE_FATAL_WARNINGS=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=1&quot;</span>
+</code></pre></div>
+<p>指定并行编译线程数：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DDEVELOPER_MODE_FATAL_WARNINGS=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=1&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span>--makeargs<span class="o">=</span><span class="s2">&quot;-j16&quot;</span>
+</code></pre></div>
+<h2 id="clang_1">指定 Clang 构建<a class="headerlink" href="#clang_1" title="Permanent link">&para;</a></h2>
+<p>使用 Clang 18 构建 Debug 版本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">CC</span><span class="o">=</span>clang-18<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>clang++-18<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DDEVELOPER_MODE_FATAL_WARNINGS=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=1&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span>--makeargs<span class="o">=</span><span class="s2">&quot;-j16&quot;</span>
+</code></pre></div>
+<h2 id="debug_1">带符号且关闭断言的 Debug 构建<a class="headerlink" href="#debug_1" title="Permanent link">&para;</a></h2>
+<p>该配置保留 Debug 符号，同时通过 <code>NDEBUG</code> 与 <code>RELEASE_WITHOUT_OPTIMIZATIONS</code> 关闭断言，适合需要减少断言干扰但仍需调试符号的场景。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">CC</span><span class="o">=</span>clang-18<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>clang++-18<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">WEBKIT_OUTPUTDIR</span><span class="o">=</span>ReleaseAssertionDebugBuild<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-DNDEBUG -DRELEASE_WITHOUT_OPTIMIZATIONS&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-DNDEBUG -DRELEASE_WITHOUT_OPTIMIZATIONS -stdlib=libc++&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-G \&quot;Unix Makefiles\&quot; -DDEVELOPER_MODE_FATAL_WARNINGS=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_EXE_LINKER_FLAGS=&#39;-stdlib=libc++ -lc++abi&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span>--makeargs<span class="o">=</span><span class="s2">&quot;-j32&quot;</span>
+</code></pre></div>
+<p>也可在 <code>Source/cmake/OptionsJSCOnly.cmake</code> 中固定添加：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">add_definitions</span><span class="p">(</span><span class="s">-DNDEBUG</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">add_definitions</span><span class="p">(</span><span class="s">-DRELEASE_WITHOUT_OPTIMIZATIONS</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="_4">静态链接构建<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>静态链接 JSC 可通过 <code>ENABLE_STATIC_JSC</code> 启用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">WEBKIT_OUTPUTDIR</span><span class="o">=</span><span class="nv">$WEBKIT_PATH</span>/WebKitBuild/<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DENABLE_STATIC_JSC=ON -DUSE_THIN_ARCHIVES=OFF&quot;</span>
+</code></pre></div>
+<h2 id="release">Release 构建<a class="headerlink" href="#release" title="Permanent link">&para;</a></h2>
+<p>不指定 <code>--debug</code> 时默认构建 Release 版本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">WEBKIT_OUTPUTDIR</span><span class="o">=</span><span class="nv">$WEBKIT_PATH</span>/WebKitBuild/<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>--jsc-only
+</code></pre></div>
+<p>关闭 fatal warnings：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DDEVELOPER_MODE_FATAL_WARNINGS=OFF&quot;</span>
+</code></pre></div>
+<h2 id="fuzzilli">Fuzzilli 构建<a class="headerlink" href="#fuzzilli" title="Permanent link">&para;</a></h2>
+<p>Fuzzilli 构建通常需要静态 JSC 与 sanitizer coverage：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">WEBKIT_OUTPUTDIR</span><span class="o">=</span>FuzzBuild<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Tools/Scripts/build-jsc<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DENABLE_STATIC_JSC=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_C_COMPILER=&#39;/usr/bin/clang&#39; -DCMAKE_CXX_COMPILER=&#39;/usr/bin/clang++&#39; -DCMAKE_CXX_FLAGS=&#39;-fsanitize-coverage=trace-pc-guard -DENABLE_FUZZILLI=1 -lrt&#39; -DCMAKE_C_FLAGS=&#39;-fsanitize-coverage=trace-pc-guard -DENABLE_FUZZILLI=1 -lrt&#39;&quot;</span>
+</code></pre></div>
+<p>部分版本需要在 <code>Source/JavaScriptCore/shell/CMakeLists.txt</code> 中显式添加编译参数：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">function</span><span class="p">(</span><span class="s">WEBKIT_ADD_COMPILER_FLAGS_NO_CHECK</span><span class="w"> </span><span class="s">_compiler</span><span class="w"> </span><span class="s">_kind</span><span class="w"> </span><span class="s">_subject</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="nb">foreach</span><span class="w"> </span><span class="p">(</span><span class="s">_flag</span><span class="w"> </span><span class="s">IN</span><span class="w"> </span><span class="s">LISTS</span><span class="w"> </span><span class="s">ARGN</span><span class="p">)</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">        </span><span class="nb">set_property</span><span class="p">(</span><span class="o">${</span><span class="nv">_kind</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">_subject</span><span class="o">}</span><span class="w"> </span><span class="s">APPEND</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">COMPILE_OPTIONS</span><span class="w"> </span><span class="s2">&quot;${_flag}&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="nb">endforeach</span><span class="w"> </span><span class="p">()</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nb">endfunction</span><span class="p">()</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="nb">WEBKIT_ADD_COMPILER_FLAGS_NO_CHECK</span><span class="p">(</span><span class="s">CXX</span><span class="w"> </span><span class="s">TARGET</span><span class="w"> </span><span class="s">JavaScriptCore</span><span class="w"> </span><span class="s">-fsanitize-coverage=trace-pc-guard</span><span class="w"> </span><span class="s">-DENABLE_FUZZILLI=1</span><span class="p">)</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="nb">WEBKIT_ADD_COMPILER_FLAGS_NO_CHECK</span><span class="p">(</span><span class="s">CXX</span><span class="w"> </span><span class="s">TARGET</span><span class="w"> </span><span class="s">jsc</span><span class="w"> </span><span class="s">-fsanitize-coverage=trace-pc-guard</span><span class="w"> </span><span class="s">-DENABLE_FUZZILLI=1</span><span class="p">)</span>
+</code></pre></div>
+<p>在 <code>Source/JavaScriptCore/Sources.txt</code> 中加入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>fuzzilli/Fuzzilli.cpp
+</code></pre></div>
+<p>Linux 下如遇缺失声明，可在 <code>Source/JavaScriptCore/fuzzilli/Fuzzilli.cpp</code> 中补充：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/mman.h&gt;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/stat.h&gt;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fcntl.h&gt;</span>
+</code></pre></div>
+<p>随后构建：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Tools/Scripts/build-webkit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--jsc-only<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>--debug<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>--no-fatal-warnings<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span>--cmakeargs<span class="o">=</span><span class="s2">&quot;-DENABLE_STATIC_JSC=ON -DCMAKE_C_COMPILER=&#39;/usr/bin/clang&#39; -DCMAKE_CXX_COMPILER=&#39;/usr/bin/clang++&#39;&quot;</span>
+</code></pre></div>
+<h2 id="_5">构建产物<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>构建完成后，<code>jsc</code> 通常位于对应输出目录的 <code>bin</code> 目录中，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>WebKitBuild/Debug/bin/jsc
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>ReleaseAssertionDebugBuild/bin/jsc
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>FuzzBuild/Debug/bin/jsc
+</code></pre></div>
+<p>可通过以下命令验证：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>./WebKitBuild/Debug/bin/jsc<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;print(&quot;ok&quot;)&#39;</span>
+</code></pre></div>
 
 
 

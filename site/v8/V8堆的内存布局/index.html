@@ -603,7 +603,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        一张图先看懂
+        概述
       
     </span>
   </a>
@@ -614,7 +614,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        各空间做什么
+        常用视角
       
     </span>
   </a>
@@ -625,18 +625,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        对象怎么流动（最常见路径）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pointer-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pointer Compression 不是堆空间
+        空间职责
       
     </span>
   </a>
@@ -647,7 +636,40 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        对象流转
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pointer-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pointer Compression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分析检查项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -879,6 +901,34 @@
     
   
     Root Cause分析要点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsc/JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux 编译要点
   
 
     
@@ -1219,7 +1269,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        一张图先看懂
+        概述
       
     </span>
   </a>
@@ -1230,7 +1280,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        各空间做什么
+        常用视角
       
     </span>
   </a>
@@ -1241,18 +1291,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        对象怎么流动（最常见路径）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pointer-compression" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pointer Compression 不是堆空间
+        空间职责
       
     </span>
   </a>
@@ -1263,7 +1302,40 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        参考
+        对象流转
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pointer-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pointer Compression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分析检查项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -1288,86 +1360,85 @@
 
 
 <h1 id="v8">V8 堆的内存布局<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h1>
-<p>这篇只保留调试和漏洞分析最常用的结论，重点是把“空间职责”和“对象流转路径”看清楚。</p>
-<hr />
-<h2 id="_1">一张图先看懂<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>这是面向调试/分析的常用视角，不是源码里的完整枚举（不同版本会有更多细分空间）。</p>
-</blockquote>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>V8 Heap (常用视角)
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ New Space（年轻代）
+<h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>V8 Heap 按对象生命周期、对象大小和对象用途划分为多个空间。调试和漏洞分析中，堆空间决定对象是否容易搬移、何时被回收，以及地址观察是否稳定。</p>
+<h2 id="_2">常用视角<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>以下结构为调试视角下的简化模型，不代表 V8 源码中的完整空间枚举。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>V8 Heap
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ New Space
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  ├─ From-Space
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  └─ To-Space
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├─ Old Space（老年代）
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├─ Large Object Spaces（大对象）
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├─ Old Space
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├─ Large Object Spaces
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  ├─ Old Large Object Space
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └─ Code Large Object Space
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├─ Code Space（代码对象）
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>└─ Read-Only Space（只读共享对象）
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├─ Code Space
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>└─ Read-Only Space
 </code></pre></div>
-<hr />
-<h2 id="_2">各空间做什么<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">空间职责<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>空间</th>
-<th>主要放什么</th>
-<th>调试时最关心什么</th>
+<th>主要内容</th>
+<th>分析重点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>New Space</td>
 <td>新创建、短生命周期对象</td>
-<td>Minor GC 频繁、对象会复制和搬移</td>
+<td>Minor GC、半空间复制、对象搬移</td>
 </tr>
 <tr>
 <td>Old Space</td>
-<td>存活时间长的普通对象</td>
-<td>进入老年代后回收策略和地址稳定性变化</td>
+<td>存活时间较长的普通对象</td>
+<td>晋升、地址稳定性、Major GC</td>
 </tr>
 <tr>
 <td>Large Object Spaces</td>
-<td>体积大的对象/代码对象</td>
-<td>大对象通常不走半空间复制路径</td>
+<td>大对象和大代码对象</td>
+<td>通常不走半空间复制路径</td>
 </tr>
 <tr>
 <td>Code Space</td>
-<td>JIT 代码与代码元数据</td>
+<td>JIT 代码和代码元数据</td>
 <td>与普通 JS 对象分配路径不同</td>
 </tr>
 <tr>
 <td>Read-Only Space</td>
 <td>共享且不可变的内部对象</td>
-<td>语义上是稳定区，不按普通可变对象处理</td>
+<td>不按普通可变对象处理</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="_3">对象怎么流动（最常见路径）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_4">对象流转<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>new object
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  -&gt; New Space
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      -&gt; 死亡：Minor GC 回收
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      -&gt; 存活：晋升到 Old Space
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      -&gt; dead: Minor GC 回收
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      -&gt; survived: 晋升到 Old Space
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>large object
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  -&gt; 直接进入 Large Object Spaces
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  -&gt; Large Object Spaces
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>code object
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  -&gt; Code Space / Code Large Object Space
 </code></pre></div>
-<p>这也是为什么做 root cause 时，先分清对象属于哪个空间会很关键：它直接影响对象是否容易搬移、何时被回收、以及地址观察是否稳定。</p>
-<hr />
-<h2 id="pointer-compression">Pointer Compression 不是堆空间<a class="headerlink" href="#pointer-compression" title="Permanent link">&para;</a></h2>
-<p><code>Pointer Compression</code> 解决的是 <strong>值表示</strong>（tagged pointer/smi）的内存开销问题，不是“再新增一个 heap space”。<br />
-它影响字段里值怎么编码，不改变对象归属到哪个空间。</p>
-<p>可配合阅读：<a href="../V8%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6/">V8 指针压缩机制</a></p>
-<hr />
-<h2 id="_4">参考<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="pointer-compression">Pointer Compression<a class="headerlink" href="#pointer-compression" title="Permanent link">&para;</a></h2>
+<p>Pointer Compression 影响 tagged value 的存储表示，不表示新的 heap space。它会改变字段中的值如何编码和解码，但不改变对象所属堆空间。</p>
+<p>相关内容见：<a href="../V8%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6/">V8 指针压缩机制</a></p>
+<h2 id="_5">分析检查项<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
+<li>目标对象位于 New Space、Old Space 还是 Large Object Space</li>
+<li>目标对象是否可能在 GC 后搬移</li>
+<li>目标对象是否为代码对象或只读对象</li>
+<li>当前观察到的地址是否受到 pointer compression 影响</li>
+</ul>
+<h2 id="_6">参考资料<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ol>
 <li><a href="https://v8.dev/blog/trash-talk">Trash talk: the Orinoco garbage collector</a></li>
 <li><a href="https://v8.dev/blog/pointer-compression">Pointer Compression in V8</a></li>
-</ul>
+</ol>
 
 
 

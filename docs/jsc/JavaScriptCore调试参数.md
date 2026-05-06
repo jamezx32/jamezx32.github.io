@@ -1,10 +1,10 @@
 # JavaScriptCore 调试参数
 
-这篇笔记把平时看 JSC 常用的启动参数、`gdb` 命令和几个小脚本整理到一起，主要目的是把“先把输出打开、把层次切开、把断点打准”这几件事收成一个固定入口。
+## 概述
 
----
+JavaScriptCore shell `jsc` 支持通过启动参数输出字节码、编译日志、OSR 信息、优化图和反汇编。调试 JIT 问题时，建议先关闭并发 JIT 与并发 GC，保证输出顺序和复现行为稳定。
 
-## 最常用的一组启动参数
+## 基础启动参数
 
 ```bash
 /home/sxy/tmp/WebKit/ReleaseAssertionDebugBuild/bin/jsc \
@@ -18,30 +18,26 @@
   >stdout.jscdump 2>stderr.jscdump
 ```
 
-这组参数的作用基本够覆盖平时排查 DFG / FTL 问题的第一轮观察：
-
-| 参数 | 作用 |
+| 参数 | 说明 |
 |---|---|
-| -d | 输出字节码 |
-| --useConcurrentJIT=0 | 关闭并行 JIT，方便复现和对照输出 |
-| --useConcurrentGC=0 | 关闭并行 GC，减少调试噪声 |
-| --verboseCompilation=1 | 输出编译层面的详细信息 |
-| --verboseOSR=1 | 输出 OSR 相关信息 |
-| --dumpGraphAtEachPhase=1 | dump 优化阶段图，适合先看 DFG / FTL 变换 |
+| `-d` | 输出字节码 |
+| `--useConcurrentJIT=0` | 关闭并发 JIT |
+| `--useConcurrentGC=0` | 关闭并发 GC |
+| `--verboseCompilation=1` | 输出编译日志 |
+| `--verboseOSR=1` | 输出 OSR 日志 |
+| `--dumpGraphAtEachPhase=1` | 输出各优化阶段的图 |
 
-如果一开始还不确定问题出在哪层，先把这组参数跑起来，通常就能知道代码有没有进优化、进了哪一层、每一阶段的图长什么样。
+该参数组合适用于第一轮定位，可确认代码是否进入 JIT、进入的优化层级，以及各阶段图的变化。
 
----
+## GDB 调试
 
-## `gdb` 里最常用的启动方式
-
-先启动 `gdb`：
+启动 `gdb`：
 
 ```bash
 gdb /home/sxy/tmp/WebKit/ReleaseAssertionDebugBuild/bin/jsc
 ```
 
-再在 `gdb` 里带参数运行脚本：
+在 `gdb` 中运行脚本并传入 JSC 参数：
 
 ```gdb
 (gdb) run /home/sxy/tmp/44308/test/test1.js \
@@ -52,19 +48,17 @@ gdb /home/sxy/tmp/WebKit/ReleaseAssertionDebugBuild/bin/jsc
   2>Graph.jscDump
 ```
 
-平时比较常用的一类断点是先在自己关心的 helper 或内置打印函数上拦一下，例如：
+常用断点示例：
 
 ```gdb
 (gdb) b functionDescribe
 ```
 
-这样做的好处是，先把“对象长什么样”看清楚，再决定后面要不要继续跟 JIT 图或机器码。
+该断点可用于观察对象描述信息，再根据对象状态决定是否继续分析 JIT 图或机器码。
 
----
+## `describe()` 输出
 
-## `describe()` 和对象形态
-
-笔记里留了一段很典型的输出：
+`describe()` 可输出对象地址、`Butterfly`、`Structure`、indexing type 等运行时信息。
 
 ```text
 >>> var a ={};
@@ -75,41 +69,25 @@ Object: 0x7f54e1464180 with butterfly (nil)(base=0xfffffffffffffff8)
 Unknown, Proto:0x7f5523014798, Leaf]), StructureID: 23808
 ```
 
-这里通常先看三件事：
-
-- 对象地址本身
-- `butterfly` 有没有分配、指向哪里
-- `Structure` 和 indexing type 当前是什么
-
-笔记里顺手记了两个常见的 indexing type：
+示例 indexing type：
 
 ```text
 0x0000a240 NonArrayWithContiguous
 0x0000a160 NonArrayWithDouble
 ```
 
-这些值单独看意义不大，但一旦和数组模式切换、属性访问或者漏洞利用链放在一起，就会变得很关键。
-
----
-
-## 数组索引和命名属性的最小观察例子
-
-下面这个例子很适合在 `describe()`、断点和结构切换时一起看：
+## 数组索引与命名属性
 
 ```javascript
 const a = [];
 a[0] = 1;                // 索引键，进入 elements / indexed storage
-a["0"] = 2;              // "0" 仍然按索引键处理
+a["0"] = 2;              // "0" 仍按索引键处理
 a.x = 3;                 // 命名属性，进入 property 路径
-a[-1] = 4;               // 不是合法数组索引，走命名属性
-a[4294967295] = 5;       // 超出数组索引上限，走命名属性
+a[-1] = 4;               // 非法数组索引，进入命名属性路径
+a[4294967295] = 5;       // 超出数组索引上限，进入命名属性路径
 ```
 
-这个例子的价值不在于行为本身，而在于它很适合拿来确认 JSC 当前把哪些键放进 indexed storage，哪些键留在普通属性区。看对象模型或做 Root Cause 时，这种边界经常决定后面的 `Structure` 和 `Butterfly` 怎么变化。
-
----
-
-## 常用 dump 脚本
+## Dump 脚本
 
 ### `jsc_dump`
 
@@ -125,7 +103,7 @@ a[4294967295] = 5;       // 超出数组索引上限，走命名属性
 ./jsc "$@" --dumpGraphAtEachPhase=true --useConcurrentJIT=false --useConcurrentGC=false 2>Graph.jscDump
 ```
 
-这个脚本适合做第一轮全量采样。优点是省事，基本把字节码、编译日志、OSR、CFA、图和反汇编都拆成了单独文件；缺点是输出很多，更适合先跑一遍再对比，不适合每次都用。
+该脚本将字节码、编译日志、OSR、CFA、生成字节码、反汇编和优化图拆分到独立文件，适用于第一轮全量采样。
 
 ### `jsc_diff_test`
 
@@ -138,9 +116,9 @@ a[4294967295] = 5;       // 超出数组索引上限，走命名属性
 ./jsc "$@" --useLLInt=false --useJIT=true  --useBaselineJIT=false --useDFGJIT=true  --useFTLJIT=true
 ```
 
-这个脚本适合快速切执行层。PoC 如果只在某一层触发，这里一般很快就能分出来是 LLInt、Baseline、DFG、FTL 还是 DFG+FTL 的问题。
+该脚本用于按执行层级对比行为，可区分 LLInt、Baseline、DFG、FTL、DFG+FTL 路径。
 
-也可以把输出分别重定向到不同文件，方便直接做 diff：
+输出重定向示例：
 
 ```bash
 #!/bin/bash
@@ -158,13 +136,9 @@ WebKitBuild/Debug/bin/jsc "$@" --useLLInt=false --useJIT=true  --useBaselineJIT=
 gdb ./jsc -ex "run --useConcurrentJIT=false exp.js"
 ```
 
-这个脚本比较简单，但平时拿来快速起一个关并发 JIT 的调试环境很方便。
+## 常用 `.jscdump` 参数组合
 
----
-
-## `.jscdump` 常用组合
-
-如果主要想看图和优化阶段，可以直接用下面这组：
+输出字节码、编译日志、OSR 和优化图：
 
 ```bash
 ./jsc PoC.js \
@@ -177,7 +151,7 @@ gdb ./jsc -ex "run --useConcurrentJIT=false exp.js"
   >stdout.jscdump 2>stderr.jscdump
 ```
 
-如果要进一步拆 DFG / FTL / B3 / Air，可以开得更细：
+分别输出 DFG、FTL、B3、Air 图：
 
 ```bash
 ./jsc PoC.js \
@@ -193,13 +167,7 @@ gdb ./jsc -ex "run --useConcurrentJIT=false exp.js"
   >stdout.jscdump 2>stderr.jscdump
 ```
 
-这组参数比较适合已经知道问题在优化链路里，接下来要判断它究竟是 DFG、FTL、B3 还是 Air 哪一层把语义做坏了。
-
----
-
-## 其它常用命令模板
-
-下面这些命令的共同用途，是把阈值、图输出和反汇编一起打开，方便快速复现实验：
+## 命令模板
 
 ```bash
 ./jsc -d -f test2.js \
@@ -237,11 +205,3 @@ gdb ./jsc -ex "run --useConcurrentJIT=false exp.js"
   --dumpBytecodeAtDFGTime=1 \
   2>/home/jiming/note/SafeToExecute/poc.jscdump
 ```
-
-这些命令没有统一“标准答案”，但思路比较固定：先关并发、再压优化阈值、最后按需要开图、开字节码和开反汇编。
-
----
-
-## 小结
-
-如果只是准备开始调 JSC，第一步通常不是急着翻源码，而是先把字节码、图、反汇编和执行层切换开关整理好。参数一旦收顺，后面看 DFG / FTL、做 Root Cause 或复现 PoC，入口会稳定很多。

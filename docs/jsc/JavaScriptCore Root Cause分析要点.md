@@ -1,18 +1,16 @@
 # JavaScriptCore Root Cause 分析要点
 
-这篇笔记主要整理 JavaScriptCore 做 Root Cause 时常用的几个观察面：引擎整体分层、JIT 优化链路，以及对象模型。后面看具体漏洞时，通常也是先把这三块对齐，再往下看字节码、图和机器码。
+## 概述
 
----
+JavaScriptCore Root Cause 分析主要围绕执行层级、JIT 优化链路和对象模型展开。执行层级用于定位问题暴露位置，优化链路用于检查语义和推测条件是否被正确保留，对象模型用于核对运行时内存布局。
 
 ## 引擎架构
 
 ![JavaScriptCore 引擎架构](images/jsc-root-cause-architecture.png)
 
-这张图先给出一个总的阅读顺序。平时说 JSC，真正排查问题时通常不会只停在 `jsc` 这个可执行文件本身，而是会顺着 Parser、Bytecode、LLInt、Baseline、DFG、FTL 这一条执行链往下看。Root Cause 时最先要确认的一件事，就是问题出现在哪一层。
+JSC 执行链路包括 Parser、Bytecode、LLInt、Baseline JIT、DFG JIT 和 FTL JIT。Root Cause 分析应首先确定异常暴露在哪一层。
 
-如果问题在 LLInt 或 Baseline，通常先看字节码语义、inline cache、对象布局和 runtime helper。如果问题出现在 DFG 或 FTL，重点会转到推测、图变换、lowering、clobber 信息以及 OSR 入口/出口的状态同步。先把层次确定下来，后面的断点、dump 参数和 patch 阅读范围就会收得比较快。
-
----
+LLInt 与 Baseline 问题通常与字节码语义、inline cache、对象布局或 runtime helper 相关。DFG 与 FTL 问题通常与类型推测、图变换、lowering、clobber 信息、OSR entry、OSR exit 状态同步相关。
 
 ## DFG 与 FTL 优化 Pipeline
 
@@ -20,48 +18,55 @@
 
 ![DFG / FTL Pipeline 细化](images/jsc-dfg-ftl-pipeline-2.png)
 
-JSC 的执行层可以先按冷代码到热代码的方向去理解。冷代码先经过 LLInt 和 Baseline，执行过程中不断收集 profile；代码热起来之后，DFG 会基于这些 profile 做更激进的推测；再往后如果继续升温，就有机会进入 FTL。FTL 不是简单“再做一层优化”，而是把 DFG 图继续往 B3 / Air 这条后端链路下放，最后生成更重的机器码。
+冷代码先经过 LLInt 与 Baseline 执行，并在执行过程中收集 profile。热代码进入 DFG，DFG 基于 profile 建立更激进的类型与控制流推测。继续升温后进入 FTL，FTL 将 DFG 图 lowering 到 B3 与 Air 后端并生成机器码。
 
-Root Cause 时，先看清楚 bug 发生在什么阶段很重要。若问题只出现在 DFG 图里，重点通常是某个 phase 把语义推断得过于乐观了；若 DFG 正常、FTL 才出问题，重点就会偏向 lowering、后端重写或者 Air/B3 层的约束丢失。很多 JIT 类型漏洞，本质上都是“上层建立的前提，在下层没有被继续维护”。
-
----
+DFG 层问题重点检查 phase 是否错误删除、重排或弱化语义节点。FTL 层问题重点检查 DFG-to-B3 lowering、B3 优化、Air 优化、指令选择和寄存器分配。JIT 类型漏洞常见根因是上层推测条件未在后续层级持续维护。
 
 ## 对象模型
 
 ![JavaScriptCore 对象模型](images/jsc-object-model.png)
 
-对象模型是另一条必须同时看的主线。JSC 里真正的对象访问，通常离不开 `JSCell`、`Structure` 和 `Butterfly` 这几个核心部件。`JSCell` 头里先放对象的基本元信息，`Structure` 描述对象当前的形状、类型和属性布局，`Butterfly` 则承载 indexed storage、out-of-line property 等实际数据区。
+JSC 对象访问主要涉及 `JSCell`、`Structure` 和 `Butterfly`。
 
-从 Root Cause 的角度看，很多 bug 最后都会落到“当前代码以为什么布局”和“对象真实已经变成什么布局”之间的差异上。只要 `Structure` 发生 transition、`Butterfly` 换了形态、indexed storage 类型切了模式，前面基于旧布局得出的偏移、推测和 alias 关系就都要重新审视。
+| 结构 | 说明 |
+|---|---|
+| `JSCell` | 保存对象基础元信息 |
+| `Structure` | 描述对象形状、类型和属性布局 |
+| `Butterfly` | 保存 indexed storage 与 out-of-line property |
 
----
+分析对象相关问题时，应比较代码推测布局与对象真实布局。`Structure` transition、`Butterfly` 重分配、indexed storage 模式切换都会影响偏移、类型判断和 alias 关系。
 
-## 做 Root Cause 时先看什么
+## 分析流程
 
-### 先确认问题在哪一层暴露
+### 确认异常层级
 
-最先看的是异常究竟出现在解释器、Baseline、DFG 还是 FTL。很多 PoC 在 LLInt 下是正常的，只在 DFG 或 FTL 下触发，这时就可以直接把范围收窄到优化层，而不是一开始就陷进 runtime 细节。
+先区分异常发生在解释器、Baseline、DFG 还是 FTL。若 PoC 仅在 DFG 或 FTL 下触发，分析范围可收敛到优化层和后端生成路径。
 
-### 再确认问题是语义错还是布局错
+### 区分语义问题与布局问题
 
-有些问题是语言语义没有被正确保留，比如 side effect、exception、ToNumber / ToString 这一类语义节点被错误重排；有些问题则更偏对象模型，比如 `Structure` 变化没有被看见、数组模式切换后还按旧 indexing type 解释数据。把这两类问题先分开，后面的 patch 阅读会轻松很多。
+语义问题通常表现为 side effect、exception edge、ToNumber、ToString、call clobber 等语义未被正确保留。布局问题通常表现为 `Structure` 变化未被观察、数组 indexing type 切换后仍按旧布局访问、`Butterfly` 状态与访问路径不一致。
 
-### 最后再看图和机器码是不是一致
+### 对齐字节码、图和机器码
 
-JSC 的调试经常要来回切 `bytecode -> graph -> disassembly`。如果字节码阶段就已经错了，后面的图和汇编只是把这个错误继续放大；如果字节码正常、图有问题，重点是某个 DFG / FTL phase；如果图是对的、最终汇编不对，再继续往 lowering 或后端看。
+分析顺序建议为 `bytecode -> graph -> disassembly`。字节码异常说明前端或 bytecode generator 已产生错误语义；图异常说明 DFG / FTL phase 存在错误变换；机器码异常说明 lowering、后端优化或指令选择阶段存在问题。
 
----
+## 检查项
 
-## 常见关注点
+- 异常是否只在特定执行层级出现
+- `JSValue` 表示是否被错误判定为 `Int32`、`Double` 或 Cell 指针
+- `Structure` transition、watchpoint、speculation check 是否正确失效
+- `Butterfly` 与 indexed storage 模式变化是否反映到后续访问
+- side effect、call、exception edge、clobber 信息是否被低估
+- OSR entry / exit 前后值表示和对象状态是否一致
+- DFG、FTL、B3、Air 各层是否持续维护相同前提条件
 
-- `JSValue` 表示方式是否被误判，尤其是 `Int32` / `Double` / Cell 指针之间的区分
-- `Structure` transition、watchpoint、speculation check 是否在该失效的时候真正失效
-- `Butterfly` 和 indexed storage 的模式变化是否被及时反映到后续访问
-- side effect、call、exception edge、clobber 信息是否被优化阶段低估
-- OSR entry / exit 前后，值表示和对象状态是否保持一致
+## 输出材料
 
----
+Root Cause 分析常用材料包括：
 
-## 小结
-
-如果把这篇压成一句话，JSC 做 Root Cause 时通常就是三条线一起看：执行层在哪一层出问题、对象模型有没有变化、优化链路有没有把前提条件一路保持到最后。后面再看具体漏洞时，这三条线基本都绕不开。
+- `jsc -d` 输出的字节码
+- `--verboseCompilation` 输出的编译日志
+- `--verboseOSR` 输出的 OSR 信息
+- `--dumpGraphAtEachPhase` 输出的优化图
+- `--dumpDFGGraphAtEachPhase`、`--dumpDFGFTLGraphAtEachPhase`、`--dumpB3GraphAtEachPhase`、`--dumpAirGraphAtEachPhase` 输出的分层图
+- `--dumpDisassembly` 与 `--dumpFTLDisassembly` 输出的反汇编

@@ -3,6 +3,9 @@ site_url: https://jamezx32.github.io/
 site_description: JavaScript Engine Security Research Notes
 site_author: SXY
 
+exclude_docs: |
+  jsc/CVE-2024-23222复现笔记框架.md
+
 theme:
   name: material
   language: zh
@@ -69,6 +72,7 @@ nav:
   - JSC:
       - 总览: jsc/index.md
       - Root Cause分析要点: jsc/JavaScriptCore Root Cause分析要点.md
+      - Linux 编译要点: jsc/JavaScriptCore Linux编译.md
       - NAN-Boxing: jsc/JavaScriptCore NAN-Boxing.md
       - 调试参数: jsc/JavaScriptCore调试参数.md
   - ChakraCore:
@@ -86,4 +90,3 @@ extra:
 
 extra_javascript:
   - javascripts/extra.js?v=2026-04-27-v44
-
