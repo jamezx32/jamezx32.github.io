@@ -10,6 +10,7 @@
       <div class="overview-band__eyebrow">快速开始</div>
       <h2 class="overview-band__title">Root Cause、Linux 编译与值表示</h2>
       <ul class="overview-link-list">
+        <li><a href="CVE-2024-23222分析/">CVE-2024-23222 Linux x86_64 复现与根因分析</a></li>
         <li><a href="JavaScriptCore Root Cause分析要点/">JavaScriptCore Root Cause 分析要点</a></li>
         <li><a href="JavaScriptCore Linux编译/">JavaScriptCore Linux 编译要点</a></li>
         <li><a href="JavaScriptCore NAN-Boxing/">JavaScriptCore NAN-Boxing</a></li>
@@ -29,8 +30,9 @@
         <div class="overview-card__eyebrow">01 Model</div>
         <h3>先看分析方法、编译和值表示</h3>
         <ul class="overview-link-list">
+          <li><a href="CVE-2024-23222分析/">CVE-2024-23222 根因分析</a></li>
           <li><a href="JavaScriptCore Root Cause分析要点/">JavaScriptCore Root Cause 分析要点</a></li>
-          <li><a href="JavaScriptCore Linux编译/">JavaScriptCore Linux 编译要点</a></li>
+          <li><a href="JavaScriptCore Linux编译/">JavaScriptCore Linux 编译</a></li>
           <li><a href="JavaScriptCore NAN-Boxing/">JavaScriptCore NAN-Boxing</a></li>
         </ul>
       </article>

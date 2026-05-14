@@ -2,78 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://jamezx32.github.io/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/chakracore/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/chakracore/CVE-2019-0567/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/chakracore/ChakraCore%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/jsc/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
+    </url>
+    <url>
+         <loc>https://jamezx32.github.io/jsc/CVE-2024-23222%E5%88%86%E6%9E%90/</loc>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/jsc/JavaScriptCore%20Linux%E7%BC%96%E8%AF%91/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/jsc/JavaScriptCore%20NAN-Boxing/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/jsc/JavaScriptCore%20Root%20Cause%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/jsc/JavaScriptCore%E8%B0%83%E8%AF%95%E5%8F%82%E6%95%B0/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/CVE-2021-30517%E5%88%86%E6%9E%90/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/CVE-2025-12433%E5%88%86%E6%9E%90/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/CVE-2025-13224%E5%88%86%E6%9E%90/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/V8%20%E6%95%B0%E7%BB%84%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/V8%E5%A0%86%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/V8%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9%E6%9C%BA%E5%88%B6/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/V8%E8%B0%83%E8%AF%95%E6%89%8B%E5%86%8C/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/v8/jit/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
     <url>
          <loc>https://jamezx32.github.io/vscode/clangd-setup/</loc>
-         <lastmod>2026-05-06</lastmod>
+         <lastmod>2026-05-14</lastmod>
     </url>
 </urlset>
