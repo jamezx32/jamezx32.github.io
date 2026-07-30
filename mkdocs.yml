@@ -8,9 +8,10 @@ exclude_docs: |
 
 theme:
   name: material
+  custom_dir: overrides
   language: zh
-  logo: assets/logo.png
-  favicon: assets/logo.png
+  logo: assets/logo.jpg
+  favicon: assets/favicon.png
   palette:
     - scheme: default
       primary: indigo
@@ -27,12 +28,17 @@ theme:
   font: false
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
+    - navigation.tracking
+    - navigation.footer
     - navigation.top
     - navigation.instant
     - search.suggest
     - search.highlight
+    - search.share
+    - toc.follow
     - content.code.copy
     - content.tabs.link
 
@@ -55,7 +61,7 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css?v=2026-05-07-v49
+  - stylesheets/extra.css?v=2026-07-30-v55
 
 nav:
   - 首页: index.md
@@ -84,10 +90,10 @@ nav:
       - clangd配置: vscode/clangd-setup.md
 
 copyright: |
-  © 2025 SXY Research Notes · Built for research and portfolio
+  © 2025–2026 SXY Research Notes · Built for research and portfolio
 
 extra:
   generator: false
 
 extra_javascript:
-  - javascripts/extra.js?v=2026-05-07-v49
+  - javascripts/extra.js?v=2026-07-30-v55

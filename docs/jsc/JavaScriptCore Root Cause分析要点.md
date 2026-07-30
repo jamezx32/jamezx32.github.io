@@ -1,3 +1,7 @@
+---
+description: 从执行层级、DFG/FTL 优化链路和对象模型整理 JavaScriptCore 漏洞根因分析方法。
+---
+
 # JavaScriptCore Root Cause 分析要点
 
 ## 概述

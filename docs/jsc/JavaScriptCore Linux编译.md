@@ -1,3 +1,7 @@
+---
+description: 记录 Linux 环境下获取 WebKit、配置工具链并构建 Debug、Release 和 Fuzzilli 版 JSC 的方法。
+---
+
 # JavaScriptCore Linux 编译要点
 
 ## 概述
@@ -16,7 +20,7 @@ cd WebKit
 如需复现固定版本，可切换到指定 commit：
 
 ```bash
-git checkout xxx
+git checkout <commit>
 ```
 
 ## 安装依赖

@@ -1,3 +1,7 @@
+---
+description: 介绍 V8 从 Ignition、Sparkplug、Maglev 到 TurboFan 与 Turboshaft 的分层执行模型和调试入口。
+---
+
 # V8 JIT 基础
 
 ## 概述

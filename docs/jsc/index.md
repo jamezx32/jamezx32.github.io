@@ -1,48 +1,97 @@
+---
+title: JavaScriptCore 研究路线
+description: JavaScriptCore 值表示、DFG/FTL、调试与漏洞根因分析的结构化入口。
+hide:
+  - toc
+---
+
 <div class="index-flow index-flow--overview-page">
-  <header class="overview-hero">
-    <div class="overview-hero__eyebrow">Engine Overview</div>
-    <h1 class="overview-hero__title">JSC</h1>
-    <p class="overview-hero__summary">这里整理 JavaScriptCore 的 Root Cause 分析入口、值表示和调试方法，适合与 V8 对照阅读。</p>
+  <header class="overview-hero overview-hero--jsc">
+    <div class="overview-hero__content">
+      <div class="overview-hero__eyebrow">Engine Track · 02</div>
+      <h1 class="overview-hero__title">JavaScriptCore</h1>
+      <p class="overview-hero__summary">围绕 JSValue 表示、DFG/FTL 优化管线与并发 JIT 展开，强调 Linux 复现、线程交互和补丁有效性验证。</p>
+      <div class="overview-hero__actions">
+        <a class="overview-button overview-button--primary" href="JavaScriptCore NAN-Boxing/">从值表示开始</a>
+        <a class="overview-button" href="CVE-2024-23222分析/">阅读最新案例</a>
+      </div>
+    </div>
+    <div class="overview-hero__facts">
+      <span><strong>5</strong> 篇主题笔记</span>
+      <span><strong>DFG / FTL</strong> 优化管线</span>
+      <span><strong>Linux</strong> 复现路径</span>
+    </div>
   </header>
 
-  <section class="overview-band">
-    <article class="overview-band__panel">
-      <div class="overview-band__eyebrow">快速开始</div>
-      <h2 class="overview-band__title">Root Cause、Linux 编译与值表示</h2>
-      <ul class="overview-link-list">
-        <li><a href="CVE-2024-23222分析/">CVE-2024-23222 Linux x86_64 复现与根因分析</a></li>
-        <li><a href="JavaScriptCore Root Cause分析要点/">JavaScriptCore Root Cause 分析要点</a></li>
-        <li><a href="JavaScriptCore Linux编译/">JavaScriptCore Linux 编译要点</a></li>
-        <li><a href="JavaScriptCore NAN-Boxing/">JavaScriptCore NAN-Boxing</a></li>
-      </ul>
-    </article>
-    <article class="overview-band__panel">
-      <div class="overview-band__eyebrow">当前重点</div>
-      <h2 class="overview-band__title">JSValue 表示与分析路径</h2>
-      <p class="overview-band__summary">如果已经熟悉 V8，可以重点看 JSValue 表示和 Root Cause 方法。</p>
-    </article>
+  <section class="overview-section">
+    <header class="overview-section__heading">
+      <div class="overview-section__eyebrow">Recommended Path</div>
+      <h2>建议阅读顺序</h2>
+      <p>先解决“值如何表示、代码如何构建”，再进入调试参数与并发漏洞现场。</p>
+    </header>
+    <div class="overview-path">
+      <article class="overview-path__step">
+        <span class="overview-path__index">01</span>
+        <div>
+          <span class="overview-path__label">Representation</span>
+          <h3>值表示与对象模型</h3>
+          <p>理解 JSValue、NaN-boxing、tag 与 payload，是阅读 JIT 与 GC 代码的基础。</p>
+          <ul class="overview-link-list">
+            <li><a href="JavaScriptCore NAN-Boxing/">JavaScriptCore NAN-Boxing</a></li>
+            <li><a href="JavaScriptCore Root Cause分析要点/">Root Cause 分析要点</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="overview-path__step">
+        <span class="overview-path__index">02</span>
+        <div>
+          <span class="overview-path__label">Environment</span>
+          <h3>构建与调试入口</h3>
+          <p>建立 Linux 构建、JIT tier 控制和内部状态输出的稳定实验环境。</p>
+          <ul class="overview-link-list">
+            <li><a href="JavaScriptCore Linux编译/">Linux 编译要点</a></li>
+            <li><a href="JavaScriptCore调试参数/">调试参数</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="overview-path__step">
+        <span class="overview-path__index">03</span>
+        <div>
+          <span class="overview-path__label">Case Study</span>
+          <h3>并发 JIT 根因分析</h3>
+          <p>观察编译线程、主线程、GC 与优化假设之间的时序关系。</p>
+          <ul class="overview-link-list">
+            <li><a href="CVE-2024-23222分析/">CVE-2024-23222 完整分析</a></li>
+          </ul>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="overview-section">
-    <div class="overview-section__eyebrow">推荐顺序</div>
-    <div class="overview-grid overview-grid--two">
-      <article class="overview-card">
-        <div class="overview-card__eyebrow">01 Model</div>
-        <h3>先看分析方法、编译和值表示</h3>
-        <ul class="overview-link-list">
-          <li><a href="CVE-2024-23222分析/">CVE-2024-23222 根因分析</a></li>
-          <li><a href="JavaScriptCore Root Cause分析要点/">JavaScriptCore Root Cause 分析要点</a></li>
-          <li><a href="JavaScriptCore Linux编译/">JavaScriptCore Linux 编译</a></li>
-          <li><a href="JavaScriptCore NAN-Boxing/">JavaScriptCore NAN-Boxing</a></li>
-        </ul>
-      </article>
-      <article class="overview-card">
-        <div class="overview-card__eyebrow">02 Debugging</div>
-        <h3>再补充调试入口</h3>
-        <ul class="overview-link-list">
-          <li><a href="JavaScriptCore调试参数/">JavaScriptCore 调试参数</a></li>
-        </ul>
-      </article>
+    <header class="overview-section__heading">
+      <div class="overview-section__eyebrow">Featured Notes</div>
+      <h2>重点文章</h2>
+    </header>
+    <div class="overview-article-grid">
+      <a class="overview-article overview-article--featured" href="CVE-2024-23222分析/">
+        <span class="overview-article__type">Featured · Root Cause</span>
+        <strong>CVE-2024-23222</strong>
+        <p>从并发属性读取到 stale cell，再到主线程最终校验。</p>
+        <span class="overview-article__cta">查看完整复现 →</span>
+      </a>
+      <a class="overview-article" href="JavaScriptCore Root Cause分析要点/">
+        <span class="overview-article__type">Methodology</span>
+        <strong>Root Cause 分析要点</strong>
+        <p>对象模型、优化层级与漏洞分析路径。</p>
+        <span class="overview-article__cta">打开方法笔记 →</span>
+      </a>
+      <a class="overview-article" href="JavaScriptCore调试参数/">
+        <span class="overview-article__type">Reference</span>
+        <strong>JavaScriptCore 调试参数</strong>
+        <p>tier 切换、dump 选项与关键调试入口。</p>
+        <span class="overview-article__cta">查看参数 →</span>
+      </a>
     </div>
   </section>
 </div>

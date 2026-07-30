@@ -1,3 +1,7 @@
+---
+description: 解释 JavaScriptCore JSVALUE64 下 JSValue 的 NaN-boxing 布局、标签、payload 和调试方法。
+---
+
 # JavaScriptCore NAN-Boxing
 
 ## 概述

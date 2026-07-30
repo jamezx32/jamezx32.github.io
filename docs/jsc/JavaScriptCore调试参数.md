@@ -1,3 +1,7 @@
+---
+description: 汇总 JavaScriptCore shell 的字节码、JIT、OSR、优化图、反汇编和 GDB 调试参数。
+---
+
 # JavaScriptCore 调试参数
 
 ## 概述

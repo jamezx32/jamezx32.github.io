@@ -1,3 +1,7 @@
+---
+description: 记录 ChakraCore 在 Linux 与 Windows 下的构建、运行、GDB 调试和 JIT 代码定位流程。
+---
+
 # ChakraCore 构建与调试
 
 ## 概述

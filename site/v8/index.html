@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="JavaScript Engine Security Research Notes">
+        <meta name="description" content="V8 对象模型、堆布局、JIT、调试与漏洞案例的结构化阅读入口。">
       
       
         <meta name="author" content="SXY">
@@ -24,12 +24,12 @@
         
       
       
-      <link rel="icon" href="../assets/logo.png">
+      <link rel="icon" href="../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>总览 - SXY Research Notes</title>
+        <title>V8 研究路线 - SXY Research Notes</title>
       
     
     
@@ -49,7 +49,7 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css?v=2026-05-07-v49">
+      <link rel="stylesheet" href="../stylesheets/extra.css?v=2026-07-30-v55">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -57,6 +57,27 @@
 
     
     
+  
+  
+  
+  
+  <meta name="author" content="SXY">
+  <meta name="theme-color" content="#0b1220">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SXY Research Notes">
+  <meta property="og:title" content="总览 · SXY Research Notes">
+  <meta property="og:description" content="V8 对象模型、堆布局、JIT、调试与漏洞案例的结构化阅读入口。">
+  <meta property="og:url" content="https://jamezx32.github.io/v8/">
+  <meta property="og:image" content="https://jamezx32.github.io/assets/images/og-card.png">
+  <meta property="og:image:width" content="1731">
+  <meta property="og:image:height" content="909">
+  <meta property="og:image:alt" content="SXY Research Notes — JavaScript Engine Security">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="总览 · SXY Research Notes">
+  <meta name="twitter:description" content="V8 对象模型、堆布局、JIT、调试与漏洞案例的结构化阅读入口。">
+  <meta name="twitter:image" content="https://jamezx32.github.io/assets/images/og-card.png">
+  <meta name="twitter:image:alt" content="SXY Research Notes — JavaScript Engine Security">
+
   </head>
   
   
@@ -83,11 +104,13 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
     <a href=".." title="SXY Research Notes" class="md-header__button md-logo" aria-label="SXY Research Notes" data-md-component="logo">
       
-  <img src="../assets/logo.png" alt="logo">
+  <img src="../assets/logo.jpg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              总览
+              V8 研究路线
             
           </span>
         </div>
@@ -161,6 +184,11 @@
       </label>
       <nav class="md-search__options" aria-label="查找">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -187,14 +215,8 @@
     
   </nav>
   
-</header>
     
-    <div class="md-container" data-md-component="container">
       
-      
-        
-          
-            
 <nav class="md-tabs" aria-label="标签" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
@@ -303,13 +325,21 @@
     </ul>
   </div>
 </nav>
-          
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
         
       
       <main class="md-main" data-md-component="main">
         <div class="md-main__inner md-grid">
           
             
+              
+                
               
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
@@ -324,7 +354,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="SXY Research Notes" class="md-nav__button md-logo" aria-label="SXY Research Notes" data-md-component="logo">
       
-  <img src="../assets/logo.png" alt="logo">
+  <img src="../assets/logo.jpg" alt="logo">
 
     </a>
     SXY Research Notes
@@ -1154,7 +1184,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1176,61 +1208,101 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
+
 
 
 
 <div class="index-flow index-flow--overview-page">
-  <header class="overview-hero">
-    <div class="overview-hero__eyebrow">Engine Overview</div>
-    <h1 class="overview-hero__title">V8</h1>
-    <p class="overview-hero__summary">V8 相关内容包括执行管线、对象与堆布局、调试方法、指针压缩机制和漏洞案例。</p>
+  <header class="overview-hero overview-hero--v8">
+    <div class="overview-hero__content">
+      <div class="overview-hero__eyebrow">Engine Track · 01</div>
+      <h1 class="overview-hero__title">V8</h1>
+      <p class="overview-hero__summary">从对象表示和堆布局开始，连接到调试工具、JIT 行为与真实漏洞案例。这里是当前内容最完整的一条研究路线。</p>
+      <div class="overview-hero__actions">
+        <a class="overview-button overview-button--primary" href="V8 数组的内存布局/">从对象布局开始</a>
+        <a class="overview-button" href="V8调试手册/">打开调试手册</a>
+      </div>
+    </div>
+    <div class="overview-hero__facts">
+      <span><strong>8</strong> 篇主题笔记</span>
+      <span><strong>3</strong> 个 CVE 案例</span>
+      <span><strong>4</strong> 个核心方向</span>
+    </div>
   </header>
 
-  <section class="overview-band">
-    <article class="overview-band__panel">
-      <div class="overview-band__eyebrow">快速开始</div>
-      <h2 class="overview-band__title">调试入口与对象模型</h2>
-      <ul class="overview-link-list">
-        <li><a href="V8调试手册/">V8 调试手册</a></li>
-        <li><a href="V8 数组的内存布局/">V8 数组的内存布局</a></li>
-      </ul>
-    </article>
-    <article class="overview-band__panel">
-      <div class="overview-band__eyebrow">当前重点</div>
-      <h2 class="overview-band__title">对象模型、调试链路与案例分析</h2>
-      <p class="overview-band__summary">建议先阅读对象表示、堆布局和调试入口，再阅读漏洞案例。</p>
-    </article>
+  <section class="overview-section">
+    <header class="overview-section__heading">
+      <div class="overview-section__eyebrow">Recommended Path</div>
+      <h2>建议阅读顺序</h2>
+      <p>每一步都为下一步补齐必要的内存模型、调试能力或漏洞推理方法。</p>
+    </header>
+    <div class="overview-path">
+      <article class="overview-path__step">
+        <span class="overview-path__index">01</span>
+        <div>
+          <span class="overview-path__label">Foundation</span>
+          <h3>对象、数组与堆布局</h3>
+          <p>理解 elements、properties、heap space 以及对象在内存中的真实组织方式。</p>
+          <ul class="overview-link-list">
+            <li><a href="V8 数组的内存布局/">V8 数组的内存布局</a></li>
+            <li><a href="V8堆的内存布局/">V8 堆的内存布局</a></li>
+            <li><a href="V8指针压缩机制/">V8 指针压缩机制</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="overview-path__step">
+        <span class="overview-path__index">02</span>
+        <div>
+          <span class="overview-path__label">Execution</span>
+          <h3>JIT 与调试链路</h3>
+          <p>把静态结构连接到 bytecode、优化阶段和运行时现场。</p>
+          <ul class="overview-link-list">
+            <li><a href="jit/">V8 JIT 基础</a></li>
+            <li><a href="V8调试手册/">V8 调试手册</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="overview-path__step">
+        <span class="overview-path__index">03</span>
+        <div>
+          <span class="overview-path__label">Case Study</span>
+          <h3>漏洞与利用原语</h3>
+          <p>围绕类型混淆、hole 状态和优化错误，还原从 PoC 到补丁的因果链。</p>
+          <ul class="overview-link-list">
+            <li><a href="CVE-2021-30517分析/">CVE-2021-30517</a></li>
+            <li><a href="CVE-2025-12433分析/">CVE-2025-12433</a></li>
+            <li><a href="CVE-2025-13224分析/">CVE-2025-13224</a></li>
+          </ul>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="overview-section">
-    <div class="overview-section__eyebrow">推荐顺序</div>
-    <div class="overview-grid">
-      <article class="overview-card">
-        <div class="overview-card__eyebrow">01 Foundation</div>
-        <h3>对象与堆布局</h3>
-        <ul class="overview-link-list">
-          <li><a href="V8 数组的内存布局/">V8 数组的内存布局</a></li>
-          <li><a href="V8堆的内存布局/">V8 堆的内存布局</a></li>
-          <li><a href="V8指针压缩机制/">V8 指针压缩机制</a></li>
-        </ul>
-      </article>
-      <article class="overview-card">
-        <div class="overview-card__eyebrow">02 Debugging</div>
-        <h3>构建与调试</h3>
-        <ul class="overview-link-list">
-          <li><a href="jit/">V8 JIT 基础</a></li>
-          <li><a href="V8调试手册/">V8 调试手册</a></li>
-        </ul>
-      </article>
-      <article class="overview-card">
-        <div class="overview-card__eyebrow">03 Case Study</div>
-        <h3>漏洞案例</h3>
-        <ul class="overview-link-list">
-          <li><a href="CVE-2021-30517分析/">CVE-2021-30517 分析</a></li>
-          <li><a href="CVE-2025-12433分析/">CVE-2025-12433 分析</a></li>
-          <li><a href="CVE-2025-13224分析/">CVE-2025-13224 分析</a></li>
-        </ul>
-      </article>
+    <header class="overview-section__heading">
+      <div class="overview-section__eyebrow">Featured Notes</div>
+      <h2>重点文章</h2>
+    </header>
+    <div class="overview-article-grid">
+      <a class="overview-article" href="V8调试手册/">
+        <span class="overview-article__type">Handbook</span>
+        <strong>V8 调试手册</strong>
+        <p>构建、内部函数、断点与常用观察入口。</p>
+        <span class="overview-article__cta">开始阅读 →</span>
+      </a>
+      <a class="overview-article" href="CVE-2025-12433分析/">
+        <span class="overview-article__type">Root Cause</span>
+        <strong>CVE-2025-12433</strong>
+        <p>hole-check elision 与控制流 merge 状态传播。</p>
+        <span class="overview-article__cta">查看分析 →</span>
+      </a>
+      <a class="overview-article" href="CVE-2021-30517分析/">
+        <span class="overview-article__type">Exploit</span>
+        <strong>CVE-2021-30517</strong>
+        <p>SuperIC confusion 与 exploit primitive 构造。</p>
+        <span class="overview-article__cta">查看分析 →</span>
+      </a>
     </div>
   </section>
 </div>
@@ -1241,8 +1313,13 @@
 
 
 
+  
+  
 
 
+
+
+  
 
 
 
@@ -1266,12 +1343,54 @@
       
         <footer class="md-footer">
   
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="上一页: 首页">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                首页
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="jit/" class="md-footer__link md-footer__link--next" aria-label="下一页: JIT基础">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                JIT基础
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2025 SXY Research Notes · Built for research and portfolio
+      © 2025–2026 SXY Research Notes · Built for research and portfolio
 
     </div>
   
@@ -1291,12 +1410,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.tracking", "navigation.footer", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "search.share", "toc.follow", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../javascripts/extra.js?v=2026-05-07-v49"></script>
+        <script src="../javascripts/extra.js?v=2026-07-30-v55"></script>
       
     
   </body>

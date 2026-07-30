@@ -1435,6 +1435,171 @@
     };
   })();
 
+  const imagePresentationModule = (function () {
+    function enhanceImage(image) {
+      if (!(image instanceof HTMLImageElement)) return;
+
+      image.loading = "lazy";
+      image.decoding = "async";
+
+      const paragraph = image.closest("p");
+      if (!isHTMLElement(paragraph) || paragraph.dataset.siteFigure === "true") {
+        return;
+      }
+
+      const onlyChild = paragraph.children.length === 1
+        ? paragraph.firstElementChild
+        : null;
+      const isStandalone = onlyChild === image || (
+        isHTMLElement(onlyChild) && onlyChild.contains(image)
+      );
+      const captionText = image.alt.trim();
+
+      if (!isStandalone || !captionText) {
+        return;
+      }
+
+      const caption = document.createElement("span");
+      caption.className = "article-figure__caption";
+      caption.textContent = captionText;
+      caption.setAttribute("aria-hidden", "true");
+      paragraph.classList.add("article-figure");
+      paragraph.dataset.siteFigure = "true";
+      paragraph.appendChild(caption);
+    }
+
+    return {
+      init: function (root) {
+        queryAll(resolveRoot(root), ".md-typeset img").forEach(enhanceImage);
+      },
+    };
+  })();
+
+  const readingExperienceModule = (function () {
+    const PROGRESS_CLASS = "site-reading-progress";
+    const META_SELECTOR = ".article-meta-bar[data-site-generated]";
+    let ticking = false;
+
+    function ensureProgressBar() {
+      let progressBar = document.querySelector("." + PROGRESS_CLASS);
+      if (progressBar) return progressBar;
+
+      progressBar = document.createElement("div");
+      progressBar.className = PROGRESS_CLASS;
+      progressBar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(progressBar);
+      return progressBar;
+    }
+
+    function getArticleLabel() {
+      const pathname = normalizeHref(window.location.pathname);
+
+      if (pathname === "/v8" || pathname.indexOf("/v8/") === 0) {
+        return "V8";
+      }
+      if (pathname === "/jsc" || pathname.indexOf("/jsc/") === 0) {
+        return "JavaScriptCore";
+      }
+      if (pathname === "/chakracore" || pathname.indexOf("/chakracore/") === 0) {
+        return "ChakraCore";
+      }
+
+      return "Research Note";
+    }
+
+    function estimateReadingTime(content) {
+      const clone = content.cloneNode(true);
+      queryAll(
+        clone,
+        "pre, code, nav, script, style, .headerlink, .article-meta-bar, .site-code-actions"
+      ).forEach(function (node) {
+        node.remove();
+      });
+
+      const text = getTextContent(clone);
+      const cjkCount = (text.match(/[\u3400-\u9fff]/g) || []).length;
+      const wordCount = (text.match(/[A-Za-z0-9_]+/g) || []).length;
+
+      return Math.max(1, Math.ceil(cjkCount / 320 + wordCount / 220));
+    }
+
+    function createMetaChip(label) {
+      const chip = document.createElement("span");
+      chip.textContent = label;
+      return chip;
+    }
+
+    function syncArticleMeta() {
+      queryAll(document, META_SELECTOR).forEach(function (node) {
+        node.remove();
+      });
+
+      if (!document.documentElement.classList.contains("page-article")) {
+        return;
+      }
+
+      const content = document.querySelector(".md-content__inner");
+      const heading = content ? content.querySelector("h1") : null;
+      if (!isHTMLElement(content) || !isHTMLElement(heading)) {
+        return;
+      }
+
+      const meta = document.createElement("div");
+      const sectionCount = content.querySelectorAll(":scope > h2").length;
+      meta.className = "article-meta-bar";
+      meta.dataset.siteGenerated = "true";
+      meta.setAttribute("aria-label", "文章信息");
+      meta.appendChild(createMetaChip(getArticleLabel()));
+      meta.appendChild(createMetaChip("约 " + estimateReadingTime(content) + " 分钟"));
+
+      if (sectionCount > 0) {
+        meta.appendChild(createMetaChip(sectionCount + " 个章节"));
+      }
+
+      meta.appendChild(createMetaChip("技术笔记"));
+      heading.insertAdjacentElement("afterend", meta);
+    }
+
+    function syncProgress() {
+      ticking = false;
+
+      const root = document.documentElement;
+      const maxScroll = Math.max(0, root.scrollHeight - window.innerHeight);
+      const progress = maxScroll > 0
+        ? Math.min(1, Math.max(0, window.scrollY / maxScroll))
+        : 0;
+
+      root.style.setProperty("--site-reading-progress", progress.toFixed(4));
+    }
+
+    function requestProgressSync() {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(syncProgress);
+    }
+
+    function bindEvents() {
+      if (document.documentElement.dataset.siteReadingExperienceBound === "true") {
+        return;
+      }
+
+      window.addEventListener("scroll", requestProgressSync, { passive: true });
+      window.addEventListener("resize", requestProgressSync, { passive: true });
+      document.documentElement.dataset.siteReadingExperienceBound = "true";
+    }
+
+    return {
+      init: function () {
+        ensureProgressBar();
+        bindEvents();
+        syncArticleMeta();
+        syncProgress();
+        window.requestAnimationFrame(syncProgress);
+      },
+    };
+  })();
+
   const fixedSidebarTopModule = (function () {
     const DEFAULT_TOP = 12;
     const GAP = 12;
@@ -1467,16 +1632,37 @@
       return Math.max(0, Math.min(rect.bottom, viewportHeight));
     }
 
+    function getVisibleHeight(element) {
+      if (!isHTMLElement(element)) return 0;
+
+      const style = window.getComputedStyle(element);
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        style.opacity === "0"
+      ) {
+        return 0;
+      }
+
+      const rect = element.getBoundingClientRect();
+      return rect.height > 0 ? Math.ceil(rect.height) : 0;
+    }
+
     function syncTop() {
       ticking = false;
 
       const header = document.querySelector(SELECTORS.headerRoot);
       const tabs = document.querySelector(".md-tabs:not([hidden])");
+      const tabsHeight = getVisibleHeight(tabs);
       const visibleBottom = Math.max(getVisibleBottom(header), getVisibleBottom(tabs));
       const top = visibleBottom > 0
         ? Math.max(DEFAULT_TOP, Math.round(visibleBottom + GAP))
         : DEFAULT_TOP;
 
+      document.documentElement.style.setProperty(
+        "--site-visible-tabs-height",
+        tabsHeight + "px"
+      );
       document.documentElement.style.setProperty("--site-fixed-sidebar-top", top + "px");
     }
 
@@ -1515,6 +1701,8 @@
 
   const modules = [
     pageTypeModule,
+    readingExperienceModule,
+    imagePresentationModule,
     footerModule,
     tocModule,
     layoutToggleModule,

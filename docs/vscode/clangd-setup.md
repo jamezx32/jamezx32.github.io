@@ -1,4 +1,6 @@
-
+---
+description: 以 V8 为例配置 VS Code、clangd 和 compile_commands.json，并处理与 C/C++ 扩展的冲突。
+---
 
 # VS Code 中配置 clangd（以 V8 为例）
 
@@ -210,4 +212,3 @@ out/x64.release/compile_commands.json
 ### 3. 只让 clangd 负责语义分析
 
 不要让 clangd 和 Microsoft C/C++ 扩展同时争夺同一套语言服务能力。
-
