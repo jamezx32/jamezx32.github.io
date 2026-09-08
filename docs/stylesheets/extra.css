@@ -2468,13 +2468,14 @@ button.md-top[data-md-component="top"]:hover, button.md-top[data-md-component="t
 
 .md-footer {
   flex: 0 0 auto;
+  z-index: 20;
   margin-top: auto;
   position: relative;
   overflow: hidden;
   align-self: stretch;
   margin-bottom: 0;
   isolation: isolate;
-  z-index: 2;
+  z-index: 20;
   background: var(--site-footer-shell-bg);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   will-change: auto;
@@ -3581,16 +3582,20 @@ html body .md-content__inner {
 }
 
 .md-sidebar--primary .md-nav--secondary .md-nav__link {
-  padding-left: 1.9rem !important;
+  padding-left: 1.15rem !important;
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+  color: var(--site-editorial-muted);
 }
 
-.md-sidebar--primary .md-nav--secondary .md-nav .md-nav__link {
-  padding-left: 2.85rem !important;
+.md-sidebar--primary .md-nav--secondary .md-nav__link:hover,
+.md-sidebar--primary .md-nav--secondary .md-nav__link--active {
+  color: var(--site-editorial-ink);
 }
 
 .md-sidebar--primary .md-nav--secondary::before {
   display: block;
-  padding: 0 0 0.3rem 1.9rem;
+  padding: 0 0 0.3rem 1.15rem;
   color: var(--site-editorial-muted);
   content: "On this page";
   font-size: 0.56rem;
@@ -3635,7 +3640,7 @@ html body .md-content__inner {
 /* Desktop sidebar: cap height, enable scrolling, add horizontal breathing */
 @media screen and (min-width: 76.25em) {
   .md-main__inner.md-grid > .md-sidebar--primary {
-    max-height: calc(100vh - var(--site-fixed-sidebar-top, 8rem) - 1rem) !important;
+    max-height: calc(100vh - var(--site-fixed-sidebar-top, 8rem) - 2.4rem) !important;
   }
 
   .md-main__inner.md-grid > .md-sidebar--primary > .md-sidebar__scrollwrap {
