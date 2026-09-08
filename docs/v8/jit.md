@@ -16,7 +16,7 @@ JavaScript source -> Ignition bytecode -> Sparkplug -> Maglev -> TurboFan
 
 Ignition 是 V8 的解释器。它将 JavaScript 函数编译为紧凑的 bytecode，并执行这些 bytecode。
 
-![V8 compilation pipeline with Ignition enabled](https://v8.dev/_img/ignition-interpreter/ignition-pipeline.png)
+![V8 compilation pipeline with Ignition enabled](images/ignition-pipeline.png)
 
 Ignition 执行过程中会收集运行时反馈，包括对象形状、属性访问模式、操作数类型等信息。这些反馈会被后续编译器用于生成专门化代码。
 
@@ -37,7 +37,7 @@ Sparkplug 的目标是降低 bytecode decoding 和 dispatch overhead，而不是
 
 Maglev 是 fast optimizing compiler，位于 Sparkplug 与 TurboFan 之间。它在编译速度和代码质量之间提供中间层级的优化。
 
-![V8 tiering with Maglev](https://v8.dev/_img/maglev/I-IS-IT-IST-ISTM.svg)
+![V8 tiering with Maglev](images/maglev-tiering.svg)
 
 Maglev 基于 bytecode 和运行时反馈构建中间表示，并根据已观察到的类型和对象形状生成专门化代码。当假设在运行时失效时，代码会触发 deoptimization 并回退到较低执行层级。
 
