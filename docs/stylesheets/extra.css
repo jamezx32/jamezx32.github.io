@@ -3611,3 +3611,15 @@ html body .md-content__inner {
   --md-primary-bg-color: #211d19;
   --md-primary-bg-color--light: #2b2620;
 }
+
+/* navigation.prune nests the active section one level deeper, which breaks
+   Material's direct-child selector for the integrated TOC; restore it */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary .md-nav--integrated .md-nav__item--active .md-nav--secondary {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    grid-template-rows: none !important;
+  }
+}
