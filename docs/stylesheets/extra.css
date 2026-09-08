@@ -30,14 +30,10 @@
   --md-code-font: var(--site-code-font);
   --site-shell-max-width: 94rem;
   --site-sidebar-width: 12rem;
-  --site-toc-width: 13rem;
   --site-content-max-width: 68rem;
   --site-shell-padding-left: 2rem;
   --site-shell-padding-right: 2rem;
   --site-sidebar-gap: 2rem;
-  --site-toc-gap: 2.35rem;
-  --site-toc-divider: rgba(33, 29, 25, 0.26);
-  --site-toc-divider-shadow: 16px 0 34px rgba(33, 29, 25, 0.12);
   --site-header-height: 66px;
   --site-header-search-height: 42px;
   --site-tabs-min-height: 46px;
@@ -367,9 +363,9 @@ body {
   }
 
   html.sidebar-collapsed .md-main__inner.md-grid {
-    grid-template-columns: minmax(0, 1fr) var(--site-toc-width) !important;
-    grid-template-areas: "content toc" !important;
-    column-gap: var(--site-toc-gap);
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "content" !important;
+    column-gap: 0;
   }
 
   html.sidebar-collapsed .md-content, html.page-home .md-content {
@@ -3576,6 +3572,12 @@ html body .md-content__inner {
   margin-top: 0.4rem;
   padding-top: 0.5rem;
   border-top: 1px solid var(--site-editorial-line) !important;
+}
+
+.md-sidebar--primary .md-nav--secondary .md-nav__link.site-toc-link--current,
+.md-sidebar--primary .md-nav__link.site-toc-link--current {
+  color: var(--site-editorial-blue) !important;
+  font-weight: 700 !important;
 }
 
 .md-sidebar--primary .md-nav--secondary::before {

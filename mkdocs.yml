@@ -27,7 +27,7 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
+    - navigation.prune
     - navigation.tracking
     - navigation.footer
     - navigation.top
@@ -59,7 +59,7 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css?v=2026-09-08-v62
+  - stylesheets/extra.css?v=2026-09-08-v63
 
 nav:
   - 首页: index.md
@@ -94,4 +94,4 @@ extra:
   generator: false
 
 extra_javascript:
-  - javascripts/extra.js?v=2026-07-30-v55
+  - javascripts/extra.js?v=2026-09-08-v56

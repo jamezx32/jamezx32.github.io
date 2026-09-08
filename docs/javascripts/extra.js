@@ -1,15 +1,11 @@
 (function () {
   const STORAGE_KEYS = {
     sidebarCollapsed: "sxy-site-sidebar-collapsed",
-    tocCollapsed: "sxy-site-toc-collapsed",
   };
 
   try {
     if (window.localStorage.getItem(STORAGE_KEYS.sidebarCollapsed) === "true") {
       document.documentElement.classList.add("sidebar-collapsed");
-    }
-    if (window.localStorage.getItem(STORAGE_KEYS.tocCollapsed) === "true") {
-      document.documentElement.classList.add("toc-collapsed");
     }
   } catch {
     // Ignore storage failures in private or restricted environments.
@@ -23,9 +19,9 @@
     pageHeading: ".md-content__inner h1",
     sidebarToggle: ".site-sidebar-toggle",
     topButton: '[data-md-component="top"]',
-    tocRoot: ".md-sidebar--secondary",
-    tocInner: ".md-sidebar--secondary .md-sidebar__inner",
-    tocLinks: ".md-sidebar--secondary .md-nav__link[href]",
+    tocRoot: ".md-sidebar--primary .md-nav--secondary",
+    tocInner: ".md-sidebar--primary .md-nav--secondary",
+    tocLinks: ".md-sidebar--primary .md-nav--secondary .md-nav__link[href]",
     tocHeading: ".site-toc-heading",
     paletteForm: '.md-header__option[data-md-component="palette"]',
     codeBlocks: ".md-typeset .highlight",
@@ -1682,12 +1678,92 @@
     };
   })();
 
+  const tocSpyModule = (function () {
+    const CURRENT_CLASS = "site-toc-link--current";
+    let ticking = false;
+
+    function collectEntries() {
+      const root = document.querySelector(
+        ".md-sidebar--primary .md-nav--secondary"
+      );
+      if (!root) return [];
+
+      return queryAll(root, '.md-nav__link[href*="#"]')
+        .map(function (link) {
+          let url;
+          try {
+            url = new URL(link.href, window.location.href);
+          } catch {
+            return null;
+          }
+          if (!isSameDocumentUrl(url) || !url.hash) return null;
+          const target = resolveHashTarget(url.hash);
+          return isHTMLElement(target)
+            ? { link: link, target: target }
+            : null;
+        })
+        .filter(Boolean);
+    }
+
+    function sync() {
+      const list = collectEntries();
+      if (!list.length) return;
+
+      const offset = 140;
+      let current = null;
+      list.forEach(function (item) {
+        if (item.target.getBoundingClientRect().top <= offset) {
+          current = item;
+        }
+      });
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.scrollHeight - 4
+      ) {
+        current = list[list.length - 1];
+      }
+
+      list.forEach(function (item) {
+        const isCurrent = current !== null && item.link === current.link;
+        item.link.classList.toggle(CURRENT_CLASS, isCurrent);
+        if (isCurrent) {
+          item.link.setAttribute("aria-current", "location");
+        } else {
+          item.link.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function requestSync() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        sync();
+      });
+    }
+
+    return {
+      init: function () {
+        if (document.documentElement.dataset.siteTocSpyBound === "true") {
+          sync();
+          return;
+        }
+        document.documentElement.dataset.siteTocSpyBound = "true";
+        window.addEventListener("scroll", requestSync, { passive: true });
+        window.addEventListener("resize", requestSync, { passive: true });
+        sync();
+      },
+    };
+  })();
+
   const modules = [
     pageTypeModule,
     readingExperienceModule,
     imagePresentationModule,
     footerModule,
     tocModule,
+    tocSpyModule,
     layoutToggleModule,
     topButtonModule,
     themeToggleModule,
