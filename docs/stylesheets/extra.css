@@ -5779,3 +5779,66 @@ html body .md-content__inner {
     padding-top: 1.8rem;
   }
 }
+
+/* ==========================================================================
+   Homepage rhythm and readability refinements — 2026-09
+   ========================================================================== */
+
+/* Hero: tighten the oversized top gap, give the lead paragraph more presence */
+.home-simple__hero {
+  padding-top: clamp(2.8rem, 6vw, 5.25rem);
+}
+
+.home-simple__hero > p {
+  margin-top: 1.5rem;
+  font-size: clamp(0.92rem, 1.4vw, 1.06rem);
+  line-height: 1.85;
+}
+
+.home-simple__actions {
+  margin-top: 1.9rem;
+}
+
+.home-simple__scope {
+  margin-top: 2.2rem;
+}
+
+/* Tracks: slightly tighter rows, darker description text */
+.home-simple__track {
+  min-height: 5rem;
+}
+
+.home-simple__track-copy small {
+  color: #4e5a70;
+  font-size: 0.68rem;
+}
+
+/* Reading path: drop the fake min-height, align links to the card bottom */
+.home-simple__path li > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.home-simple__path p {
+  min-height: 0;
+}
+
+.home-simple__path a {
+  margin-top: auto;
+  padding-top: 0.9rem;
+}
+
+/* Selected notes: lift title/description size for scanability */
+.home-simple__articles strong {
+  font-size: 0.78rem;
+}
+
+.home-simple__articles small {
+  font-size: 0.65rem;
+}
+
+/* Section eyebrow labels: keep uppercase but a touch larger */
+.home-simple__section-head > span {
+  font-size: 0.62rem;
+}
