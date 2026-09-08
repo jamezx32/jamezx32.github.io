@@ -58,8 +58,8 @@
   --site-code-label-right: 7.4rem;
   --site-code-lineno-width: 3.05rem;
   --site-code-line-padding-left: 3.55rem;
-  --site-code-header-bg: linear-gradient(180deg, rgba(237, 240, 244, 0.995), rgba(228, 232, 237, 0.985));
-  --site-code-header-border: rgba(176, 182, 190, 0.11);
+  --site-code-header-bg: linear-gradient(180deg, rgba(239, 233, 221, 0.995), rgba(233, 226, 211, 0.985));
+  --site-code-header-border: rgba(33, 29, 25, 0.12);
   --site-sidebar-nested-border: rgba(33, 29, 25, 0.16);
   --site-sidebar-active-bg: transparent;
   --site-sidebar-active-border: rgba(15, 23, 42, 0.22);
@@ -2259,10 +2259,10 @@ button.md-top[data-md-component="top"]:hover, button.md-top[data-md-component="t
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  border: 1px solid rgba(171, 177, 187, 0.17);
+  border: 1px solid rgba(33, 29, 25, 0.16);
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(245, 248, 252, 0.992), rgba(239, 243, 248, 0.978));
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, rgba(250, 247, 240, 0.99), rgba(243, 238, 227, 0.98));
+  box-shadow: 0 12px 28px rgba(33, 29, 25, 0.07);
   overflow: hidden;
   isolation: isolate;
 }
@@ -2311,7 +2311,7 @@ button.md-top[data-md-component="top"]:hover, button.md-top[data-md-component="t
 .custom-codeblock__language {
   min-width: 0;
   overflow: hidden;
-  color: #3c434d;
+  color: #6f675c;
   font-family: var(--site-heading-font);
   font-size: 0.92rem;
   font-weight: 760;
@@ -3590,6 +3590,20 @@ html body .md-content__inner {
 
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #f6f3ec;
+  --md-code-fg-color: #33291f;
+  --md-code-bg-color: #f3eee3;
+  --md-code-hl-color: rgba(161, 60, 42, 0.1);
+  --md-code-hl-keyword-color: #9d3b2c;
+  --md-code-hl-string-color: #3f6f60;
+  --md-code-hl-number-color: #8f3f71;
+  --md-code-hl-function-color: #b0762a;
+  --md-code-hl-comment-color: #93887a;
+  --md-code-hl-operator-color: #6f675c;
+  --md-code-hl-punctuation-color: #6f675c;
+  --md-code-hl-variable-color: #33291f;
+  --md-code-hl-constant-color: #8f3f71;
+  --md-code-hl-special-color: #8a5a2a;
+  --md-code-hl-name-color: #33291f;
   --md-accent-fg-color: #a13c2a;
   --md-primary-fg-color: #f4efe4;
   --md-primary-bg-color: #211d19;
