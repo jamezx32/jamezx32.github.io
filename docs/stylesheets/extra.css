@@ -1894,7 +1894,7 @@ body {
   color: #f8fafc;
   background: rgba(33, 29, 25, 0.1);
   border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: inset 0 -2px 0 #60a5fa;
+  box-shadow: inset 0 -2px 0 var(--site-editorial-blue);
   border: 0;
   transform: none;
 }
@@ -2696,7 +2696,7 @@ button.md-top[data-md-component="top"]:hover, button.md-top[data-md-component="t
   margin-bottom: 0;
   isolation: isolate;
   z-index: 2;
-  background: radial-gradient(circle at 18% 50%, rgba(59, 130, 246, 0.16), transparent 24%), radial-gradient(circle at 82% 50%, rgba(99, 102, 241, 0.14), transparent 22%), var(--site-footer-shell-bg);
+  background: var(--site-footer-shell-bg);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   will-change: auto;
 }
@@ -3866,8 +3866,13 @@ html body .md-content__inner {
   background: #0d0b08;
 }
 
-.md-tabs__link:hover, .md-tabs__link--active, .md-tabs__link[data-md-state="blur"] {
+.md-tabs__link:hover, .md-tabs__link--active, .md-tabs__link[data-md-state="blur"],
+.md-tabs__item--active .md-tabs__link {
   color: #d8836a;
+}
+
+.md-tabs__item--active .md-tabs__link {
+  font-weight: 750;
 }
 
 ::selection {
