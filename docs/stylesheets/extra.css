@@ -29,7 +29,7 @@
   --md-text-font: var(--site-body-font);
   --md-code-font: var(--site-code-font);
   --site-shell-max-width: 94rem;
-  --site-sidebar-width: 13.5rem;
+  --site-sidebar-width: 12rem;
   --site-toc-width: 13rem;
   --site-content-max-width: 68rem;
   --site-shell-padding-left: 2rem;
@@ -58,7 +58,7 @@
   --site-code-label-right: 7.4rem;
   --site-code-lineno-width: 3.05rem;
   --site-code-line-padding-left: 3.55rem;
-  --site-code-header-bg: linear-gradient(180deg, rgba(239, 233, 221, 0.995), rgba(233, 226, 211, 0.985));
+  --site-code-header-bg: linear-gradient(180deg, rgba(243, 241, 234, 0.995), rgba(237, 235, 228, 0.985));
   --site-code-header-border: rgba(33, 29, 25, 0.12);
   --site-sidebar-nested-border: rgba(33, 29, 25, 0.16);
   --site-sidebar-active-bg: transparent;
@@ -260,8 +260,8 @@ body {
 @media screen and (min-width: 76.25em) {
   .md-main__inner.md-grid {
     display: grid !important;
-    grid-template-columns: var(--site-sidebar-width) minmax(0, 1fr) var(--site-toc-width) !important;
-    grid-template-areas: "sidebar content toc" !important;
+    grid-template-columns: var(--site-sidebar-width) minmax(0, 1fr) !important;
+    grid-template-areas: "sidebar content" !important;
     grid-template-rows: auto;
     column-gap: var(--site-sidebar-gap);
     row-gap: 0;
@@ -2259,9 +2259,9 @@ button.md-top[data-md-component="top"]:hover, button.md-top[data-md-component="t
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  border: 1px solid rgba(33, 29, 25, 0.16);
+  border: 1px solid rgba(33, 29, 25, 0.12);
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(250, 247, 240, 0.99), rgba(243, 238, 227, 0.98));
+  background: linear-gradient(180deg, rgba(251, 250, 246, 0.99), rgba(246, 244, 238, 0.98));
   box-shadow: 0 12px 28px rgba(33, 29, 25, 0.07);
   overflow: hidden;
   isolation: isolate;
@@ -3591,7 +3591,7 @@ html body .md-content__inner {
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #f6f3ec;
   --md-code-fg-color: #33291f;
-  --md-code-bg-color: #f3eee3;
+  --md-code-bg-color: #f4f2eb;
   --md-code-hl-color: rgba(161, 60, 42, 0.1);
   --md-code-hl-keyword-color: #9d3b2c;
   --md-code-hl-string-color: #3f6f60;
