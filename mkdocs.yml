@@ -3,9 +3,6 @@ site_url: https://jamezx32.github.io/
 site_description: JavaScript Engine Security Research Notes
 site_author: SXY
 
-exclude_docs: |
-  jsc/CVE-2024-23222复现笔记框架.md
-
 theme:
   name: material
   custom_dir: overrides

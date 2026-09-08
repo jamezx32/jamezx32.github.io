@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# MkDocs build output (deployed via GitHub Actions, not needed in git)
+site/
+
+# Local working files
+output/
+tmp/
+__pycache__/
