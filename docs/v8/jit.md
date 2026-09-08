@@ -68,6 +68,8 @@ Turboshaft 是 V8 顶层优化管线中的 IR 和编译基础设施演进，不�
 | Maglev | 中层优化、deopt | `--trace-opt`、Maglev 相关 trace 参数 |
 | TurboFan | 优化图、机器码、deopt 点 | `--trace-opt`、`--trace-deopt`、`--trace-turbo` |
 
+各层级参数在断点调试和运行时观察中的落地方法，见 [V8 调试手册](V8调试手册.md)。
+
 ## 参考资料
 
 1. [Firing up the Ignition interpreter](https://v8.dev/blog/ignition-interpreter)
