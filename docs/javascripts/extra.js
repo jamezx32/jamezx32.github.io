@@ -27,7 +27,6 @@
     tocInner: ".md-sidebar--secondary .md-sidebar__inner",
     tocLinks: ".md-sidebar--secondary .md-nav__link[href]",
     tocHeading: ".site-toc-heading",
-    tocToggle: ".site-toc-toggle",
     paletteForm: '.md-header__option[data-md-component="palette"]',
     codeBlocks: ".md-typeset .highlight",
   };
@@ -651,22 +650,6 @@
           '<span class="site-sidebar-toggle__icon" aria-hidden="true"></span>' +
           '<span class="site-sidebar-toggle__text">隐藏目录</span>',
         requiresToc: false,
-      },
-      {
-        selector: SELECTORS.tocToggle,
-        controlType: "toc",
-        className: "toc-collapsed",
-        storageKey: STORAGE_KEYS.tocCollapsed,
-        classNames: "site-header-control__button site-toc-toggle",
-        textSelector: ".site-toc-toggle__text",
-        defaultText: "隐藏标题目录",
-        collapsedText: "显示标题目录",
-        defaultLabel: "隐藏标题目录",
-        collapsedLabel: "显示标题目录",
-        innerHTML:
-          '<span class="site-toc-toggle__icon" aria-hidden="true"></span>' +
-          '<span class="site-toc-toggle__text">隐藏标题目录</span>',
-        requiresToc: true,
       },
     ];
 
