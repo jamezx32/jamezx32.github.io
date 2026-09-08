@@ -3642,17 +3642,13 @@ html body .md-content__inner {
     max-height: 100% !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
-    scrollbar-width: thin;
+    scrollbar-width: none;
   }
 
   .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
-    display: block;
-    width: 4px;
-  }
-
-  .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
-    background: rgba(33, 29, 25, 0.18);
-    border-radius: 2px;
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   .md-sidebar--primary .md-sidebar__inner {
