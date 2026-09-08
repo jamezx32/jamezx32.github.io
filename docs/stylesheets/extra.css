@@ -3580,11 +3580,19 @@ html body .md-content__inner {
   font-weight: 700 !important;
 }
 
+.md-sidebar--primary .md-nav--secondary .md-nav__link {
+  padding-left: 1.9rem !important;
+}
+
+.md-sidebar--primary .md-nav--secondary .md-nav .md-nav__link {
+  padding-left: 2.85rem !important;
+}
+
 .md-sidebar--primary .md-nav--secondary::before {
   display: block;
-  padding: 0 0.35rem 0.3rem;
+  padding: 0 0 0.3rem 1.9rem;
   color: var(--site-editorial-muted);
-  content: "本页目录";
+  content: "On this page";
   font-size: 0.56rem;
   font-weight: 700;
   letter-spacing: 0.14em;

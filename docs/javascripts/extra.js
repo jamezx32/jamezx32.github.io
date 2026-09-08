@@ -313,39 +313,6 @@
   const tocModule = (function () {
     let activeEntries = [];
 
-    function ensureHeading(title) {
-      const tocInner = document.querySelector(SELECTORS.tocInner);
-      if (!tocInner) return;
-
-      let heading = tocInner.querySelector(SELECTORS.tocHeading);
-      if (!title) {
-        if (heading) {
-          heading.remove();
-        }
-        return;
-      }
-
-      if (!heading) {
-        heading = document.createElement("div");
-        heading.className = "site-toc-heading";
-        heading.innerHTML =
-          '<div class="site-toc-heading__eyebrow">On this page</div>' +
-          '<div class="site-toc-heading__title"></div>';
-
-        const nav = tocInner.querySelector(".md-nav--secondary, .md-nav[data-md-level='1']");
-        if (nav) {
-          tocInner.insertBefore(heading, nav);
-        } else {
-          tocInner.appendChild(heading);
-        }
-      }
-
-      const titleNode = heading.querySelector(".site-toc-heading__title");
-      if (titleNode) {
-        titleNode.textContent = title;
-      }
-    }
-
     function applyTitle() {
       const tocRoot = document.querySelector(SELECTORS.tocRoot);
       if (!tocRoot) return;
@@ -364,7 +331,6 @@
         });
       }
 
-      ensureHeading(title);
     }
 
     function getTopOffset() {
