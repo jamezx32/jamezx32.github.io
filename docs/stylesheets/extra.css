@@ -5842,3 +5842,261 @@ html body .md-content__inner {
 .home-simple__section-head > span {
   font-size: 0.62rem;
 }
+
+/* ==========================================================================
+   Editorial restyle: warm paper / ink / brick — 2026-09
+   Serif display headings, flat surfaces, booktabs tables.
+   Code block styling intentionally untouched.
+   ========================================================================== */
+
+:root {
+  --site-text-color: #2b2620;
+  --site-heading-color: #211d19;
+  --site-muted-text-color: #6f675c;
+  --site-page-bg: #f6f3ec;
+  --site-overscroll-bg: #f6f3ec;
+  --site-footer-shell-bg: #191611;
+
+  --site-editorial-ink: #211d19;
+  --site-editorial-muted: #6f675c;
+  --site-editorial-line: rgba(33, 29, 25, 0.15);
+  --site-editorial-surface: #fbf9f4;
+  --site-editorial-soft: #efe9dd;
+  --site-editorial-blue: #a13c2a;
+  --site-editorial-cyan: #3f6f60;
+  --site-editorial-radius: 0.25rem;
+  --site-editorial-shadow: none;
+
+  --site-heading-font: Georgia, "Times New Roman", "Songti SC", "STSong",
+    "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
+
+  --site-sidebar-width: 13.5rem;
+
+  --md-default-bg-color: #f6f3ec;
+  --md-accent-fg-color: #a13c2a;
+  --md-primary-fg-color: #f4efe4;
+  --md-primary-bg-color: #211d19;
+  --md-primary-bg-color--light: #2b2620;
+}
+
+[data-md-color-scheme="slate"] {
+  --site-text-color: #ddd6c8;
+  --site-heading-color: #ece7db;
+  --site-muted-text-color: #a89e8d;
+  --site-page-bg: #171410;
+  --site-overscroll-bg: #171410;
+  --site-footer-shell-bg: #100e0b;
+
+  --site-editorial-ink: #ece7db;
+  --site-editorial-muted: #a89e8d;
+  --site-editorial-line: rgba(236, 231, 219, 0.16);
+  --site-editorial-surface: #1f1b16;
+  --site-editorial-soft: #272119;
+  --site-editorial-blue: #d8836a;
+  --site-editorial-cyan: #8fb3a5;
+
+  --md-default-bg-color: #171410;
+  --md-accent-fg-color: #d8836a;
+  --md-primary-fg-color: #ece7db;
+  --md-primary-bg-color: #12100c;
+  --md-primary-bg-color--light: #1a1712;
+}
+
+/* Header and tabs: solid ink bar */
+.md-header {
+  background: #211d19;
+  backdrop-filter: none;
+}
+
+.md-tabs {
+  background: #191611;
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  background: #12100c;
+}
+
+[data-md-color-scheme="slate"] .md-tabs {
+  background: #0d0b08;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active,
+.md-tabs__link[data-md-state="blur"] {
+  color: #d8836a;
+}
+
+/* Content links: brick ink */
+.md-typeset a,
+.home-engine-card__links a:focus-visible {
+  color: var(--site-editorial-blue);
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus-visible {
+  color: var(--site-editorial-blue);
+}
+
+::selection {
+  background: rgba(161, 60, 42, 0.18);
+}
+
+/* Reading progress: solid brick */
+.site-reading-progress,
+.site-reading-progress::before {
+  background: var(--site-editorial-blue) !important;
+}
+
+/* Serif display headings */
+.home-simple__hero h1,
+.home-simple__section-head h2,
+.overview-hero__title,
+.overview-section__heading h2 {
+  font-family: var(--site-heading-font);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.home-simple__hero h1 {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  letter-spacing: 0.005em;
+  font-weight: 650;
+}
+
+/* Flat ink action buttons */
+.home-simple__actions .home-simple__primary,
+.overview-button,
+.index-flow .home-hero--editorial .home-hero__action--primary,
+.home-closing > a {
+  color: #f4efe4 !important;
+  background: var(--site-editorial-ink) !important;
+  border: 1px solid var(--site-editorial-ink) !important;
+  border-radius: 0 !important;
+}
+
+[data-md-color-scheme="slate"] .home-simple__actions .home-simple__primary,
+[data-md-color-scheme="slate"] .overview-button,
+[data-md-color-scheme="slate"] .index-flow .home-hero--editorial .home-hero__action--primary,
+[data-md-color-scheme="slate"] .home-closing > a {
+  color: #211d19 !important;
+  background: var(--site-editorial-ink) !important;
+  border-color: var(--site-editorial-ink) !important;
+}
+
+.home-simple__actions .home-simple__primary:hover,
+.home-simple__actions .home-simple__primary:focus-visible,
+.overview-button:hover,
+.overview-button:focus-visible,
+.index-flow .home-hero--editorial .home-hero__action--primary:hover,
+.index-flow .home-hero--editorial .home-hero__action--primary:focus-visible,
+.home-closing > a:hover,
+.home-closing > a:focus-visible {
+  color: #f4efe4 !important;
+  background: #4a3f33 !important;
+  border-color: #4a3f33 !important;
+}
+
+[data-md-color-scheme="slate"] .home-simple__actions .home-simple__primary:hover,
+[data-md-color-scheme="slate"] .overview-button:hover,
+[data-md-color-scheme="slate"] .home-closing > a:hover {
+  color: #211d19 !important;
+  background: #cfc6b4 !important;
+  border-color: #cfc6b4 !important;
+}
+
+/* Secondary overview buttons: outlined, not white-filled */
+[data-md-color-scheme="default"] .overview-hero .overview-button:not(.overview-button--primary),
+[data-md-color-scheme="default"] .overview-hero .overview-button:not(.overview-button--primary):hover,
+[data-md-color-scheme="default"] .overview-hero .overview-button:not(.overview-button--primary):focus-visible {
+  color: #211d19 !important;
+  background: transparent !important;
+  border: 1px solid rgba(33, 29, 25, 0.35) !important;
+}
+
+/* Overview hero cards: flat paper panel, no gradient, no glow */
+[data-md-color-scheme="default"] .overview-hero,
+[data-md-color-scheme="slate"] .overview-hero {
+  background: var(--site-editorial-surface) !important;
+  border: 1px solid var(--site-editorial-line);
+  box-shadow: none;
+}
+
+[data-md-color-scheme="slate"] .overview-hero__summary {
+  color: var(--site-editorial-muted);
+}
+
+/* Booktabs-style tables: horizontal rules only, no zebra, no rounding */
+.md-typeset__scrollwrap {
+  border-radius: 0;
+}
+
+.md-typeset table:not([class]) {
+  border-collapse: collapse;
+  border-radius: 0;
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th {
+  color: var(--site-editorial-ink);
+  background: transparent;
+  border-top: 2px solid var(--site-editorial-ink);
+  border-bottom: 1px solid var(--site-editorial-ink);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.md-typeset table:not([class]) td {
+  border-bottom: 1px solid var(--site-editorial-line);
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(even),
+.md-typeset table:not([class]) tbody tr:nth-child(even) td {
+  background: transparent;
+}
+
+.md-typeset table:not([class]) tbody tr:hover td {
+  background: color-mix(in srgb, var(--site-editorial-ink) 4%, transparent);
+}
+
+/* Integrated in-page TOC: separate it clearly from sibling page links */
+.md-sidebar--primary .md-nav--secondary {
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--site-editorial-line) !important;
+}
+
+.md-sidebar--primary .md-nav--secondary::before {
+  display: block;
+  padding: 0 0.35rem 0.3rem;
+  color: var(--site-editorial-muted);
+  content: "本页目录";
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* Material palette vars are scheme-scoped; mirror the overrides there */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #f6f3ec;
+  --md-accent-fg-color: #a13c2a;
+  --md-primary-fg-color: #f4efe4;
+  --md-primary-bg-color: #211d19;
+  --md-primary-bg-color--light: #2b2620;
+}
+
+/* The standalone TOC toggle targets the removed secondary sidebar; hide it */
+.site-toc-toggle {
+  display: none !important;
+}
+
+/* Track descriptions: keep muted tone warm to match the palette */
+.home-simple__track-copy small {
+  color: var(--site-editorial-muted);
+}
