@@ -3631,3 +3631,32 @@ html body .md-content__inner {
     grid-template-rows: none !important;
   }
 }
+
+/* Desktop sidebar: cap height, enable scrolling, add horizontal breathing */
+@media screen and (min-width: 76.25em) {
+  .md-main__inner.md-grid > .md-sidebar--primary {
+    max-height: calc(100vh - var(--site-fixed-sidebar-top, 8rem) - 1rem) !important;
+  }
+
+  .md-main__inner.md-grid > .md-sidebar--primary > .md-sidebar__scrollwrap {
+    max-height: 100% !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+    background: rgba(33, 29, 25, 0.18);
+    border-radius: 2px;
+  }
+
+  .md-sidebar--primary .md-sidebar__inner {
+    padding-right: 0.55rem;
+    padding-left: 0.55rem;
+  }
+}

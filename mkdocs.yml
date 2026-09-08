@@ -47,6 +47,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: false
+      toc_depth: 2
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.highlight:
@@ -59,7 +60,7 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css?v=2026-09-08-v66
+  - stylesheets/extra.css?v=2026-09-08-v67
 
 nav:
   - 首页: index.md
