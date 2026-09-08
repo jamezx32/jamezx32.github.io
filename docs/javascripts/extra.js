@@ -1609,6 +1609,37 @@
         tabsHeight + "px"
       );
       document.documentElement.style.setProperty("--site-fixed-sidebar-top", top + "px");
+
+      // Keep the fixed sidebar clear of the footer as it scrolls into view
+      const sidebar = document.querySelector(".md-sidebar--primary");
+      const footer = document.querySelector(SELECTORS.footerRoot);
+      if (sidebar && !window.matchMedia("(min-width: 76.25em)").matches) {
+        sidebar.style.removeProperty("max-height");
+        const wrap = sidebar.querySelector(".md-sidebar__scrollwrap");
+        if (wrap) {
+          wrap.style.removeProperty("max-height");
+        }
+        return;
+      }
+
+      if (
+        sidebar &&
+        footer &&
+        window.matchMedia("(min-width: 76.25em)").matches
+      ) {
+        const footerTop = footer.getBoundingClientRect().top;
+        const viewport = window.visualViewport
+          ? window.visualViewport.height
+          : window.innerHeight;
+        const cap = viewport - top - 38;
+        const avail = Math.min(cap, footerTop - top - 12);
+        const capPx = Math.max(Math.round(avail), 220) + "px";
+        sidebar.style.setProperty("max-height", capPx, "important");
+        const scrollwrap = sidebar.querySelector(".md-sidebar__scrollwrap");
+        if (scrollwrap) {
+          scrollwrap.style.setProperty("max-height", capPx, "important");
+        }
+      }
     }
 
     function requestSync() {
