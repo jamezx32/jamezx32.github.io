@@ -17,8 +17,8 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>8</strong> 篇主题笔记</span>
-      <span><strong>3</strong> 个 CVE 案例</span>
+      <span><strong>11</strong> 篇主题笔记</span>
+      <span><strong>6</strong> 个 CVE 案例</span>
       <span><strong>4</strong> 个核心方向</span>
     </div>
   </header>
@@ -63,6 +63,9 @@ hide:
           <p>围绕类型混淆、hole 状态和优化错误，还原从 PoC 到补丁的因果链。</p>
           <ul class="overview-link-list">
             <li><a href="CVE-2021-30517分析/">CVE-2021-30517</a></li>
+            <li><a href="CVE-2021-38003分析/">CVE-2021-38003</a></li>
+            <li><a href="CVE-2024-2887分析/">CVE-2024-2887</a></li>
+            <li><a href="CVE-2024-5274分析/">CVE-2024-5274</a></li>
             <li><a href="CVE-2025-12433分析/">CVE-2025-12433</a></li>
             <li><a href="CVE-2025-13224分析/">CVE-2025-13224</a></li>
           </ul>

@@ -21,7 +21,7 @@ hide:
       <span>V8</span>
       <span>JavaScriptCore</span>
       <span>ChakraCore</span>
-      <span>16 篇研究笔记</span>
+      <span>20 篇研究笔记</span>
     </div>
   </header>
 
@@ -40,7 +40,7 @@ hide:
           <strong>V8</strong>
           <small>对象与堆布局、指针压缩、JIT、调试和漏洞利用原语</small>
         </span>
-        <span class="home-simple__track-count">8 篇</span>
+        <span class="home-simple__track-count">11 篇</span>
         <span aria-hidden="true">→</span>
       </a>
       <a class="home-simple__track" href="jsc/">
@@ -49,7 +49,7 @@ hide:
           <strong>JavaScriptCore</strong>
           <small>JSValue、DFG / FTL、并发 JIT、Linux 复现与补丁验证</small>
         </span>
-        <span class="home-simple__track-count">5 篇</span>
+        <span class="home-simple__track-count">6 篇</span>
         <span aria-hidden="true">→</span>
       </a>
       <a class="home-simple__track" href="chakracore/">
@@ -111,7 +111,7 @@ hide:
     <div class="home-simple__articles">
       <a href="jsc/CVE-2024-23222分析/">
         <span>JSC</span>
-        <strong>CVE-2024-23222 Linux x86_64 复现与根因分析</strong>
+        <strong>CVE-2024-23222 分析</strong>
         <small>并发属性读取、stale JSCell 与主线程最终校验</small>
         <span aria-hidden="true">↗</span>
       </a>

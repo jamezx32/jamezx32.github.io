@@ -72,6 +72,9 @@ nav:
       - V8 堆的内存布局: v8/V8堆的内存布局.md
       - V8 指针压缩机制: v8/V8指针压缩机制.md
       - CVE-2021-30517分析: v8/CVE-2021-30517分析.md
+      - CVE-2021-38003分析: v8/CVE-2021-38003分析.md
+      - CVE-2024-2887分析: v8/CVE-2024-2887分析.md
+      - CVE-2024-5274分析: v8/CVE-2024-5274分析.md
       - CVE-2025-13224分析: v8/CVE-2025-13224分析.md
       - CVE-2025-12433分析: v8/CVE-2025-12433分析.md
   - JSC:
@@ -80,6 +83,7 @@ nav:
       - Linux 编译要点: jsc/JavaScriptCore Linux编译.md
       - NAN-Boxing: jsc/JavaScriptCore NAN-Boxing.md
       - Root Cause分析要点: jsc/JavaScriptCore Root Cause分析要点.md
+      - CVE-2023-41993分析: jsc/CVE-2023-41993分析.md
       - CVE-2024-23222分析: jsc/CVE-2024-23222分析.md
   - ChakraCore:
       - 总览: chakracore/index.md

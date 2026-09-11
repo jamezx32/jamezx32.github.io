@@ -17,7 +17,7 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>5</strong> 篇主题笔记</span>
+      <span><strong>6</strong> 篇主题笔记</span>
       <span><strong>DFG / FTL</strong> 优化管线</span>
       <span><strong>Linux</strong> 复现路径</span>
     </div>
@@ -58,9 +58,10 @@ hide:
         <span class="overview-path__index">03</span>
         <div>
           <span class="overview-path__label">Case Study</span>
-          <h3>并发 JIT 根因分析</h3>
-          <p>观察编译线程、主线程、GC 与优化假设之间的时序关系。</p>
+          <h3>漏洞根因分析案例</h3>
+          <p>从 DFG 优化键缺陷到并发 JIT 时序，还原从 PoC 到补丁的因果链。</p>
           <ul class="overview-link-list">
+            <li><a href="CVE-2023-41993分析/">CVE-2023-41993 完整分析</a></li>
             <li><a href="CVE-2024-23222分析/">CVE-2024-23222 完整分析</a></li>
           </ul>
         </div>
