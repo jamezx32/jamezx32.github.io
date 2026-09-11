@@ -1,74 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
   <defs>
-    <style>
-      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
-      .field { font: 500 18px Helvetica, Arial, sans-serif; fill: #101828; }
-      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
-      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
-      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
-    </style>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 Z" fill="#0b7285"/>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a13c2a"/>
+    </marker>
+    <marker id="arrI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#211d19"/>
     </marker>
   </defs>
 
-  <rect width="980" height="430" fill="#ffffff"/>
-  <text x="40" y="30" class="note">A simplified view of a JSArray whose elements are object references</text>
+  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700">let arr = [{x:1}, {y:2}, arr2]  →  PACKED_ELEMENTS</text>
 
-  <g transform="translate(40 88)">
-    <rect width="300" height="228" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="300" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="300" height="12" fill="#0b7285"/>
-    <text x="150" y="28" text-anchor="middle" class="title">JSArray</text>
-
-    <rect x="18" y="62" width="264" height="38" rx="8" fill="#eef4f7"/>
-    <rect x="18" y="108" width="264" height="38" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
-    <rect x="18" y="154" width="264" height="38" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
-    <rect x="18" y="200" width="264" height="30" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-
-    <text x="36" y="86" class="field">map</text>
-    <text x="36" y="132" class="field">properties</text>
-    <text x="36" y="178" class="field">elements pointer</text>
-    <text x="36" y="221" class="field">length</text>
+  <!-- JSArray -->
+  <g>
+    <rect x="60" y="66" width="240" height="170" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="60" y="66" width="240" height="34" fill="#211d19"/>
+    <text x="180" y="89" font-size="15.5" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray（对象头）</text>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="80" y="131">map</text>
+      <text x="80" y="167">properties</text>
+      <text x="80" y="203">elements</text>
+    </g>
+    <line x1="66" y1="142" x2="294" y2="142" stroke="#d8d2c4"/>
+    <line x1="66" y1="178" x2="294" y2="178" stroke="#d8d2c4"/>
   </g>
 
-  <g transform="translate(456 66)">
-    <rect width="270" height="272" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="270" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="270" height="12" fill="#0b7285"/>
-    <text x="135" y="28" text-anchor="middle" class="title">FixedArray</text>
+  <path d="M 196 196 C 300 196, 340 160, 416 156" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
+  <text x="238" y="152" font-size="13" fill="#a13c2a" font-weight="600">elements 指针</text>
 
-    <rect x="18" y="62" width="234" height="40" rx="8" fill="#eef4f7"/>
-    <rect x="18" y="110" width="234" height="44" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-    <rect x="18" y="162" width="234" height="44" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-    <rect x="18" y="214" width="234" height="40" rx="8" fill="#eef4f7"/>
-
-    <text x="36" y="88" class="field">map / header</text>
-    <text x="36" y="138" class="field">element[0]  ref -&gt; obj0</text>
-    <text x="36" y="190" class="field">element[1]  ref -&gt; obj1</text>
-    <text x="36" y="240" class="field">...</text>
+  <!-- FixedArray -->
+  <g>
+    <rect x="420" y="66" width="380" height="170" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="420" y="66" width="380" height="34" fill="#3f6f60"/>
+    <text x="610" y="89" font-size="15.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedArray（backing store）</text>
+    <g font-size="14" font-family="Menlo, Consolas, monospace" fill="#6f675c">
+      <text x="440" y="126">map · length = 3</text>
+    </g>
+    <line x1="426" y1="140" x2="794" y2="140" stroke="#d8d2c4"/>
+    <g font-size="13.5" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
+      <text x="500" y="176">ref →</text>
+      <text x="620" y="176">ref →</text>
+      <text x="740" y="176">ref →</text>
+    </g>
+    <g font-size="11.5" fill="#6f675c" text-anchor="middle">
+      <text x="500" y="198">slot[0] · 4 字节</text>
+      <text x="620" y="198">slot[1] · 4 字节</text>
+      <text x="740" y="198">slot[2] · 4 字节</text>
+    </g>
+    <line x1="560" y1="148" x2="560" y2="206" stroke="#d8d2c4"/>
+    <line x1="680" y1="148" x2="680" y2="206" stroke="#d8d2c4"/>
+    <text x="440" y="224" font-size="12.5" fill="#a13c2a">↑ tagged 压缩指针，GC 会扫描并更新</text>
   </g>
 
-  <g transform="translate(792 94)">
-    <rect width="148" height="104" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="148" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="148" height="12" fill="#0b7285"/>
-    <text x="74" y="28" text-anchor="middle" class="title">obj0</text>
-    <text x="28" y="84" class="field">{x: 1}</text>
+  <!-- 指向的对象 -->
+  <g>
+    <rect x="440" y="290" width="130" height="66" fill="#fbf9f4" stroke="#211d19"/>
+    <text x="505" y="318" font-size="14" fill="#211d19" text-anchor="middle" font-family="Menlo, Consolas, monospace">{ x : 1 }</text>
+    <text x="505" y="340" font-size="12" fill="#6f675c" text-anchor="middle">堆上的 JSObject</text>
+
+    <rect x="610" y="290" width="130" height="66" fill="#fbf9f4" stroke="#211d19"/>
+    <text x="675" y="318" font-size="14" fill="#211d19" text-anchor="middle" font-family="Menlo, Consolas, monospace">{ y : 2 }</text>
+    <text x="675" y="340" font-size="12" fill="#6f675c" text-anchor="middle">堆上的 JSObject</text>
+
+    <rect x="780" y="290" width="130" height="66" fill="#fbf9f4" stroke="#211d19"/>
+    <text x="845" y="318" font-size="14" fill="#211d19" text-anchor="middle" font-family="Menlo, Consolas, monospace">arr2</text>
+    <text x="845" y="340" font-size="12" fill="#6f675c" text-anchor="middle">另一个 JSArray</text>
   </g>
+  <path d="M 500 214 L 500 284" fill="none" stroke="#211d19" stroke-width="1.6" marker-end="url(#arrI)"/>
+  <path d="M 620 214 L 622 284" fill="none" stroke="#211d19" stroke-width="1.6" marker-end="url(#arrI)"/>
+  <path d="M 740 214 L 843 284" fill="none" stroke="#211d19" stroke-width="1.6" marker-end="url(#arrI)"/>
 
-  <g transform="translate(792 232)">
-    <rect width="148" height="104" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="148" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="148" height="12" fill="#0b7285"/>
-    <text x="74" y="28" text-anchor="middle" class="title">obj1</text>
-    <text x="28" y="84" class="field">{y: 2}</text>
+  <!-- 关键差异 -->
+  <g font-size="13.5" fill="#211d19">
+    <text x="60" y="316">· 槽内存 tagged value：</text>
+    <text x="80" y="340">对象 → 压缩指针（低位 1），Smi → 内联整数（低位 0）。</text>
+    <text x="60" y="376">· 指针压缩下每槽 4 字节；GC 移动对象时会改写这些槽，指针永远有效。</text>
+    <text x="60" y="404">· 利用视角：对象数组和 double 数组互相误读（4 字节指针 ↔ 8 字节 double 的错位拼合），</text>
+    <text x="80" y="428">是 addrof / fakeobj 的另一种实现路径 —— 误读一次就同时泄漏地址和伪造对象。</text>
   </g>
-
-  <line x1="340" y1="176" x2="456" y2="176" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
-  <line x1="726" y1="138" x2="792" y2="146" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
-  <line x1="726" y1="190" x2="792" y2="284" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
-
-  <rect x="320" y="352" width="360" height="44" rx="10" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
-  <text x="500" y="379" text-anchor="middle" class="callout">array slots hold references, not object bodies inline</text>
 </svg>

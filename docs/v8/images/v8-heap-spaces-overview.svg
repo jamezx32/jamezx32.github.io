@@ -1,80 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
-  <defs>
-    <style>
-      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
-      .label { font: 600 18px Helvetica, Arial, sans-serif; fill: #101828; }
-      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
-      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
-      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
-    </style>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
+  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700">V8 堆的空间划分（调试视角的简化模型）</text>
 
-  <rect width="980" height="560" fill="#ffffff"/>
-  <text x="42" y="34" class="note">A rough map of the spaces most often encountered in V8 heap analysis</text>
+  <!-- Cage 外框 -->
+  <rect x="60" y="58" width="860" height="424" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5" stroke-dasharray="none"/>
+  <rect x="60" y="58" width="860" height="30" fill="#211d19"/>
+  <text x="490" y="79" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">指针压缩 cage（4GB 地址窗口，压缩指针都指向这里）</text>
 
-  <g transform="translate(42 64)">
-    <rect width="896" height="384" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-    <text x="26" y="34" class="callout">V8 heap</text>
+  <!-- New Space -->
+  <g>
+    <rect x="88" y="112" width="380" height="150" fill="#ffffff" stroke="#3f6f60" stroke-width="1.8"/>
+    <text x="110" y="140" font-size="15" fill="#3f6f60" font-weight="700">New Space（新生代）</text>
+    <text x="110" y="162" font-size="12.5" fill="#6f675c">短命对象 · 半空间复制 GC · 对象会被搬移</text>
+    <rect x="110" y="176" width="160" height="64" fill="#fbf9f4" stroke="#3f6f60"/>
+    <text x="190" y="204" font-size="13.5" fill="#211d19" text-anchor="middle">From-Space</text>
+    <text x="190" y="224" font-size="12" fill="#6f675c" text-anchor="middle">正在分配</text>
+    <rect x="288" y="176" width="160" height="64" fill="#fbf9f4" stroke="#3f6f60"/>
+    <text x="368" y="204" font-size="13.5" fill="#211d19" text-anchor="middle">To-Space</text>
+    <text x="368" y="224" font-size="12" fill="#6f675c" text-anchor="middle">存活者复制到此</text>
+    <path d="M 272 208 L 284 208" stroke="#3f6f60" stroke-width="2"/>
+  </g>
 
-    <g transform="translate(26 58)">
-      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-      <rect width="250" height="42" rx="12" fill="#0b7285"/>
-      <rect y="30" width="250" height="12" fill="#0b7285"/>
-      <text x="125" y="28" text-anchor="middle" class="title">New Space</text>
-
-      <rect x="18" y="62" width="96" height="56" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
-      <rect x="136" y="62" width="96" height="56" rx="8" fill="#d9f0ff" stroke="#53b1fd" stroke-width="1.5"/>
-      <text x="66" y="92" text-anchor="middle" class="label">From</text>
-      <text x="184" y="92" text-anchor="middle" class="label">To</text>
-      <text x="18" y="132" class="mini">young objects / minor GC / semispace copy</text>
-    </g>
-
-    <g transform="translate(322 58)">
-      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-      <rect width="250" height="42" rx="12" fill="#0b7285"/>
-      <rect y="30" width="250" height="12" fill="#0b7285"/>
-      <text x="125" y="28" text-anchor="middle" class="title">Old Space</text>
-
-      <rect x="18" y="62" width="214" height="56" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-      <text x="36" y="92" class="label">long-lived objects</text>
-      <text x="18" y="132" class="mini">mark-sweep / mark-compact</text>
-    </g>
-
-    <g transform="translate(618 58)">
-      <rect width="250" height="138" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-      <rect width="250" height="42" rx="12" fill="#0b7285"/>
-      <rect y="30" width="250" height="12" fill="#0b7285"/>
-      <text x="125" y="28" text-anchor="middle" class="title">Large Object Space</text>
-
-      <rect x="18" y="62" width="214" height="56" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
-      <text x="36" y="92" class="label">large objects</text>
-      <text x="18" y="132" class="mini">generally not a good fit for copying GC</text>
-    </g>
-
-    <g transform="translate(98 230)">
-      <rect width="250" height="120" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-      <rect width="250" height="42" rx="12" fill="#0b7285"/>
-      <rect y="30" width="250" height="12" fill="#0b7285"/>
-      <text x="125" y="28" text-anchor="middle" class="title">Code Space</text>
-
-      <rect x="18" y="62" width="214" height="40" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-      <text x="36" y="88" class="label">builtins / JIT code / metadata</text>
-    </g>
-
-    <g transform="translate(548 230)">
-      <rect width="250" height="120" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-      <rect width="250" height="42" rx="12" fill="#0b7285"/>
-      <rect y="30" width="250" height="12" fill="#0b7285"/>
-      <text x="125" y="28" text-anchor="middle" class="title">Read-Only Space</text>
-
-      <rect x="18" y="62" width="214" height="40" rx="8" fill="#f2f4f7" stroke="#98a2b3" stroke-width="1.5"/>
-      <text x="36" y="88" class="label">shared immutable structures</text>
+  <!-- Old Space -->
+  <g>
+    <rect x="496" y="112" width="392" height="150" fill="#ffffff" stroke="#a13c2a" stroke-width="1.8"/>
+    <text x="518" y="140" font-size="15" fill="#a13c2a" font-weight="700">Old Space（老生代）</text>
+    <text x="518" y="162" font-size="12.5" fill="#6f675c">长命对象 · mark-compact · 地址相对稳定</text>
+    <g font-size="13.5" fill="#211d19">
+      <text x="518" y="196">· 新生代两次 GC 后仍存活 → 晋升到此</text>
+      <text x="518" y="222">· 碎片整理时对象仍可能搬移，但频率低</text>
+      <text x="518" y="248">· exploit 里布置的稳定结构通常放这里</text>
     </g>
   </g>
 
-  <g transform="translate(186 470)">
-    <rect width="608" height="54" rx="12" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
-    <text x="304" y="492" text-anchor="middle" class="callout">Pointer Compression</text>
-    <text x="304" y="512" text-anchor="middle" class="mini">tagged representation optimization, not a separate heap space</text>
+  <!-- Large Object Space -->
+  <g>
+    <rect x="88" y="286" width="380" height="170" fill="#ffffff" stroke="#211d19" stroke-width="1.5"/>
+    <text x="110" y="314" font-size="15" fill="#211d19" font-weight="700">Large Object Space</text>
+    <text x="110" y="336" font-size="12.5" fill="#6f675c">大对象直接分配 · 不进新生代</text>
+    <g font-size="13.5" fill="#211d19">
+      <text x="110" y="370">· 超过阈值（约 128KB~ 的对象级大块）</text>
+      <text x="110" y="396">· 不做半空间复制，标记回收</text>
+      <text x="110" y="422">· 分配后地址保持不变 → 喷射稳定</text>
+    </g>
   </g>
+
+  <!-- Code Space -->
+  <g>
+    <rect x="496" y="286" width="188" height="170" fill="#ffffff" stroke="#211d19" stroke-width="1.5"/>
+    <text x="518" y="314" font-size="15" fill="#211d19" font-weight="700">Code Space</text>
+    <text x="518" y="336" font-size="12.5" fill="#6f675c">JIT 代码与元数据</text>
+    <g font-size="13.5" fill="#211d19">
+      <text x="518" y="370">· 与 JS 对象的分配</text>
+      <text x="518" y="392">  路径隔离</text>
+      <text x="518" y="420">· 有独立写保护</text>
+    </g>
+  </g>
+
+  <!-- Read-Only Space -->
+  <g>
+    <rect x="704" y="286" width="184" height="170" fill="#ffffff" stroke="#211d19" stroke-width="1.5"/>
+    <text x="726" y="314" font-size="15" fill="#211d19" font-weight="700">Read-Only Space</text>
+    <text x="726" y="336" font-size="12.5" fill="#6f675c">共享不可变对象</text>
+    <g font-size="13.5" fill="#211d19">
+      <text x="726" y="370">· null / undefined 等</text>
+      <text x="726" y="392">  内部常量</text>
+      <text x="726" y="420">· 按只读内存对待</text>
+    </g>
+  </g>
+
+  <!-- 底注 -->
+  <text x="60" y="520" font-size="13.5" fill="#6f675c">分析要点：对象在哪个空间，决定了它会不会被搬移（地址稳定性）、被谁回收（GC 算法）、以及能否被当作可靠的利用地基。</text>
+  <text x="60" y="544" font-size="13.5" fill="#6f675c">DebugPrint 的对象地址跨 GC 变化 → 在 New Space；长期不变 → 已晋升 Old Space 或 LOS。</text>
 </svg>

@@ -1,72 +1,74 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470">
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
   <defs>
-    <style>
-      .title { font: 700 20px Helvetica, Arial, sans-serif; fill: #ffffff; }
-      .field { font: 500 18px Helvetica, Arial, sans-serif; fill: #101828; }
-      .note { font: 500 14px Helvetica, Arial, sans-serif; fill: #475467; }
-      .mini { font: 500 13px Helvetica, Arial, sans-serif; fill: #344054; }
-      .callout { font: 600 16px Helvetica, Arial, sans-serif; fill: #0c111d; }
-    </style>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 Z" fill="#0b7285"/>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6f675c"/>
     </marker>
   </defs>
 
-  <rect width="980" height="470" fill="#ffffff"/>
-  <text x="40" y="32" class="note">Common storage modes for named properties in V8</text>
+  <!-- 阶段标题 -->
+  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700">命名属性的三种存储形态（由快到慢，按需迁移）</text>
 
-  <g transform="translate(40 88)">
-    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="252" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="252" height="12" fill="#0b7285"/>
-    <text x="126" y="28" text-anchor="middle" class="title">in-object</text>
-
-    <rect x="18" y="62" width="216" height="40" rx="8" fill="#eef4f7"/>
-    <rect x="18" y="110" width="216" height="40" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-    <rect x="18" y="158" width="216" height="40" rx="8" fill="#ecfdf3" stroke="#12b76a" stroke-width="1.5"/>
-    <rect x="18" y="206" width="216" height="40" rx="8" fill="#f2f4f7"/>
-
-    <text x="36" y="88" class="field">object header</text>
-    <text x="36" y="136" class="field">prop a</text>
-    <text x="36" y="184" class="field">prop b</text>
-    <text x="36" y="232" class="field">unused slots ...</text>
+  <!-- 阶段1：in-object -->
+  <g>
+    <text x="60" y="76" font-size="14.5" fill="#a13c2a" font-weight="700">① in-object 槽位</text>
+    <text x="60" y="97" font-size="13" fill="#6f675c">对象创建时预留在头部之后</text>
+    <rect x="60" y="112" width="250" height="180" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="60" y="112" width="250" height="32" fill="#211d19"/>
+    <text x="185" y="133" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">对象头（map …）</text>
+    <line x1="66" y1="168" x2="304" y2="168" stroke="#d8d2c4"/>
+    <line x1="66" y1="216" x2="304" y2="216" stroke="#d8d2c4"/>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="80" y="194">slot0 : prop a</text>
+      <text x="80" y="242">slot1 : prop b</text>
+      <text x="80" y="280" fill="#6f675c">unused …</text>
+    </g>
   </g>
 
-  <g transform="translate(364 88)">
-    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="252" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="252" height="12" fill="#0b7285"/>
-    <text x="126" y="28" text-anchor="middle" class="title">fast properties</text>
+  <path d="M 322 202 L 356 202" fill="none" stroke="#6f675c" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="318" y="184" font-size="12.5" fill="#6f675c">槽位用尽</text>
 
-    <rect x="18" y="62" width="216" height="40" rx="8" fill="#eef4f7"/>
-    <rect x="18" y="110" width="216" height="40" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
-    <rect x="18" y="158" width="216" height="40" rx="8" fill="#fff7ed" stroke="#f79009" stroke-width="1.5"/>
-    <rect x="18" y="206" width="216" height="40" rx="8" fill="#f2f4f7"/>
-
-    <text x="36" y="88" class="field">object -&gt; properties store</text>
-    <text x="36" y="136" class="field">slot 0</text>
-    <text x="36" y="184" class="field">slot 1</text>
-    <text x="36" y="232" class="field">more capacity ...</text>
+  <!-- 阶段2：properties store -->
+  <g>
+    <text x="368" y="76" font-size="14.5" fill="#a13c2a" font-weight="700">② out-of-object 槽位</text>
+    <text x="368" y="97" font-size="13" fill="#6f675c">对象指向独立的 properties store</text>
+    <rect x="368" y="112" width="250" height="180" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="368" y="112" width="250" height="32" fill="#3f6f60"/>
+    <text x="493" y="133" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">properties store</text>
+    <line x1="374" y1="168" x2="612" y2="168" stroke="#d8d2c4"/>
+    <line x1="374" y1="216" x2="612" y2="216" stroke="#d8d2c4"/>
+    <line x1="374" y1="264" x2="612" y2="264" stroke="#d8d2c4"/>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="388" y="194">slot0 : prop a</text>
+      <text x="388" y="242">slot1 : prop b</text>
+      <text x="388" y="280">slot2 : prop c</text>
+    </g>
+    <text x="493" y="316" font-size="12.5" fill="#6f675c" text-anchor="middle">对象的 properties 指针指到这里</text>
   </g>
 
-  <g transform="translate(688 88)">
-    <rect width="252" height="266" rx="12" fill="#ffffff" stroke="#0b7285" stroke-width="2"/>
-    <rect width="252" height="42" rx="12" fill="#0b7285"/>
-    <rect y="30" width="252" height="12" fill="#0b7285"/>
-    <text x="126" y="28" text-anchor="middle" class="title">dictionary mode</text>
+  <path d="M 630 202 L 664 202" fill="none" stroke="#6f675c" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="610" y="184" font-size="12.5" fill="#6f675c">形状频繁变化 / 删除属性</text>
 
-    <rect x="18" y="62" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-    <rect x="18" y="126" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-    <rect x="18" y="190" width="216" height="56" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-
-    <text x="36" y="94" class="field">"a" -&gt; value</text>
-    <text x="36" y="158" class="field">"b" -&gt; value</text>
-    <text x="36" y="222" class="field">hash / attrs / metadata</text>
+  <!-- 阶段3：dictionary -->
+  <g>
+    <text x="676" y="76" font-size="14.5" fill="#a13c2a" font-weight="700">③ dictionary mode</text>
+    <text x="676" y="97" font-size="13" fill="#6f675c">哈希表，牺牲速度换灵活</text>
+    <rect x="676" y="112" width="250" height="180" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="676" y="112" width="250" height="32" fill="#6f675c"/>
+    <text x="801" y="133" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">字典（hash 表）</text>
+    <line x1="682" y1="168" x2="920" y2="168" stroke="#d8d2c4"/>
+    <line x1="682" y1="216" x2="920" y2="216" stroke="#d8d2c4"/>
+    <g font-size="14" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="696" y="194">hash | key | value | attrs</text>
+      <text x="696" y="242">hash | key | value | attrs</text>
+      <text x="696" y="280" fill="#6f675c">…（无固定槽位顺序）</text>
+    </g>
   </g>
 
-  <line x1="292" y1="220" x2="364" y2="220" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
-  <line x1="616" y1="220" x2="688" y2="220" stroke="#0b7285" stroke-width="4" marker-end="url(#arrow)"/>
-
-  <rect x="248" y="388" width="484" height="42" rx="10" fill="#f5fbff" stroke="#53b1fd" stroke-width="1.5"/>
-  <text x="490" y="415" text-anchor="middle" class="callout">properties may start in-object, spill to fast backing store, and eventually become dictionary-based</text>
+  <!-- 底部要点 -->
+  <line x1="60" y1="336" x2="926" y2="336" stroke="#d8d2c4"/>
+  <g font-size="13.5" fill="#211d19">
+    <text x="60" y="368">· map（隐藏类）描述 ①② 的槽位布局：形状相同 → 槽位偏移相同 → 字段访问编译成固定偏移读写。</text>
+    <text x="60" y="396">· 槽位迁移（①→②）只改指针和 map，不改已存数据；进入 ③ 后失去固定偏移，fast path 退化为查表。</text>
+    <text x="60" y="424">· 漏洞分析视角：JIT 若按旧 map 的固定偏移访问已迁入字典的对象，读写就会落到错误位置 —— 典型 type confusion 来源。</text>
+  </g>
 </svg>
