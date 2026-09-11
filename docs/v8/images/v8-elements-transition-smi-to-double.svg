@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a13c2a"/>
+    </marker>
+  </defs>
+
+  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700" font-family="Menlo, Consolas, monospace">let a = [1, 2, 3];  a.push(1.1);</text>
+  <text x="60" y="60" font-size="14" fill="#a13c2a" font-weight="700">PACKED_SMI_ELEMENTS → PACKED_DOUBLE_ELEMENTS</text>
+
+  <!-- 前：FixedArray + Smi -->
+  <g>
+    <text x="60" y="104" font-size="14" fill="#6f675c" font-weight="600">写入前</text>
+    <rect x="60" y="118" width="360" height="168" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="60" y="118" width="360" height="32" fill="#211d19"/>
+    <text x="240" y="139" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedArray（4 字节槽 · tagged）</text>
+    <g font-size="15" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
+      <text x="152" y="192">Smi 1</text>
+      <text x="252" y="192">Smi 2</text>
+      <text x="352" y="192">Smi 3</text>
+    </g>
+    <g font-size="11.5" fill="#6f675c" text-anchor="middle">
+      <text x="152" y="216">低位 0</text>
+      <text x="252" y="216">低位 0</text>
+      <text x="352" y="216">低位 0</text>
+    </g>
+    <line x1="202" y1="162" x2="202" y2="226" stroke="#d8d2c4"/>
+    <line x1="302" y1="162" x2="302" y2="226" stroke="#d8d2c4"/>
+    <text x="76" y="264" font-size="12.5" fill="#6f675c">整数内联在槽内，无指针、GC 不扫内容</text>
+  </g>
+
+  <!-- 迁移箭头 -->
+  <path d="M 436 202 L 520 202" stroke="#a13c2a" stroke-width="2.4" marker-end="url(#arr)"/>
+  <text x="478" y="180" font-size="12.5" fill="#a13c2a" text-anchor="middle" font-weight="600">写入 1.1</text>
+  <text x="478" y="232" font-size="12" fill="#6f675c" text-anchor="middle">换 map + 换仓库</text>
+
+  <!-- 后：FixedDoubleArray -->
+  <g>
+    <text x="540" y="104" font-size="14" fill="#6f675c" font-weight="600">写入后</text>
+    <rect x="540" y="118" width="380" height="168" fill="#fbf9f4" stroke="#a13c2a" stroke-width="1.8"/>
+    <rect x="540" y="118" width="380" height="32" fill="#a13c2a"/>
+    <text x="730" y="139" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedDoubleArray（8 字节槽 · raw）</text>
+    <g font-size="15" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
+      <text x="640" y="192">1.0</text>
+      <text x="730" y="192">2.0</text>
+      <text x="820" y="192">3.0</text>
+      <text x="898" y="192">1.1</text>
+    </g>
+    <g font-size="11.5" fill="#6f675c" text-anchor="middle">
+      <text x="640" y="216">位模式重编码</text>
+      <text x="730" y="216">位模式重编码</text>
+      <text x="820" y="216">位模式重编码</text>
+      <text x="898" y="216">新增槽</text>
+    </g>
+    <line x1="596" y1="162" x2="596" y2="226" stroke="#d8d2c4"/>
+    <line x1="686" y1="162" x2="686" y2="226" stroke="#d8d2c4"/>
+    <line x1="776" y1="162" x2="776" y2="226" stroke="#d8d2c4"/>
+    <line x1="862" y1="162" x2="862" y2="226" stroke="#d8d2c4"/>
+    <text x="556" y="264" font-size="12.5" fill="#6f675c">旧元素以 double 位模式重新写入新仓库</text>
+  </g>
+
+  <!-- 三点变化 -->
+  <line x1="60" y1="318" x2="920" y2="318" stroke="#d8d2c4"/>
+  <g font-size="13.5" fill="#211d19">
+    <text x="60" y="350">DebugPrint 前后能同时观察到三处变化：</text>
+    <text x="88" y="380">① map 改变 —— elements kind 记录在 map 里，SMI 数组与 double 数组不同 map；</text>
+    <text x="88" y="408">② elements 指向新分配的 FixedDoubleArray，旧 FixedArray 整体废弃；</text>
+    <text x="88" y="436">③ 内容重编码 —— 整数 1 在新仓库里是 1.0 的 IEEE 754 位模式，且此后写回整数 1 也不会降级回 SMI。</text>
+  </g>
+</svg>

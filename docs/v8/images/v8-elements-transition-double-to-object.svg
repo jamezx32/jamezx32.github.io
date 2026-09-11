@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="500" viewBox="0 0 980 500" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f6f60"/>
+    </marker>
+    <marker id="arrI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#211d19"/>
+    </marker>
+  </defs>
+
+  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700" font-family="Menlo, Consolas, monospace">a = [1.0, 2.0];  a.push({x: 1});</text>
+  <text x="60" y="60" font-size="14" fill="#3f6f60" font-weight="700">PACKED_DOUBLE_ELEMENTS → PACKED_ELEMENTS</text>
+
+  <!-- 前：FixedDoubleArray -->
+  <g>
+    <text x="60" y="104" font-size="14" fill="#6f675c" font-weight="600">写入前</text>
+    <rect x="60" y="118" width="340" height="150" fill="#fbf9f4" stroke="#a13c2a" stroke-width="1.8"/>
+    <rect x="60" y="118" width="340" height="32" fill="#a13c2a"/>
+    <text x="230" y="139" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedDoubleArray（8 字节 · raw double）</text>
+    <g font-size="15" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
+      <text x="160" y="192">1.0</text>
+      <text x="300" y="192">2.0</text>
+    </g>
+    <line x1="230" y1="162" x2="230" y2="210" stroke="#d8d2c4"/>
+    <text x="76" y="246" font-size="12.5" fill="#6f675c">槽里是裸位模式，GC 不认识也不扫描</text>
+  </g>
+
+  <!-- 迁移箭头 -->
+  <path d="M 416 194 L 500 194" stroke="#3f6f60" stroke-width="2.4" marker-end="url(#arr)"/>
+  <text x="458" y="172" font-size="12.5" fill="#3f6f60" text-anchor="middle" font-weight="600">写入对象</text>
+  <text x="458" y="224" font-size="12" fill="#6f675c" text-anchor="middle">再次换仓库</text>
+
+  <!-- 后：FixedArray -->
+  <g>
+    <text x="520" y="104" font-size="14" fill="#6f675c" font-weight="600">写入后</text>
+    <rect x="520" y="118" width="400" height="150" fill="#fbf9f4" stroke="#3f6f60" stroke-width="1.8"/>
+    <rect x="520" y="118" width="400" height="32" fill="#3f6f60"/>
+    <text x="720" y="139" font-size="14.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedArray（4 字节槽 · tagged）</text>
+    <g font-size="14" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
+      <text x="600" y="192">1.0 → Smi</text>
+      <text x="716" y="192">2.0 → Smi</text>
+      <text x="848" y="192">ref →</text>
+    </g>
+    <line x1="658" y1="162" x2="658" y2="210" stroke="#d8d2c4"/>
+    <line x1="782" y1="162" x2="782" y2="210" stroke="#d8d2c4"/>
+    <text x="536" y="246" font-size="12.5" fill="#6f675c">double 无法表示指针 → 全部转成 tagged 重新落仓</text>
+  </g>
+
+  <!-- 对象 -->
+  <g>
+    <rect x="806" y="304" width="130" height="56" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <text x="871" y="328" font-size="14" fill="#211d19" text-anchor="middle" font-family="Menlo, Consolas, monospace">{ x : 1 }</text>
+    <text x="871" y="348" font-size="12" fill="#6f675c" text-anchor="middle">堆上的 JSObject</text>
+  </g>
+  <path d="M 848 210 L 864 298" fill="none" stroke="#211d19" stroke-width="1.6" marker-end="url(#arrI)"/>
+  <text x="880" y="268" font-size="12" fill="#6f675c">对象本体在堆上，</text>
+  <text x="880" y="286" font-size="12" fill="#6f675c">槽里只存压缩指针</text>
+
+  <!-- 要点 -->
+  <line x1="60" y1="388" x2="920" y2="388" stroke="#d8d2c4"/>
+  <g font-size="13.5" fill="#211d19">
+    <text x="60" y="420">· 迁移是单向的：一旦进入对象数组，写回纯数字也回不去 double / SMI 仓库。</text>
+    <text x="60" y="448">· 槽位语义彻底改变（raw double ↔ tagged 指针）：GC 开始扫描并改写这些槽；</text>
+    <text x="60" y="476">  若优化代码仍按旧仓库的槽宽 / 语义访问 —— 8 字节 double 与 4 字节指针的错位拼合，就是 addrof / fakeobj 的温床。</text>
+  </g>
+</svg>
