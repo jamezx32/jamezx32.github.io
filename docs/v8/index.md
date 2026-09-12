@@ -17,8 +17,8 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>11</strong> 篇主题笔记</span>
-      <span><strong>6</strong> 个 CVE 案例</span>
+      <span><strong>13</strong> 篇主题笔记</span>
+      <span><strong>7</strong> 个 CVE 案例</span>
       <span><strong>4</strong> 个核心方向</span>
     </div>
   </header>
@@ -40,6 +40,7 @@ hide:
             <li><a href="V8 数组的内存布局/">V8 数组的内存布局</a></li>
             <li><a href="V8堆的内存布局/">V8 堆的内存布局</a></li>
             <li><a href="V8指针压缩机制/">V8 指针压缩机制</a></li>
+            <li><a href="V8沙箱机制/">V8 沙箱机制</a></li>
           </ul>
         </div>
       </article>
@@ -67,6 +68,7 @@ hide:
             <li><a href="CVE-2024-2887分析/">CVE-2024-2887</a></li>
             <li><a href="CVE-2024-5274分析/">CVE-2024-5274</a></li>
             <li><a href="CVE-2025-12433分析/">CVE-2025-12433</a></li>
+            <li><a href="CVE-2025-12429分析/">CVE-2025-12429</a></li>
             <li><a href="CVE-2025-13224分析/">CVE-2025-13224</a></li>
           </ul>
         </div>

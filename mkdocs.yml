@@ -71,12 +71,14 @@ nav:
       - V8 数组的内存布局: v8/V8 数组的内存布局.md
       - V8 堆的内存布局: v8/V8堆的内存布局.md
       - V8 指针压缩机制: v8/V8指针压缩机制.md
+      - V8 沙箱机制: v8/V8沙箱机制.md
       - CVE-2021-30517分析: v8/CVE-2021-30517分析.md
       - CVE-2021-38003分析: v8/CVE-2021-38003分析.md
       - CVE-2024-2887分析: v8/CVE-2024-2887分析.md
       - CVE-2024-5274分析: v8/CVE-2024-5274分析.md
       - CVE-2025-13224分析: v8/CVE-2025-13224分析.md
       - CVE-2025-12433分析: v8/CVE-2025-12433分析.md
+      - CVE-2025-12429分析: v8/CVE-2025-12429分析.md
   - JSC:
       - 总览: jsc/index.md
       - 调试参数: jsc/JavaScriptCore调试参数.md
@@ -85,6 +87,7 @@ nav:
       - Root Cause分析要点: jsc/JavaScriptCore Root Cause分析要点.md
       - 库基址泄露: jsc/JavaScriptCore 库基址泄露.md
       - 调用约定与寄存器: jsc/调用约定与寄存器.md
+      - ROP 链: jsc/JavaScriptCore ROP 链.md
       - CVE-2023-41993分析: jsc/CVE-2023-41993分析.md
       - CVE-2024-23222分析: jsc/CVE-2024-23222分析.md
   - ChakraCore:

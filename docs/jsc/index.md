@@ -17,7 +17,7 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>8</strong> 篇主题笔记</span>
+      <span><strong>9</strong> 篇主题笔记</span>
       <span><strong>DFG / FTL</strong> 优化管线</span>
       <span><strong>Linux</strong> 复现路径</span>
     </div>
@@ -75,6 +75,7 @@ hide:
           <ul class="overview-link-list">
             <li><a href="JavaScriptCore 库基址泄露/">JavaScriptCore 库基址泄露</a></li>
             <li><a href="调用约定与寄存器/">调用约定与寄存器</a></li>
+            <li><a href="JavaScriptCore ROP 链/">ROP 链</a></li>
           </ul>
         </div>
       </article>
