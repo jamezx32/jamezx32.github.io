@@ -17,7 +17,7 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>6</strong> 篇主题笔记</span>
+      <span><strong>8</strong> 篇主题笔记</span>
       <span><strong>DFG / FTL</strong> 优化管线</span>
       <span><strong>Linux</strong> 复现路径</span>
     </div>
@@ -63,6 +63,18 @@ hide:
           <ul class="overview-link-list">
             <li><a href="CVE-2023-41993分析/">CVE-2023-41993 完整分析</a></li>
             <li><a href="CVE-2024-23222分析/">CVE-2024-23222 完整分析</a></li>
+          </ul>
+        </div>
+      </article>
+      <article class="overview-path__step">
+        <span class="overview-path__index">04</span>
+        <div>
+          <span class="overview-path__label">Exploitation</span>
+          <h3>利用基础</h3>
+          <p>从原语走向 ROP：库基址泄露、调用约定与寄存器的命令行工作流。</p>
+          <ul class="overview-link-list">
+            <li><a href="JavaScriptCore 库基址泄露/">JavaScriptCore 库基址泄露</a></li>
+            <li><a href="调用约定与寄存器/">调用约定与寄存器</a></li>
           </ul>
         </div>
       </article>

@@ -83,6 +83,8 @@ nav:
       - Linux 编译要点: jsc/JavaScriptCore Linux编译.md
       - NAN-Boxing: jsc/JavaScriptCore NAN-Boxing.md
       - Root Cause分析要点: jsc/JavaScriptCore Root Cause分析要点.md
+      - 库基址泄露: jsc/JavaScriptCore 库基址泄露.md
+      - 调用约定与寄存器: jsc/调用约定与寄存器.md
       - CVE-2023-41993分析: jsc/CVE-2023-41993分析.md
       - CVE-2024-23222分析: jsc/CVE-2024-23222分析.md
   - ChakraCore:
