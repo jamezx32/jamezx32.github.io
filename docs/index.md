@@ -21,7 +21,7 @@ hide:
       <span>V8</span>
       <span>JavaScriptCore</span>
       <span>ChakraCore</span>
-      <span>25 篇研究笔记</span>
+      <span>23 篇研究笔记</span>
     </div>
   </header>
 
