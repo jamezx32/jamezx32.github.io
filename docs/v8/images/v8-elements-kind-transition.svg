@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="736" viewBox="0 0 1060 736" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a13c2a"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="34" font-size="17" fill="#211d19" font-weight="700">let a = [1, 2, 3];  a.push(1.1);  a.push({})  →  仓库形态与编码的三步变化</text>
+
+  <!-- ===== 列 1：PACKED_SMI ===== -->
+  <text x="180" y="72" font-size="15.5" fill="#a13c2a" font-weight="700" text-anchor="middle">PACKED_SMI_ELEMENTS</text>
+  <g>
+    <rect x="40" y="86" width="280" height="160" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="40" y="86" width="280" height="32" fill="#211d19"/>
+    <text x="180" y="107" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray · 共 16 字节</text>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="58" y="144">map</text>
+      <text x="58" y="174">properties</text>
+      <text x="58" y="204">elements</text>
+      <text x="58" y="234">length = 3</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="304" y="144">4B 压缩指针</text>
+      <text x="304" y="174">4B</text>
+      <text x="304" y="204">4B</text>
+      <text x="304" y="234">4B Smi</text>
+    </g>
+    <line x1="46" y1="152" x2="314" y2="152" stroke="#d8d2c4"/>
+    <line x1="46" y1="182" x2="314" y2="182" stroke="#d8d2c4"/>
+    <line x1="46" y1="212" x2="314" y2="212" stroke="#d8d2c4"/>
+  </g>
+  <path d="M 180 246 L 180 292" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
+  <text x="190" y="274" font-size="12.5" fill="#a13c2a" font-weight="600">elements 指针</text>
+  <g>
+    <rect x="40" y="296" width="280" height="222" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="40" y="296" width="280" height="32" fill="#a13c2a"/>
+    <text x="180" y="317" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedArray · 每格 4 字节 tagged</text>
+    <g font-size="13.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="58" y="350">map · 4B</text>
+      <text x="58" y="374">length = 3（容量）· 4B</text>
+    </g>
+    <line x1="46" y1="384" x2="314" y2="384" stroke="#d8d2c4"/>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="58" y="407">Smi 1</text>
+      <text x="58" y="443">Smi 2</text>
+      <text x="58" y="479">Smi 3</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="304" y="407">slot[0] · 4 字节</text>
+      <text x="304" y="443">slot[1] · 4 字节</text>
+      <text x="304" y="479">slot[2] · 4 字节</text>
+    </g>
+    <line x1="46" y1="420" x2="314" y2="420" stroke="#d8d2c4"/>
+    <line x1="46" y1="456" x2="314" y2="456" stroke="#d8d2c4"/>
+    <text x="58" y="508" font-size="12.5" fill="#a13c2a">低位 0：Smi 编码（槽里的数 = 数值 ×2）</text>
+  </g>
+
+  <!-- ===== 迁移箭头 1 ===== -->
+  <path d="M 326 440 L 384 440" fill="none" stroke="#a13c2a" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="355" y="410" font-size="15" fill="#211d19" font-weight="700" text-anchor="middle">a.push(1.1)</text>
+  <text x="355" y="466" font-size="12.5" fill="#6f675c" text-anchor="middle">换 map · 换 store</text>
+  <text x="355" y="484" font-size="12.5" fill="#6f675c" text-anchor="middle">Smi → 裸 double 位模式</text>
+
+  <!-- ===== 列 2：PACKED_DOUBLE ===== -->
+  <text x="530" y="72" font-size="15.5" fill="#a13c2a" font-weight="700" text-anchor="middle">PACKED_DOUBLE_ELEMENTS</text>
+  <g>
+    <rect x="390" y="86" width="280" height="160" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="390" y="86" width="280" height="32" fill="#211d19"/>
+    <text x="530" y="107" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray · 共 16 字节</text>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="408" y="144">map′</text>
+      <text x="408" y="174">properties</text>
+      <text x="408" y="204">elements′</text>
+      <text x="408" y="234">length = 4</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="654" y="144">4B（kind 已变）</text>
+      <text x="654" y="174">4B</text>
+      <text x="654" y="204">4B（指向新仓库）</text>
+      <text x="654" y="234">4B Smi</text>
+    </g>
+    <line x1="396" y1="152" x2="664" y2="152" stroke="#d8d2c4"/>
+    <line x1="396" y1="182" x2="664" y2="182" stroke="#d8d2c4"/>
+    <line x1="396" y1="212" x2="664" y2="212" stroke="#d8d2c4"/>
+  </g>
+  <path d="M 530 246 L 530 292" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
+  <g>
+    <rect x="390" y="296" width="280" height="306" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="390" y="296" width="280" height="32" fill="#a13c2a"/>
+    <text x="530" y="317" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedDoubleArray · 每格 8 字节裸 double</text>
+    <g font-size="13.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="408" y="350">map · 4B</text>
+      <text x="408" y="374">length = 4（容量）· 4B</text>
+    </g>
+    <line x1="396" y1="384" x2="664" y2="384" stroke="#d8d2c4"/>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="408" y="413">1.0</text>
+      <text x="408" y="461">2.0</text>
+      <text x="408" y="509">3.0</text>
+      <text x="408" y="557">1.1</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="654" y="413">slot[0] · 8 字节</text>
+      <text x="654" y="461">slot[1] · 8 字节</text>
+      <text x="654" y="509">slot[2] · 8 字节</text>
+      <text x="654" y="557">slot[3] · 8 字节</text>
+    </g>
+    <line x1="396" y1="432" x2="664" y2="432" stroke="#d8d2c4"/>
+    <line x1="396" y1="480" x2="664" y2="480" stroke="#d8d2c4"/>
+    <line x1="396" y1="528" x2="664" y2="528" stroke="#d8d2c4"/>
+    <text x="408" y="590" font-size="12.5" fill="#a13c2a">raw IEEE 754 位模式：无 tag、GC 不扫描</text>
+  </g>
+
+  <!-- ===== 迁移箭头 2 ===== -->
+  <path d="M 676 440 L 734 440" fill="none" stroke="#a13c2a" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="705" y="410" font-size="15" fill="#211d19" font-weight="700" text-anchor="middle">a.push({})</text>
+  <text x="705" y="466" font-size="12.5" fill="#6f675c" text-anchor="middle">换 map · 换 store</text>
+  <text x="705" y="484" font-size="12.5" fill="#6f675c" text-anchor="middle">double 装箱成 HN 指针</text>
+
+  <!-- ===== 列 3：PACKED ===== -->
+  <text x="880" y="72" font-size="15.5" fill="#a13c2a" font-weight="700" text-anchor="middle">PACKED_ELEMENTS</text>
+  <g>
+    <rect x="740" y="86" width="280" height="160" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="740" y="86" width="280" height="32" fill="#211d19"/>
+    <text x="880" y="107" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray · 共 16 字节</text>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="758" y="144">map″</text>
+      <text x="758" y="174">properties</text>
+      <text x="758" y="204">elements″</text>
+      <text x="758" y="234">length = 5</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="1004" y="144">4B（kind 已变）</text>
+      <text x="1004" y="174">4B</text>
+      <text x="1004" y="204">4B（指向新仓库）</text>
+      <text x="1004" y="234">4B Smi</text>
+    </g>
+    <line x1="746" y1="152" x2="1014" y2="152" stroke="#d8d2c4"/>
+    <line x1="746" y1="182" x2="1014" y2="182" stroke="#d8d2c4"/>
+    <line x1="746" y1="212" x2="1014" y2="212" stroke="#d8d2c4"/>
+  </g>
+  <path d="M 880 246 L 880 292" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
+  <g>
+    <rect x="740" y="296" width="280" height="294" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="740" y="296" width="280" height="32" fill="#a13c2a"/>
+    <text x="880" y="317" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedArray · 每格 4 字节 tagged</text>
+    <g font-size="13.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="758" y="350">map · 4B</text>
+      <text x="758" y="374">length = 5（容量）· 4B</text>
+    </g>
+    <line x1="746" y1="384" x2="1014" y2="384" stroke="#d8d2c4"/>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="758" y="407">→ HN(1.0)</text>
+      <text x="758" y="443">→ HN(2.0)</text>
+      <text x="758" y="479">→ HN(3.0)</text>
+      <text x="758" y="515">→ HN(1.1)</text>
+      <text x="758" y="551">→ {}</text>
+    </g>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="1004" y="407">slot[0] · 4 字节</text>
+      <text x="1004" y="443">slot[1] · 4 字节</text>
+      <text x="1004" y="479">slot[2] · 4 字节</text>
+      <text x="1004" y="515">slot[3] · 4 字节</text>
+      <text x="1004" y="551">slot[4] · 4 字节</text>
+    </g>
+    <line x1="746" y1="420" x2="1014" y2="420" stroke="#d8d2c4"/>
+    <line x1="746" y1="456" x2="1014" y2="456" stroke="#d8d2c4"/>
+    <line x1="746" y1="492" x2="1014" y2="492" stroke="#d8d2c4"/>
+    <line x1="746" y1="528" x2="1014" y2="528" stroke="#d8d2c4"/>
+    <text x="758" y="578" font-size="12.5" fill="#a13c2a">低位 1：压缩指针；HN = HeapNumber</text>
+  </g>
+
+  <!-- ===== 页脚要点 ===== -->
+  <line x1="40" y1="632" x2="1020" y2="632" stroke="#d8d2c4"/>
+  <g font-size="13.5" fill="#211d19">
+    <text x="40" y="662">· JSArray 头固定 16 字节；迁移变的是两处——map（elements kind 记在 map 里）与 elements 指针（整仓搬进新仓库）。</text>
+    <text x="40" y="688">· 只升不降：SMI 的"不装箱、免写屏障"等优化假设只在承诺成立时安全；降级会让这些假设踩在还躺着的指针上。</text>
+    <text x="40" y="714">· 唯一合法的"降级"是 fill 这类全量覆盖：SMI 与 OBJECT 共用 FixedArray，只换 map、不搬仓库。装箱后的 HeapNumber = map 4B + value 8B。</text>
+  </g>
+</svg>
