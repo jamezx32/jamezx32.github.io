@@ -17,7 +17,7 @@ hide:
       </div>
     </div>
     <div class="overview-hero__facts">
-      <span><strong>9</strong> 篇主题笔记</span>
+      <span><strong>8</strong> 篇主题笔记</span>
       <span><strong>DFG / FTL</strong> 优化管线</span>
       <span><strong>Linux</strong> 复现路径</span>
     </div>
@@ -71,11 +71,10 @@ hide:
         <div>
           <span class="overview-path__label">Exploitation</span>
           <h3>利用基础</h3>
-          <p>从原语走向 ROP：库基址泄露、调用约定与寄存器的命令行工作流。</p>
+          <p>从原语走向代码执行：库基址泄露与调用约定的命令行工作流。</p>
           <ul class="overview-link-list">
             <li><a href="JavaScriptCore 库基址泄露/">JavaScriptCore 库基址泄露</a></li>
             <li><a href="调用约定与寄存器/">调用约定与寄存器</a></li>
-            <li><a href="JavaScriptCore ROP 链/">ROP 链</a></li>
           </ul>
         </div>
       </article>

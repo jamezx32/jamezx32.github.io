@@ -49,7 +49,7 @@ hide:
           <strong>JavaScriptCore</strong>
           <small>JSValue、DFG / FTL、并发 JIT、Linux 复现与补丁验证</small>
         </span>
-        <span class="home-simple__track-count">9 篇</span>
+        <span class="home-simple__track-count">8 篇</span>
         <span aria-hidden="true">→</span>
       </a>
       <a class="home-simple__track" href="chakracore/">
