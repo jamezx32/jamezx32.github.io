@@ -1,66 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="440" viewBox="0 0 980 440" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="580" viewBox="0 0 900 580" font-family="'Helvetica Neue', Helvetica, Arial, 'PingFang SC', sans-serif">
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#a13c2a"/>
     </marker>
   </defs>
 
-  <text x="60" y="34" font-size="17" fill="#211d19" font-weight="700">let arr = [1.1, 2.2, 3.3]  →  PACKED_DOUBLE_ELEMENTS</text>
+  <text x="40" y="34" font-size="17" fill="#211d19" font-weight="700">let arr = [1.1, 2.2, 3.3]  →  PACKED_DOUBLE_ELEMENTS</text>
 
   <!-- JSArray -->
   <g>
-    <rect x="60" y="66" width="260" height="200" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
-    <rect x="60" y="66" width="260" height="34" fill="#211d19"/>
-    <text x="190" y="89" font-size="15.5" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray（对象头）</text>
+    <rect x="40" y="66" width="260" height="160" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="40" y="66" width="260" height="32" fill="#211d19"/>
+    <text x="170" y="87" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">JSArray · 共 16 字节</text>
     <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
-      <text x="80" y="131">map</text>
-      <text x="80" y="173">properties</text>
-      <text x="80" y="215">elements ──┐</text>
-      <text x="80" y="251">length = 3</text>
+      <text x="58" y="144">map</text>
+      <text x="58" y="174">properties</text>
+      <text x="58" y="204">elements</text>
+      <text x="58" y="234">length = 3</text>
     </g>
-    <line x1="66" y1="142" x2="314" y2="142" stroke="#d8d2c4"/>
-    <line x1="66" y1="184" x2="314" y2="184" stroke="#d8d2c4"/>
-    <line x1="66" y1="226" x2="314" y2="226" stroke="#d8d2c4"/>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="284" y="144">4B 压缩指针</text>
+      <text x="284" y="174">4B</text>
+      <text x="284" y="204">4B</text>
+      <text x="284" y="234">4B Smi</text>
+    </g>
+    <line x1="46" y1="152" x2="294" y2="152" stroke="#d8d2c4"/>
+    <line x1="46" y1="182" x2="294" y2="182" stroke="#d8d2c4"/>
+    <line x1="46" y1="212" x2="294" y2="212" stroke="#d8d2c4"/>
   </g>
 
-  <!-- 箭头 -->
-  <path d="M 214 208 C 330 200, 360 176, 436 172" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
-  <text x="252" y="166" font-size="13" fill="#a13c2a" font-weight="600">elements 指针</text>
+  <!-- elements 指针箭头 -->
+  <path d="M 250 210 C 330 200, 350 170, 396 150" fill="none" stroke="#a13c2a" stroke-width="2.2" marker-end="url(#arr)"/>
+  <text x="286" y="166" font-size="12.5" fill="#a13c2a" font-weight="600">elements 指针</text>
 
   <!-- FixedDoubleArray -->
   <g>
-    <rect x="440" y="66" width="480" height="200" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
-    <rect x="440" y="66" width="480" height="34" fill="#a13c2a"/>
-    <text x="680" y="89" font-size="15.5" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedDoubleArray（backing store）</text>
-
-    <!-- 头部字段 -->
-    <g font-size="14" font-family="Menlo, Consolas, monospace" fill="#6f675c">
-      <text x="460" y="126">map</text>
-      <text x="460" y="158">length = 3</text>
+    <rect x="400" y="66" width="460" height="484" fill="#fbf9f4" stroke="#211d19" stroke-width="1.5"/>
+    <rect x="400" y="66" width="460" height="32" fill="#a13c2a"/>
+    <text x="630" y="87" font-size="15" fill="#f4efe4" text-anchor="middle" font-weight="600">FixedDoubleArray（backing store）</text>
+    <g font-size="13.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="420" y="120">map · 4B</text>
+      <text x="420" y="144">length = 3（容量）· 4B</text>
     </g>
-    <line x1="446" y1="172" x2="914" y2="172" stroke="#d8d2c4"/>
+    <line x1="406" y1="156" x2="854" y2="156" stroke="#d8d2c4"/>
 
-    <!-- 数据槽 -->
-    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19" text-anchor="middle">
-      <text x="570" y="206">1.1</text>
-      <text x="710" y="206">2.2</text>
-      <text x="850" y="206">3.3</text>
+    <g font-size="14.5" font-family="Menlo, Consolas, monospace" fill="#211d19">
+      <text x="420" y="185">1.1</text>
+      <text x="420" y="229">2.2</text>
+      <text x="420" y="273">3.3</text>
     </g>
-    <g font-size="12" fill="#6f675c" text-anchor="middle">
-      <text x="570" y="230">slot[0] · 8 字节</text>
-      <text x="710" y="230">slot[1] · 8 字节</text>
-      <text x="850" y="230">slot[2] · 8 字节</text>
+    <g font-size="12.5" fill="#6f675c" text-anchor="end">
+      <text x="840" y="185">slot[0] · 8 字节</text>
+      <text x="840" y="229">slot[1] · 8 字节</text>
+      <text x="840" y="273">slot[2] · 8 字节</text>
     </g>
-    <line x1="640" y1="180" x2="640" y2="240" stroke="#d8d2c4"/>
-    <line x1="780" y1="180" x2="780" y2="240" stroke="#d8d2c4"/>
-    <text x="460" y="252" font-size="12.5" fill="#a13c2a">↑ raw double，不是 tagged value</text>
-  </g>
-
-  <!-- 关键差异 -->
-  <line x1="60" y1="300" x2="920" y2="300" stroke="#d8d2c4"/>
-  <g font-size="13.5" fill="#211d19">
-    <text x="60" y="332">· 槽内存的是裸的 IEEE 754 双精度位模式：JS 层写入什么 double，内存里就是什么字节。</text>
-    <text x="60" y="360">· 没有指针语义 → GC 不会扫描这些槽；也因此，从 JS 能精确控制连续 8 字节的内容。</text>
-    <text x="60" y="388">· 利用视角：把地址按 double 写进这里，再用对象引用去解释同一块内存，就是 fakeobj / addrof 的经典舞台（见 CVE-2021-30517）。</text>
+    <line x1="406" y1="200" x2="854" y2="200" stroke="#d8d2c4"/>
+    <line x1="406" y1="244" x2="854" y2="244" stroke="#d8d2c4"/>
+    <text x="420" y="316" font-size="12.5" fill="#a13c2a">raw IEEE 754 位模式：无 tag、GC 不扫描</text>
+    <text x="420" y="340" font-size="12.5" fill="#a13c2a">JS 层写入什么 double，内存里就是什么字节</text>
   </g>
 </svg>
