@@ -12,7 +12,7 @@ description: 在 JSC 利用中泄露 libJavaScriptCore.so 与 libc.so 的基址�
 运行时地址 = 库的加载基址（每次启动随机） + 目标在库内的静态偏移（固定）
 ```
 
-ASLR 决定了基址必须运行时泄露，静态偏移可以离线求解。这套方法我在 Safari 11.0.1 / 11.0.2（Ubuntu 20.04 x86-64）上完整走通：
+ASLR 决定了基址必须运行时泄露，静态偏移可以离线求解。除了符号（`system` 等），gadget 没有符号名——它的偏移要从可执行段里按字节搜索，选哪个 gadget、怎么搜、踩哪些坑，一并收录在本文的「gadget 偏移」一节。这套方法我在 Safari 11.0.1 / 11.0.2（Ubuntu 20.04 x86-64）上完整走通：
 
 - **泄露链**：`describe()` 拿 Structure 地址 → `read64` 读 Structure 里的 anchor 指针 → libJSC 基址 → 减一个版本常量 delta → libc 基址；
 - **偏移量取**：delta 用 gdb 量、anchor 偏移用 `/proc/PID/mem` 探测，anchor 消失时换原生函数链；
@@ -39,7 +39,7 @@ $ nm -D /lib/x86_64-linux-gnu/libc.so.6 | grep -E " (T|W) (system|__libc_system)
 0000000000052290 W system        # → system = libc + 0x52290
 ```
 
-**字节偏移**——gadget 没有符号，要在可执行段里搜字节序列。正确做法是解析 ELF program headers、只扫 `PT_LOAD + PF_X` 段（数据段里的同款字节跳进去不可执行）。例如 `pop rdi ; ret` 的编码是 `5f c3`，在 glibc 2.31 里落在 `0x23b6a`；结果用 ROPgadget 的完整 dump 交叉验证。
+**字节偏移**——gadget 没有符号，要在可执行段里搜字节序列（选哪个 gadget、怎么搜、踩哪些坑，详见下文「gadget 偏移」一节）。例如 `pop rdi ; ret` 的编码是 `5f c3`，在 glibc 2.31 里落在 `0x23b6a`。
 
 由此得到整个利用的分工原则：**静态脚本做搜索，exp 只做地址计算**——生成期把所有偏移解出来写死成常量，运行期拿到泄露的基址后只做一次 `base + offset` 加法，不做任何内存扫描。这样 exp 里需要"动态"的部分被压缩到最小的泄露链本身。
 
@@ -130,6 +130,35 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 - **libc 没有这个问题**——`ldd` 对 debug/release 引擎解析到的是同一个 `/lib/x86_64-linux-gnu/libc.so.6`，偏移天然与构建无关。这是 gadget 和 `system` 都从 libc 拿、不从 libJSC 拿的另一个理由（第一个理由是 libc 里 gadget 密度更高）；
 - 量偏移的脚本要显式接收引擎路径参数，避免"量的是 A 构建、跑的是 B 构建"的静默错位——两个构建下跑一遍、输出应当一致（libc 类）或明确记录来源（libJSC 类）。
 
+## gadget 偏移：选型与搜索
+
+符号表里只有函数（`system`、`execve`），gadget 是"落在指令流中间的字节序列"，没有符号可查——它的偏移要自己搜。搜索之前先选目标：选哪个 gadget，直接决定后面整条链的稳定性。
+
+### 候选淘汰（glibc 2.31 实测）
+
+最初设想的是最顺手的 `call reg ; ret`，三重验证把它淘汰掉的过程本身就是一课：
+
+- ROPgadget 对 glibc-2.31 的完整 dump（10 万行）：`grep -E "call r[a-z0-9]+ ; ret"` → **0 条**；
+- 自写字节扫描器（解析 ELF program headers，只扫 `PT_LOAD + PF_X` 段）：`ff d0 c3`（call rax）、`ff d1`（rcx）、`ff d2`（rdx）、`ff d6`（rsi）、`ff 10 c3`（call [rax]）……全部 NOT FOUND；
+- libJavaScriptCore.so（16MB 代码段）和 jsc 主程序里同样没有 call 家族。
+
+| 候选 | 结论 |
+| --- | --- |
+| `call reg ; ret` | glibc 2.31 里**一条都不存在**（dump + 字节扫描双确认），淘汰 |
+| `jmp reg`（如 `jmp rax` @ 0x23eba） | 存在，但 jmp 不 push 返回地址，被调函数入口 `rsp ≡ 0 (mod 16)`，glibc 内部的 `movaps` 对齐访问直接 SIGSEGV——淘汰的主因是这个对齐缺陷 |
+| libJSC 里的 `call rax ; add rsp,8 ; ret` @ 0x2e9694 | 偏移来自 debug 构建就对 release 无效（两个完全不同的二进制，见上节），淘汰 |
+| **`pop rdi ; ret`** | **选用**：libc 里真实存在（0x23b6a）；语义唯一（只有 `5f c3` 一种 2 字节形态），不需要运行时读字节验证；对齐路径确定 |
+
+除"能找到"之外还有两个主动理由：选 `ret` 结尾的 gadget（而不是裸 `jmp reg`）让**栈上数据驱动控制流**成为可能——第一个参数的装载和被调函数的分发都由 gadget 从栈上完成；且 `pop rdi ; ret` 是所有二进制里最普遍的 gadget，换 libc 版本基本必然还在，可移植性最好。附带收益：它的 2 字节形态唯一，不需要运行时读 gadget 字节做家族判断——若选 jmp 型，就得为 call/jmp 两族相反的垫片方向引入运行时字节检测，而"运行时精确读代码字节"恰好会撞上上面的 read64 精度边界。
+
+### 搜索的正确姿势
+
+ gadget 偏移的搜索有一条纪律：**解析 ELF program headers、只扫 `PT_LOAD + PF_X` 段**——数据段里的同款字节跳进去不可执行，搜到了也是假的。验证用双通道：自写字节扫描器的结果与 `ROPgadget --binary` 的完整 dump 交叉比对（0x23b6a 两边一致）。
+
+`system` 一类符号的偏移则用 `nm -D` 从动态符号表解析。注意输出可能带版本后缀（`system@@GLIBC_2.2.5`），比较符号名时按第一个 `@` 截断；`system` 与 `__libc_system` 是同一地址。**符号偏移和 gadget 偏移都是 libc 的属性**——`ldd` 对任何引擎解析到的都是同一个 libc，所以这些偏移与用哪个构建的 jsc 无关（这正好避开上一节的 debug/release 坑）。
+
+一个值得记录的选型教训：libJSC 里不是没有更"顺理成章"的候选（如 `call rax ; add rsp,8 ; ret`），但它随引擎构建变化，而 gadget 需求与引擎无关——**能从 libc 拿的偏移绝不去 libJSC 拿**，这与泄露链"delta 之外不引入 libJSC 偏移"的思路一脉相承。
+
 ## 工具箱
 
 | 目的 | 命令 |
@@ -141,10 +170,12 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 | 真实运行时布局 | exp 自旋 → 读 `/proc/PID/maps`、`/proc/PID/mem` |
 | ELF 头确认 | `xxd -l 16 <lib>`（注意 OSABI=3） |
 | gadget 全量 dump | `ROPgadget --binary <lib>`（与自写字节扫描器交叉验证） |
+| gadget 字节扫描 | 解析 program headers → 只扫 `PT_LOAD+PF_X` 段（如 `5f c3` = `pop rdi ; ret`） |
 
 ## 相关阅读
 
-- [调用约定与寄存器](调用约定与寄存器.md)：拿到基址之后布置 ROP 链、理解 `pop rdi` 与栈对齐的底层规则。
+- [调用约定与寄存器](调用约定与寄存器.md)：拿到基址与 gadget 之后布置调用链、理解 `pop rdi` 与栈对齐的底层规则。
+- [CVE-2024-23222 分析](CVE-2024-23222分析.md)：同一套调试环境下的 JSC 案例。
 - [CVE-2023-41993 分析](CVE-2023-41993分析.md)：`describe()`、Structure 字段表与 GetterSetter 泄漏——本文泄露链的起点对象。
 - [CVE-2024-23222 分析](CVE-2024-23222分析.md)：JSC DFG 并发 JIT 案例，同一套调试环境。
 - [JavaScriptCore 调试参数](JavaScriptCore调试参数.md)：`describe()` 输出与调试开关汇总。
