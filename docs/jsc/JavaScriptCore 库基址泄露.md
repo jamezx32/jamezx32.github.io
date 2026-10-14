@@ -148,4 +148,4 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 - [CVE-2023-41993 分析](CVE-2023-41993分析.md)：`describe()`、Structure 字段表与 GetterSetter 泄漏——本文泄露链的起点对象。
 - [CVE-2024-23222 分析](CVE-2024-23222分析.md)：JSC DFG 并发 JIT 案例，同一套调试环境。
 - [JavaScriptCore 调试参数](JavaScriptCore调试参数.md)：`describe()` 输出与调试开关汇总。
-- [V8 调试手册](../v8/V8调试手册.md)：V8 侧对应的 `%DebugPrint` 与 gdb 工作流。
+- [V8 调试手册](../v8/V8 调试手册.md)：V8 侧对应的 `%DebugPrint` 与 gdb 工作流。

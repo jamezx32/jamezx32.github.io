@@ -13,7 +13,7 @@ hide:
       <p class="overview-hero__summary">从对象表示和堆布局开始，连接到调试工具、JIT 行为与真实漏洞案例。这里是当前内容最完整的一条研究路线。</p>
       <div class="overview-hero__actions">
         <a class="overview-button overview-button--primary" href="V8 数组的内存布局/">从对象布局开始</a>
-        <a class="overview-button" href="V8调试手册/">打开调试手册</a>
+        <a class="overview-button" href="V8 调试手册/">打开调试手册</a>
       </div>
     </div>
     <div class="overview-hero__facts">
@@ -52,7 +52,7 @@ hide:
           <p>把静态结构连接到 bytecode、优化阶段和运行时现场。</p>
           <ul class="overview-link-list">
             <li><a href="jit/">V8 JIT 基础</a></li>
-            <li><a href="V8调试手册/">V8 调试手册</a></li>
+            <li><a href="V8 调试手册/">V8 调试手册</a></li>
           </ul>
         </div>
       </article>
@@ -82,7 +82,7 @@ hide:
       <h2>重点文章</h2>
     </header>
     <div class="overview-article-grid">
-      <a class="overview-article" href="V8调试手册/">
+      <a class="overview-article" href="V8 调试手册/">
         <span class="overview-article__type">Handbook</span>
         <strong>V8 调试手册</strong>
         <p>构建、内部函数、断点与常用观察入口。</p>
