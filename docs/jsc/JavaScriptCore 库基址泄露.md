@@ -1,12 +1,12 @@
 ---
-description: 在 JSC 利用中泄露 libJavaScriptCore.so 与 libc.so 的基址：Structure anchor 链、gdb 量 delta、/proc 探测量 anchor、ELF 头自校验与 debug/release 的坑。
+description: 在 JSC 利用中获取运行时地址：泄露 libJavaScriptCore.so 与 libc 基址（Structure anchor 链、gdb 量 delta、/proc 探测、ELF 自校验），以及 gadget 偏移的选型与字节搜索。
 ---
 
 # JavaScriptCore 库基址泄露
 
 ## 概述
 
-任意读写原语到手之后，下一步几乎总是要调用引擎之外的代码——ROP 链要跳 libc 里的 gadget，shellcode 要调 `system`、`execve` 或引擎内部的函数。这些目标的绝对地址由两部分决定：
+任意读写原语到手之后，下一步几乎总是要调用引擎之外的代码——跳进 libc 的 gadget、调用 `system`、`execve` 或引擎内部的函数。这些目标的绝对地址由两部分决定：
 
 ```text
 运行时地址 = 库的加载基址（每次启动随机） + 目标在库内的静态偏移（固定）
@@ -132,7 +132,7 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 
 ## gadget 偏移：选型与搜索
 
-符号表里只有函数（`system`、`execve`），gadget 是"落在指令流中间的字节序列"，没有符号可查——它的偏移要自己搜。搜索之前先选目标：选哪个 gadget，直接决定后面整条链的稳定性。
+上一节说的"字节偏移"搜的是 gadget——落在指令流中间、没有符号的字节序列。搜索之前先选目标：选哪个 gadget，直接决定后面整条链的稳定性。
 
 ### 候选淘汰（glibc 2.31 实测）
 
@@ -153,11 +153,9 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 
 ### 搜索的正确姿势
 
- gadget 偏移的搜索有一条纪律：**解析 ELF program headers、只扫 `PT_LOAD + PF_X` 段**——数据段里的同款字节跳进去不可执行，搜到了也是假的。验证用双通道：自写字节扫描器的结果与 `ROPgadget --binary` 的完整 dump 交叉比对（0x23b6a 两边一致）。
+搜索有一条纪律：**解析 ELF program headers、只扫 `PT_LOAD + PF_X` 段**——数据段里的同款字节跳进去不可执行，搜到了也是假的。验证用双通道：自写字节扫描器的结果与 `ROPgadget --binary` 的完整 dump 交叉比对（0x23b6a 两边一致）。
 
-`system` 一类符号的偏移则用 `nm -D` 从动态符号表解析。注意输出可能带版本后缀（`system@@GLIBC_2.2.5`），比较符号名时按第一个 `@` 截断；`system` 与 `__libc_system` 是同一地址。**符号偏移和 gadget 偏移都是 libc 的属性**——`ldd` 对任何引擎解析到的都是同一个 libc，所以这些偏移与用哪个构建的 jsc 无关（这正好避开上一节的 debug/release 坑）。
-
-一个值得记录的选型教训：libJSC 里不是没有更"顺理成章"的候选（如 `call rax ; add rsp,8 ; ret`），但它随引擎构建变化，而 gadget 需求与引擎无关——**能从 libc 拿的偏移绝不去 libJSC 拿**，这与泄露链"delta 之外不引入 libJSC 偏移"的思路一脉相承。
+还有一条归属纪律：**gadget 偏移和符号偏移一样，都是 libc 的属性**——`ldd` 对任何引擎解析到的都是同一个 libc，所以这些偏移与用哪个构建的 jsc 无关（正好避开上一节的 debug/release 坑）。一个值得记录的教训：libJSC 里不是没有更"顺理成章"的候选（如 `call rax ; add rsp,8 ; ret`），但它随引擎构建变化，而 gadget 需求与引擎无关——**能从 libc 拿的偏移绝不去 libJSC 拿**，这与泄露链"delta 之外不引入 libJSC 偏移"的思路一脉相承。
 
 ## 工具箱
 
@@ -175,8 +173,7 @@ Safari 11.0.3 上 Structure ±32KB 内不再有任何 libJSC 指针——anchor 
 ## 相关阅读
 
 - [调用约定与寄存器](调用约定与寄存器.md)：拿到基址与 gadget 之后布置调用链、理解 `pop rdi` 与栈对齐的底层规则。
-- [CVE-2024-23222 分析](CVE-2024-23222分析.md)：同一套调试环境下的 JSC 案例。
 - [CVE-2023-41993 分析](CVE-2023-41993分析.md)：`describe()`、Structure 字段表与 GetterSetter 泄漏——本文泄露链的起点对象。
-- [CVE-2024-23222 分析](CVE-2024-23222分析.md)：JSC DFG 并发 JIT 案例，同一套调试环境。
+- [CVE-2024-23222 分析](CVE-2024-23222分析.md)：同一套调试环境下的 JSC DFG 并发 JIT 案例。
 - [JavaScriptCore 调试参数](JavaScriptCore调试参数.md)：`describe()` 输出与调试开关汇总。
-- [V8 调试手册](../v8/V8 调试手册.md)：V8 侧对应的 `%DebugPrint` 与 gdb 工作流。
+- [V8 调试手册](../v8/V8%20调试手册.md)：V8 侧对应的 `%DebugPrint` 与 gdb 工作流。
