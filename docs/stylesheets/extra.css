@@ -1612,35 +1612,44 @@ td) code {
   color: rgba(255, 255, 255, 0.72);
 }
 
-/* 展开后的搜索结果列表:背景/文字/高亮改绑站点令牌——
-   Material 原生弹层用 --md-default-bg-color(接近纯白),与本站暖纸页面底不配套。
-   注意只改 scrollwrap(结果区),不改 __inner——它是闭合态搜索框在 header 里的容器,
-   header 本身是深墨色,给它设浅色背景会在深 header 上嵌一块浅矩形 */
+/* 展开后的搜索面板:整体深墨色,与 header 无缝衔接(命令面板风格)。
+   不论页面 scheme 是浅是深,header 永远是深墨色,从它展开的搜索面板也应一致 */
 .md-search__scrollwrap {
-  background-color: var(--site-page-bg);
+  background-color: var(--md-primary-bg-color, #211d19);
+}
+
+.md-search__form {
+  border-radius: 0.7rem 0.7rem 0 0;
+}
+
+/* Material 展开态用高优先级选择器设 form 背景,必须用同等选择器才能覆盖 */
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+  background-color: var(--md-primary-bg-color, #211d19);
+  color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.7rem 0.7rem 0 0;
 }
 
 .md-search-result {
-  color: var(--site-text-color);
+  color: #ddd6c8;
 }
 
 .md-search-result__meta {
-  background-color: rgba(161, 60, 42, 0.14);
-  color: var(--site-muted-text-color);
+  background-color: rgba(236, 231, 219, 0.12);
+  color: #a89e8d;
 }
 
 .md-search-result__icon {
-  color: var(--site-muted-text-color);
+  color: #a89e8d;
 }
 
 .md-search-result mark {
-  background-color: rgba(161, 60, 42, 0.14);
-  color: var(--site-text-color);
+  background-color: rgba(161, 60, 42, 0.28);
+  color: #ece7db;
 }
 
 .md-search-result__link:hover,
 .md-search-result__link:focus {
-  background-color: rgba(161, 60, 42, 0.14);
+  background-color: rgba(236, 231, 219, 0.08);
 }
 
 .md-tabs:not([hidden]) {
