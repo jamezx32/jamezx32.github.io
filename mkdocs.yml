@@ -60,7 +60,7 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css?v=2026-10-14-v75
+  - stylesheets/extra.css?v=2026-10-14-v76
 
 nav:
   - 首页: index.md

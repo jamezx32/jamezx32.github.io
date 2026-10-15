@@ -1599,8 +1599,8 @@ td) code {
   min-height: var(--site-header-search-height);
   border-radius: 0.7rem;
   /* header 永远是深墨色(#211d19),不跟 scheme 翻转;搜索框配色也不能分 scheme */
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
   transition: min-height 0.22s ease, border-radius 0.22s ease;
 }
 
@@ -1618,15 +1618,11 @@ td) code {
   background-color: var(--md-primary-bg-color, #211d19);
 }
 
-.md-search__form {
-  border-radius: 0.7rem 0.7rem 0 0;
-}
-
 /* Material 展开态用高优先级选择器设 form 背景,必须用同等选择器才能覆盖 */
 [data-md-toggle="search"]:checked ~ .md-header .md-search__form {
   background-color: var(--md-primary-bg-color, #211d19);
   color: rgba(255, 255, 255, 0.95);
-  border-radius: 0.7rem 0.7rem 0 0;
+  border-radius: 0.7rem 0.7rem 0 0;  /* 展开时底角平,与结果面板衔接 */
 }
 
 .md-search-result {
